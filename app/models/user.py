@@ -1,6 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from datetime import datetime
 
 
 class User(db.Model, UserMixin):
@@ -13,6 +14,9 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
+    profile_image_url = db.Column(db.String(255), nullable=False)
+    created_at = db.Column(db.DateTime(), default=datetime.utcnow())
+    updated_at = db.Column(db.DateTime(), default=datetime.utcnow())
 
     @property
     def password(self):
@@ -26,8 +30,22 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password, password)
 
     def to_dict(self):
+        """
+        Converts class data into a dictionary for use in api routes
+        """
         return {
             'id': self.id,
             'username': self.username,
-            'email': self.email
+            'email': self.email,
+            'profileImageUrl': self.profile_image_url
+        }
+
+    def to_dict_less(self):
+        """
+        Converts necessary class data into a dictionary for use in api routes
+        """
+        return {
+            'id': self.id,
+            'username': self.username,
+            'profileImageUrl': self.profile_image_url
         }
