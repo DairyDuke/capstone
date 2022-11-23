@@ -2,15 +2,15 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
 
-class BookCover(db.Model):
-    __tablename__ = 'book_covers'
+class Bookshelf(db.Model):
+    __tablename__ = 'bookshelves'
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    book_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("books.id")))
-    cover_image_url = db.Column(db.String())
+    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
+    bookshelf_name = db.Column(db.String(), nullable=False)
     created_at = db.Column(db.DateTime(), default=datetime.utcnow())
     updated_at = db.Column(db.DateTime(), default=datetime.utcnow())
 
@@ -23,8 +23,7 @@ class BookCover(db.Model):
         """
         return {
             'id': self.id,
-            'bookId': self.book_id,
-            'coverImageUrl': self.cover_image_url,
+            'bookshelfName': self.bookshelf_name,
             'createdAt': self.created_at,
             'updatedAt': self.updated_at
         }
