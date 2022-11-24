@@ -18,12 +18,12 @@ class Review(db.Model):
 
     # Relationship between Reviews and Users
     author = db.relationship(
-        "User", back_populates="reviews", cascade="all, delete-orphan"
+        "User", back_populates="reviews"
     )
 
     # Relationship between Reviews and Books
     rated = db.relationship(
-        "Book", back_populates="reviewed", cascade="all, delete-orphan"
+        "Book", back_populates="reviewed"
     )
 
 

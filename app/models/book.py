@@ -17,7 +17,7 @@ class Book(db.Model):
 
     # Need a way to pull creator data and cover data right away
     creators = db.relationship(
-        "Creator", back_populates="books"
+        "Creator", back_populates="books", cascade="all, delete-orphan"
     )
 
     # rever engineer this:
@@ -39,17 +39,17 @@ class Book(db.Model):
     # A book can be in many bookshelves, a bookshelf
     # can only contain a book once.
     shelved = db.relationship(
-        "Booksheelf", secondary=books_in_shelves, back_populates="stacks"
+        "Bookshelf", secondary=books_in_shelves, back_populates="stacks"
     )
 
     # Relationship between Books and Reviews
     reviewed = db.relationship(
-        "Review", back_populates="rated"
+        "Review", back_populates="rated", cascade="all, delete-orphan"
     )
 
     # Relationship between Books and Book Covers
     covered = db.relationship(
-        "BookCover", back_populates="book_parent"
+        "BookCover", back_populates="book_parent", cascade="all, delete-orphan"
     )
 
 

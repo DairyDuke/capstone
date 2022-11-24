@@ -22,11 +22,11 @@ class User(db.Model, UserMixin):
 
     # Relationship between Users and Bookshelves
     bookshelf_list = db.relationship(
-        "Bookshelf", back_populates="user"
+        "Bookshelf", back_populates="user", cascade="all, delete-orphan"
     )
     # Relationship between Users and Reviews
     reviews = db.relationship(
-        "Review", back_populates="author"
+        "Review", back_populates="author", cascade="all, delete-orphan"
     )
 
     @property

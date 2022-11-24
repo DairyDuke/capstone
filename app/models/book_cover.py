@@ -16,7 +16,7 @@ class BookCover(db.Model):
 
     # Relationship between Covers and Books
     book_parent = db.relationship(
-        "Book", back_populates="covered", cascade="all, delete-orphan"
+        "Book", back_populates="covered"
     )
 
 

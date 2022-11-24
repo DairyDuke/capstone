@@ -19,7 +19,7 @@ class Creator(db.Model):
 
     # Relationship between Creators and Books
     books = db.relationship(
-        "Book", back_populates="creators", cascade="all, delete-orphan"
+        "Book", back_populates="creators"
     )
 
 

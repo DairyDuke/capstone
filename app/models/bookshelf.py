@@ -17,7 +17,7 @@ class Bookshelf(db.Model):
 
     # Relationship between Bookshelves and Users
     user = db.relationship(
-        "User", back_populates="bookshelf_list", cascade="all, delete-orphan"
+        "User", back_populates="bookshelf_list"
     )
 
     # A bookshelf can have many books, a single book
