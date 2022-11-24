@@ -1,5 +1,6 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
+from .books_in_shelve import books_in_shelves
 
 
 class Bookshelf(db.Model):
@@ -14,7 +15,16 @@ class Bookshelf(db.Model):
     created_at = db.Column(db.DateTime(), default=datetime.utcnow())
     updated_at = db.Column(db.DateTime(), default=datetime.utcnow())
 
+    # Relationship between Bookshelves and Users
+    user = db.relationship(
+        "User", back_populates="bookshelf_list", cascade="all, delete-orphan"
+    )
 
+    # A bookshelf can have many books, a single book
+    # can only be in a bookshelf once
+    stacks = db.relationship(
+        "Book", secondary=books_in_shelves, back_populates="shelved"
+    )
 
 
     def to_dict(self):

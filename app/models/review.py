@@ -12,9 +12,19 @@ class Review(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
     book_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("books.id")))
     review_text = db.Column(db.Text(), nullable=False)
-    rating = db.Column(db.Decimal(), nullable=False)
+    rating = db.Column(db.Float(), nullable=False)
     created_at = db.Column(db.DateTime(), default=datetime.utcnow())
     updated_at = db.Column(db.DateTime(), default=datetime.utcnow())
+
+    # Relationship between Reviews and Users
+    author = db.relationship(
+        "User", back_populates="reviews", cascade="all, delete-orphan"
+    )
+
+    # Relationship between Reviews and Books
+    rated = db.relationship(
+        "Book", back_populates="reviewed", cascade="all, delete-orphan"
+    )
 
 
 

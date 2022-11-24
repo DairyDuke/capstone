@@ -1,6 +1,6 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
-
+from .books_in_shelve import books_in_shelves
 
 class Book(db.Model):
     __tablename__ = 'books'
@@ -15,7 +15,42 @@ class Book(db.Model):
     created_at = db.Column(db.DateTime(), default=datetime.utcnow())
     updated_at = db.Column(db.DateTime(), default=datetime.utcnow())
 
+    # Need a way to pull creator data and cover data right away
+    creators = db.relationship(
+        "Creator", back_populates="books"
+    )
 
+    # rever engineer this:
+    #     # This relationship allows you to access both the collection of users
+    # # that follow a given user (with user.followers), and the collection
+    # # of users that a user follows (with user.following)
+    # followers = db.relationship(
+    #     "User",
+    #     secondary=follows,
+    #     primaryjoin=(follows.c.follower_id == id),
+    #     secondaryjoin=(follows.c.user_id == id),
+    #     backref=db.backref("following", lazy="dynamic"),
+    #     lazy="dynamic"
+    # )
+    # creator_list = db.relationship(
+    #     "Book", secondary=
+    # )
+
+    # A book can be in many bookshelves, a bookshelf
+    # can only contain a book once.
+    shelved = db.relationship(
+        "Booksheelf", secondary=books_in_shelves, back_populates="stacks"
+    )
+
+    # Relationship between Books and Reviews
+    reviewed = db.relationship(
+        "Review", back_populates="rated"
+    )
+
+    # Relationship between Books and Book Covers
+    covered = db.relationship(
+        "BookCover", back_populates="book_parent"
+    )
 
 
 

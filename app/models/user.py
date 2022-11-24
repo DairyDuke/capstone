@@ -3,6 +3,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from datetime import datetime
 
+# from .book_cover import book
+
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -17,6 +19,15 @@ class User(db.Model, UserMixin):
     profile_image_url = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime(), default=datetime.utcnow())
     updated_at = db.Column(db.DateTime(), default=datetime.utcnow())
+
+    # Relationship between Users and Bookshelves
+    bookshelf_list = db.relationship(
+        "Bookshelf", back_populates="user"
+    )
+    # Relationship between Users and Reviews
+    reviews = db.relationship(
+        "Review", back_populates="author"
+    )
 
     @property
     def password(self):

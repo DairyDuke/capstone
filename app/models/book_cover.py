@@ -14,6 +14,10 @@ class BookCover(db.Model):
     created_at = db.Column(db.DateTime(), default=datetime.utcnow())
     updated_at = db.Column(db.DateTime(), default=datetime.utcnow())
 
+    # Relationship between Covers and Books
+    book_parent = db.relationship(
+        "Book", back_populates="covered", cascade="all, delete-orphan"
+    )
 
 
 
