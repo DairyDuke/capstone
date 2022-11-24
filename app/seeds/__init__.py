@@ -5,6 +5,7 @@ from .books import seed_books, undo_books
 from .bookshelves import seed_bookshelves, undo_bookshelves
 from .creators import seed_creators, undo_creators
 from .reviews import seed_reviews, undo_reviews
+from .books_in_shelves import seed_shelving, undo_shelving
 
 from app.models.db import db, environment, SCHEMA
 
@@ -28,12 +29,14 @@ def seed():
     seed_creators()
     seed_bookshelves()
     seed_reviews()
+    # seed_shelving()
     # Add other seed functions here
 
 
 # Creates the `flask seed undo` command
 @seed_commands.command('undo')
 def undo():
+    # undo_shelving()
     undo_reviews()
     undo_bookshelves()
     undo_creators()
