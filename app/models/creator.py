@@ -1,5 +1,6 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
+from .creator_and_book import creator_and_book
 
 
 class Creator(db.Model):
@@ -9,7 +10,6 @@ class Creator(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    book_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("books.id")))
     role = db.Column(db.String(), nullable=False)
     name = db.Column(db.String(), nullable=False)
     creator_image_url = db.Column(db.String(), nullable=False)
@@ -19,7 +19,7 @@ class Creator(db.Model):
 
     # Relationship between Creators and Books
     books = db.relationship(
-        "Book", back_populates="creators"
+        "Book", secondary=creator_and_book, back_populates="creators"
     )
 
 

@@ -1,6 +1,6 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
-from .books_in_shelve import books_in_shelves
+from .books_in_shelve import books_in_shelve
 
 
 class Bookshelf(db.Model):
@@ -23,7 +23,7 @@ class Bookshelf(db.Model):
     # A bookshelf can have many books, a single book
     # can only be in a bookshelf once
     stacks = db.relationship(
-        "Book", secondary=books_in_shelves, back_populates="shelved"
+        "Book", secondary=books_in_shelve, back_populates="shelved"
     )
 
 

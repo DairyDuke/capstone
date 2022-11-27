@@ -1,6 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
-from .books_in_shelve import books_in_shelves
+from .books_in_shelve import books_in_shelve
+from .creator_and_book import creator_and_book
 
 class Book(db.Model):
     __tablename__ = 'books'
@@ -17,7 +18,7 @@ class Book(db.Model):
 
     # Need a way to pull creator data and cover data right away
     creators = db.relationship(
-        "Creator", back_populates="books", cascade="all, delete-orphan"
+        "Creator", secondary=creator_and_book, back_populates="books"
     )
 
     # rever engineer this:
@@ -39,7 +40,7 @@ class Book(db.Model):
     # A book can be in many bookshelves, a bookshelf
     # can only contain a book once.
     shelved = db.relationship(
-        "Bookshelf", secondary=books_in_shelves, back_populates="stacks"
+        "Bookshelf", secondary=books_in_shelve, back_populates="stacks"
     )
 
     # Relationship between Books and Reviews
