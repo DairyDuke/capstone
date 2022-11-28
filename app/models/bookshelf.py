@@ -1,32 +1,30 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
+from .books_in_shelve import books_in_shelve
 
 
-class Review(db.Model):
-    __tablename__ = 'reviews'
+class Bookshelf(db.Model):
+    __tablename__ = 'bookshelves'
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
-    book_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("books.id")))
-    review_text = db.Column(db.Text(), nullable=False)
-    rating = db.Column(db.Float(), nullable=False)
+    bookshelf_name = db.Column(db.String(), nullable=False)
     created_at = db.Column(db.DateTime(), default=datetime.utcnow())
     updated_at = db.Column(db.DateTime(), default=datetime.utcnow())
 
-    # Relationship between Reviews and Users
-    author = db.relationship(
-        "User", back_populates="reviews"
+    # Relationship between Bookshelves and Users
+    user = db.relationship(
+        "User", back_populates="bookshelf_list"
     )
 
-    # Relationship between Reviews and Books
-    rated = db.relationship(
-        "Book", back_populates="reviewed"
+    # A bookshelf can have many books, a single book
+    # can only be in a bookshelf once
+    stacks = db.relationship(
+        "Book", secondary=books_in_shelve, back_populates="shelved"
     )
-
-
 
 
     def to_dict(self):
@@ -35,10 +33,7 @@ class Review(db.Model):
         """
         return {
             'id': self.id,
-            'userId': self.user_id,
-            'bookId': self.book_id,
-            'reviewText': self.review_text,
-            'rating': self.rating,
+            'bookshelfName': self.bookshelf_name,
             'createdAt': self.created_at,
             'updatedAt': self.updated_at
         }
