@@ -65,5 +65,5 @@ class Book(db.Model):
             'genre': self.genre,
             'summary': self.summary,
             'createdAt': self.created_at,
-            'updatedAt': self.updated_at
+            'updatedAt': self.updated_at,
         }

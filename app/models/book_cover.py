@@ -20,7 +20,6 @@ class BookCover(db.Model):
     )
 
 
-
     def to_dict(self):
         """
         Converts class data into a dictionary for use in api routes
@@ -31,4 +30,12 @@ class BookCover(db.Model):
             'coverImageUrl': self.cover_image_url,
             'createdAt': self.created_at,
             'updatedAt': self.updated_at
+        }
+
+    def to_dict_less(self):
+        """
+        Converts class data into a dictionary for use in api routes
+        """
+        return {
+            'coverImageUrl': self.cover_image_url
         }
