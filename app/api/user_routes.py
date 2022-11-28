@@ -23,3 +23,18 @@ def user(id):
     """
     user = User.query.get(id)
     return user.to_dict()
+
+
+# # ################################################### #
+# #            # Get all Bookshelves #                  #
+# # ################################################### #
+
+# @user_routes.route('/<int:id>/bookshelves')
+# @login_required
+# def user_bookshelves(id):
+#     """
+#     Query for all bookshelves owned by a user
+#     """
+#     pass
+#     # user = User.query.get(id)
+#     # return user.to_dict()
