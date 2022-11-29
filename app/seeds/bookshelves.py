@@ -6,45 +6,54 @@ def seed_bookshelves():
   user1 = [
     Bookshelf(
               user_id = 1,
-              bookshelf_name = 'read'
+              bookshelf_name = 'read',
+              protected = True
     ),
     Bookshelf(
               user_id = 1,
-              bookshelf_name = 'want to read'
+              bookshelf_name = 'want to read',
+              protected = True
     ),
     Bookshelf(
               user_id = 1,
-              bookshelf_name = 'currently reading'
+              bookshelf_name = 'currently reading',
+              protected = True
     )
   ]
 
   user2 = [
     Bookshelf(
               user_id = 2,
-              bookshelf_name = 'read'
+              bookshelf_name = 'read',
+              protected = True
     ),
     Bookshelf(
               user_id = 2,
-              bookshelf_name = 'want to read'
+              bookshelf_name = 'want to read',
+              protected = True
     ),
     Bookshelf(
               user_id = 2,
-              bookshelf_name = 'currently reading'
+              bookshelf_name = 'currently reading',
+              protected = True
     )
   ]
 
   user3 = [
     Bookshelf(
               user_id = 3,
-              bookshelf_name = 'read'
+              bookshelf_name = 'read',
+              protected = True
     ),
     Bookshelf(
               user_id = 3,
-              bookshelf_name = 'want to read'
+              bookshelf_name = 'want to read',
+              protected = True
     ),
     Bookshelf(
               user_id = 3,
-              bookshelf_name = 'currently reading'
+              bookshelf_name = 'currently reading',
+              protected = True
     )
   ]
 

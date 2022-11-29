@@ -12,6 +12,7 @@ class Bookshelf(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
     bookshelf_name = db.Column(db.String(), nullable=False)
+    protected = db.Column(db.Boolean(), nullable=False, default=False)
     created_at = db.Column(db.DateTime(), default=datetime.utcnow())
     updated_at = db.Column(db.DateTime(), default=datetime.utcnow())
 
@@ -32,8 +33,10 @@ class Bookshelf(db.Model):
         Converts class data into a dictionary for use in api routes
         """
         return {
-            'id': self.id,
-            'bookshelfName': self.bookshelf_name,
-            'createdAt': self.created_at,
-            'updatedAt': self.updated_at
+            "id": self.id,
+            "userId": self.user_id,
+            "bookshelfName": self.bookshelf_name,
+            "protected": self.protected,
+            "createdAt": self.created_at,
+            "updatedAt": self.updated_at
         }

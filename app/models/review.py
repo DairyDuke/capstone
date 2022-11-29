@@ -27,8 +27,6 @@ class Review(db.Model):
     )
 
 
-
-
     def to_dict(self):
         """
         Converts class data into a dictionary for use in api routes
@@ -42,3 +40,7 @@ class Review(db.Model):
             'createdAt': self.created_at,
             'updatedAt': self.updated_at
         }
+
+
+    def to_dict_rating(self):
+        return  self.rating
