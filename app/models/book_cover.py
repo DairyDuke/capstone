@@ -36,6 +36,4 @@ class BookCover(db.Model):
         """
         Converts class data into a dictionary for use in api routes
         """
-        return {
-            'coverImageUrl': self.cover_image_url
-        }
+        return self.cover_image_url

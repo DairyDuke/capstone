@@ -1,0 +1,7 @@
+.header_nav_container ul {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+}

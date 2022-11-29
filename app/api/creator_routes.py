@@ -15,7 +15,7 @@ from sqlalchemy.orm import joinedload
 from .auth_routes import validation_errors_to_error_messages
 
 
-book_routes = Blueprint('books', __name__)
+book_routes = Blueprint('creator', __name__)
 
 
 # GET - Gets all Books available on website.
@@ -44,8 +44,8 @@ def all_books():
         # book_user_dict = [bookshelf.]
         # Need to confirm shelf ownership
         book_user_dict = [shelf.to_dict() for shelf in book.shelved]
-        # print(current_user)
-        # print(filtered_user_list)
+        print(current_user)
+        print(filtered_user_list)
         # book_user = book_user_dict.filter(x => currentuser.id = x.userId)
         if current_user.get_id():
           filtered_user_list = filter(lambda shelf: current_user and shelf.id == current_user.get_id(), book_user_dict)
@@ -95,21 +95,34 @@ def book_details(bookId):
 
 # POST- Creates a new book.
 @book_routes.route('', methods=["POST"])
-def create_book():
+def create_author():
     """
-    Queries the database to check if book exists.
-    If it doesn't creates the book.
-    First adds it to the database, then adds the cover.
-    Queries the database for the Author, if author is not found,
-    creates a new author before creating the association.
-    Else, just creates an association.
     """
+    # We've created a new book, now to assign the author.
+    # Grab the Creator form
+    creator_form = CreatorForm()
+    # Assign the csrf token
+    creator_form['csrf_token'].data = request.cookies['csrf_token']
+    try:
+        new_creator = Book.query.filter_by(title=book_form.data['title']).first()
+        print(new_book)
+        if new_book == None:
+            raise Exception()
+            # creator_form
+    except:
+        pass
+    else:
+        pass
+            # role_type_list
+            # name
+            # creator_image_url
+            # author_summary
     # pass
     book_form = BookForm()
     book_form['csrf_token'].data = request.cookies['csrf_token']
     try:
       new_book = Book.query.filter_by(title=book_form.data['title']).first()
-      # print(new_book)
+      print(new_book)
       if new_book == None:
           raise Exception()
     except:
@@ -134,9 +147,30 @@ def create_book():
               )
           db.session.add(new_book_cover)
           db.session.commit()
-          new_book.to_dict()
-          new_book['cover_image_url'] = new_book_cover.to_dict_less()
-          return new_book
+          # We've created a new book, now to assign the author.
+          # Grab the Creator form
+          creator_form = CreatorForm()
+          # Assign the csrf token
+          creator_form['csrf_token'].data = request.cookies['csrf_token']
+
+          try:
+            new_creator = Book.query.filter_by(title=book_form.data['title']).first()
+            print(new_book)
+            if new_book == None:
+              raise Exception()
+            # creator_form
+          except:
+            pass
+          else:
+            pass
+            # role_type_list
+            # name
+            # creator_image_url
+            # author_summary
+
+
+          return {'message': "Everything good"}, 200
+
         return {'errors': validation_errors_to_error_messages(form.errors)}, 401
     else:
         return {'message': "Book already exists!"}, 300
@@ -166,27 +200,19 @@ def edit_book(bookId):
                 current_book_cover = book_form.data['cover_image_url']
 
             db.session.commit()
-            current_book.to_dict()
-            current_book['cover_image_url'] = current_book_cover.to_dict_less()
-            return current_book
+
+            return {'message': "Everything good"}, 200
+
         return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+    # creator_form = CreatorForm()
+    # creator_form['csrf_token'].data = request.cookies['csrf_token']
 
 
 # DELETE - Deletes a current Book entry.
 @book_routes.route('/<int:bookId>', methods=["DELETE"])
 def delete_book(bookId):
-    # pass
-    try:
-        book_to_delete = Book.query.get_or_404(bookId)
-    except:
-        return {'message': "Book couldn't be found"}, 404
-    else:
-
-        db.session.delete(book_to_delete)
-        db.session.commit()
-        return {'message': "Successfully deleted"}, 200
-
-
+    pass
 
 # ################################################### #
 #                 # Bookshelves #                     #
@@ -195,25 +221,7 @@ def delete_book(bookId):
 # POST - Adds a Book to a User's Bookshelf.
 @book_routes.route('/<int:bookId>/bookshelf', methods=["POST"])
 def create_bookshelf(bookId):
-    """
-    Queries database for user bookshelves,
-    checks to see if book is currently in one of the three 'Exclusive' shelves,
-    then makes the appropriate association.
-    """
-    user_shelves = Bookshelf.query.order_by(Bookshelf.id.desc()).options(joinedload(Bookshelf.stacks),joinedload(Bookshelf.user)).all()
-
-    response = [ ]
-    for shelf in user_shelves:
-        shelf_dict = shelf.to_dict()
-        #Convert Creator and Cover data to be usable
-        shelved_dict = [stack.to_dict() for stack in shelf.stacks]
-        user_owned_shelves = [user_shelf.to_dict_less() for user_shelf in shelf.user]
-        book_dict['Users'] = shelved_dict
-        book_dict['Shelves'] = user_owned_shelves
-
-        response.append(book_dict)
-    return response
-    # books = Book.query.order_by(Book.created_at.desc()).options(joinedload(Book.creators), joinedload(Book.covered), joinedload(Book.shelved), joinedload(Book.reviewed)).all()
+    pass
 
 # DELETE - Removes a Book from a User's Bookshelf.
 @book_routes.route('/<int:bookId>/bookshelf', methods=["DELETE"])

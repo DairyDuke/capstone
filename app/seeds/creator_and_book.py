@@ -6,36 +6,36 @@ def seed_creator_and_book():
   # pass
 
     book1 = [
-      creator_and_book(
+      creator_and_book.insert().values(
         creator_id = 1,
         book_id =1
       )
     ]
     book2 = [
-      creator_and_book(
+      creator_and_book.insert().values(
         creator_id = 2,
         book_id =2
       ),
-      creator_and_book(
+      creator_and_book.insert().values(
         creator_id = 3,
         book_id =2
       )
       ]
     book3 = [
-      creator_and_book(
+      creator_and_book.insert().values(
         creator_id = 4,
         book_id =3
       )]
 
 
     for entry in book1:
-        db.session.add(entry)
+        db.session.execute(entry)
 
     for entry in book2:
-        db.session.add(entry)
+        db.session.execute(entry)
 
     for entry in book3:
-        db.session.add(entry)
+        db.session.execute(entry)
 
     db.session.commit()
 

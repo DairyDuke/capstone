@@ -29,7 +29,6 @@ class Creator(db.Model):
         """
         return {
             'id': self.id,
-            'bookId': self.book_id,
             'role': self.role,
             'name': self.name,
             'creatorImageUrl': self.creator_image_url,
