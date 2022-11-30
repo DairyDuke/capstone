@@ -3,7 +3,10 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import LoginForm from './components/auth/Login/LoginForm';
 import SignUpForm from './components/auth/Signup/SignUpForm';
+
 import Header from './components/Header';
+import Footer from './components/Footer'
+import Splash from './components/Splash'
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import UsersList from './components/Header/UsersList';
 import User from './components/Header/User';
@@ -34,16 +37,28 @@ function App() {
         <Route path='/sign-up' exact={true}>
           <SignUpForm />
         </Route>
-        <ProtectedRoute path='/users' exact={true} >
+        {/* <ProtectedRoute path='/users' exact={true} >
           <UsersList/>
         </ProtectedRoute>
         <ProtectedRoute path='/users/:userId' exact={true} >
           <User />
-        </ProtectedRoute>
+        </ProtectedRoute> */}
         <Route path='/' exact={true} >
-          <h1>My Home Page</h1>
+          <Splash />
+        </Route>
+        <Route path='/mybooks'>
+
+        </Route>
+        <Route path='/books/:bookId'>
+
+        </Route>
+        <Route>
+          <div id='page-not-found-container'>
+            <h1>404 Page not found {':<'} Sowwyyyyy</h1>
+          </div>
         </Route>
       </Switch>
+      <Footer />
     </BrowserRouter>
   );
 }
