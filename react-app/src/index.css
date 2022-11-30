@@ -19,7 +19,12 @@ h1 {
   font-size: 2em;
   margin: 0.67em 0;
 }
-
+/* h2 {
+  display: unset;
+  font-size: unset;
+  margin: unset;
+  font-weight: unset;
+} */
 /* --- Correct box sizing for FF and overflow issues with Edge/IE ---  */
 hr {
   box-sizing: content-box;
@@ -42,6 +47,7 @@ a {
 /* --- Remove the overall decoration from unordered lists --- */
 ul, li {
   list-style-type: none;
+  padding: 0%;
 }
 
 li {

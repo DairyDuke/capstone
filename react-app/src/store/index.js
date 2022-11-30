@@ -2,9 +2,15 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 // Individual Reducer Files
 import session from './session'
+import booksReducer from './book'
+// import bookshelfReducer from './bookshelf'
+// import reviewReducer from './review'
 
 const rootReducer = combineReducers({
   session,
+  books: booksReducer,
+  // bookshelves: bookshelfReducer,
+  // reviews: reviewReducer
 });
 
 

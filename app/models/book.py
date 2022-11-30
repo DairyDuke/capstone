@@ -40,7 +40,9 @@ class Book(db.Model):
     # A book can be in many bookshelves, a bookshelf
     # can only contain a book once.
     shelved = db.relationship(
-        "Bookshelf", secondary=books_in_shelve, back_populates="stacks"
+        "Bookshelf",
+        secondary=books_in_shelve,
+        back_populates="stacks"
     )
 
     # Relationship between Books and Reviews

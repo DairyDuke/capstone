@@ -194,28 +194,122 @@ def delete_book(bookId):
 
 # POST - Adds a Book to a User's Bookshelf.
 @book_routes.route('/<int:bookId>/bookshelf', methods=["POST"])
-def create_bookshelf(bookId):
+def add_book_to_shelf(bookId):
     """
     Queries database for user bookshelves,
     checks to see if book is currently in one of the three 'Exclusive' shelves,
     then makes the appropriate association.
     """
-    user_shelves = Bookshelf.query.order_by(Bookshelf.id.desc()).options(joinedload(Bookshelf.stacks),joinedload(Bookshelf.user)).all()
+    data = request.get_json()
+    try:
+        book_to_add = Book.query.get_or_404(bookId)
+        user_shelves = Bookshelf.query.order_by(Bookshelf.id.desc()).options(joinedload(Bookshelf.stacks),joinedload(Bookshelf.user)).filter_by(user_id=current_user.get_id()).all()
+    except:
+        return {"message": "Book couldn't be found"}, 404
 
-    response = [ ]
+
+    book_dict_message = book_to_add.to_dict()
+    if data["bookshelf_name"]:
+        response = {"message": f"{book_dict_message['title']} successfully added to {data['bookshelf_name']}!"}
+    elif data["custom_bookshelf_name"]:
+        response = {"message": f"{book_dict_message['title']} successfully added to {data['custom_bookshelf_name']}!"}
+
     for shelf in user_shelves:
         shelf_dict = shelf.to_dict()
-        #Convert Creator and Cover data to be usable
-        shelved_dict = [stack.to_dict() for stack in shelf.stacks]
-        user_owned_shelves = [user_shelf.to_dict_less() for user_shelf in shelf.user]
-        book_dict['Users'] = shelved_dict
-        book_dict['Shelves'] = user_owned_shelves
+        # Staple Bookshelf Route
+        if data["bookshelf_name"] == shelf_dict["bookshelfName"]:
+            if book_to_add in shelf.stacks:
+                response = {"message": "Book already on shelf!"}
+            else:
+             shelf.stacks.append(book_to_add)
+        elif book_to_add in shelf.stacks:
+            if shelf_dict["protected"] == True:
+                shelf.stacks.remove(book_to_add)
+        # Custom Bookshelf Route
+        if data["custom_bookshelf_name"] == shelf_dict["bookshelfName"]:
+            if book_to_add in shelf.stacks:
+                response = {"message": "Book already on shelf!"}
+            else:
+             shelf.stacks.append(book_to_add)
+        # elif book_to_add in shelf.stacks:
+        #     if shelf_dict["protected"] == True:
+        #         shelf.stacks.remove(book_to_add)
 
-        response.append(book_dict)
+    #     shelf_dict["books"] = []
+    #     for stack in shelf.stacks:
+    #         shelf_dict["books"].append(stack.to_dict())
+    #         if int(stack.id) == int(bookId):
+    #                 print("This printed true")
+    #             book_location["Locations"].append( {
+    #                 "id" : shelf.id,
+    #                 "bookshelf_name" : shelf.bookshelf_name
+    #             })
+
+    #     response["Test"].append(shelf_dict)
+    # response["Test"].append(book_location)
+
+    db.session.commit()
     return response
+    # return "cool"
     # books = Book.query.order_by(Book.created_at.desc()).options(joinedload(Book.creators), joinedload(Book.covered), joinedload(Book.shelved), joinedload(Book.reviewed)).all()
 
 # DELETE - Removes a Book from a User's Bookshelf.
 @book_routes.route('/<int:bookId>/bookshelf', methods=["DELETE"])
-def delete_bookshelf(bookId):
-    pass
+def remove_book_from_shelf(bookId):
+    """
+    Queries database for user bookshelves,
+    checks to see if book is currently in one of the three 'Exclusive' shelves,
+    then makes the appropriate association.
+    """
+    data = request.get_json()
+    try:
+        book_to_add = Book.query.get_or_404(bookId)
+        user_shelves = Bookshelf.query.order_by(Bookshelf.id.desc()).options(joinedload(Bookshelf.stacks),joinedload(Bookshelf.user)).filter_by(user_id=current_user.get_id()).all()
+    except:
+        return {"message": "Book couldn't be found"}, 404
+
+    book_dict_message = book_to_add.to_dict()
+    if data["bookshelf_name"]:
+        response = {"message": f"{book_dict_message['title']} successfully removed from {data['bookshelf_name']}!"}
+    elif data["custom_bookshelf_name"]:
+        response = {"message": f"{book_dict_message['title']} successfully removed from {data['custom_bookshelf_name']}!"}
+
+    for shelf in user_shelves:
+        shelf_dict = shelf.to_dict()
+        # Staple Bookshelf Route
+        if data["bookshelf_name"] == shelf_dict["bookshelfName"]:
+            if book_to_add in shelf.stacks:
+                shelf.stacks.remove(book_to_add)
+            # else:
+            #     response = {"message": "Book already on shelf!"}
+            #  shelf.stacks.append(book_to_add)
+        elif book_to_add in shelf.stacks:
+            if shelf_dict["protected"] == True:
+                shelf.stacks.remove(book_to_add)
+        # Custom Bookshelf Route
+        if data["custom_bookshelf_name"] == shelf_dict["bookshelfName"]:
+            if book_to_add in shelf.stacks:
+                shelf.stacks.remove(book_to_add)
+            # else:
+            #  shelf.stacks.append(book_to_add)
+        # elif book_to_add in shelf.stacks:
+        #     if shelf_dict["protected"] == True:
+        #         shelf.stacks.remove(book_to_add)
+
+    #     shelf_dict["books"] = []
+    #     for stack in shelf.stacks:
+    #         shelf_dict["books"].append(stack.to_dict())
+    #         if int(stack.id) == int(bookId):
+    #                 print("This printed true")
+    #             book_location["Locations"].append( {
+    #                 "id" : shelf.id,
+    #                 "bookshelf_name" : shelf.bookshelf_name
+    #             })
+
+    #     response["Test"].append(shelf_dict)
+    # response["Test"].append(book_location)
+
+    db.session.commit()
+    return response
+    # return "cool"
+    # books = Book.query.order_by(Book.created_at.desc()).options(joinedload(Book.creators), joinedload(Book.covered), joinedload(Book.shelved), joinedload(Book.reviewed)).all()
