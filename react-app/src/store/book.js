@@ -188,6 +188,7 @@ const booksReducer = (state = initialState, action) => {
     //   return
 
     case GET_ALL_BOOKS:
+      // for (let )
       return newState;
 
     case GET_SINGLE_BOOK:

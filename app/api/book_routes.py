@@ -58,7 +58,10 @@ def all_books():
         # Getting the average review rating.
         book_review_dict = []
         [book_review_dict.append(review.to_dict_rating()) for review in book.reviewed]
-        book_dict['AverageRating'] = sum(book_review_dict) / len(book_review_dict)
+        if len(book_review_dict) > 0:
+            book_dict['AverageRating'] = sum(book_review_dict) / len(book_review_dict)
+        else:
+            book_dict['AverageRating'] = 0
 
         response["Books"].append(book_dict)
 
