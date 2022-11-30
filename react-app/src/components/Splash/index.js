@@ -1,12 +1,16 @@
-import React from "react";
-import { NavLink } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { NavLink, Redirect } from 'react-router-dom';
+import { useSelector, useDispatch } from "react-redux"
 import './Splash.css'
+import * as bookActions from '../../store/book'
 
 const Splash = ()=>{
+   const imgAddress = "https://juneau.org/wp-content/uploads/2021/09/Fall-in-love-with-reading-banner-1200x382.jpg"
   return(
     <>
       <div className="splash_main_container">
         <div className="splash_full_length_banner">
+          <img src={imgAddress} />
           <h1>Welcome👋</h1>
            <div id="splash_login_module">
               <h2>Discover & read more</h2>
@@ -19,15 +23,17 @@ const Splash = ()=>{
            </div>
         </div>
         <div className="splash_content_container">
-            <div id="splash_description_box">
-              Deciding what to read next?
-              <br />
-              You’re in the right place. Tell us what titles or genres you’ve enjoyed in the past, and we’ll give you surprisingly insightful recommendations.
-            </div>
-            <div id="splash_description_box">
-              What are your friends reading?
-            <br />
-              Chances are your friends are discussing their favorite (and least favorite) books on Goodreads.
+            <div className="splash_description_box_container">
+              <div id="splash_description_box_left">
+                <h2>Deciding what to read next?</h2>
+
+                <p>You’re in the right place. Tell us what titles or genres you’ve enjoyed in the past, and we’ll give you surprisingly insightful recommendations.</p>
+              </div>
+              <div id="splash_description_box_right">
+                <h2>What are your friends reading?</h2>
+
+                <p>Chances are your friends are discussing their favorite (and least favorite) books on Goodreads.</p>
+              </div>
             </div>
             <div id="splash_discover_reccomendations">
                 <span id="splash_what_discover_box">

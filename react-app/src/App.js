@@ -55,6 +55,7 @@ function App() {
         <Route>
           <div id='page-not-found-container'>
             <h1>404 Page not found {':<'} Sowwyyyyy</h1>
+            <h4> Thanks, Nate!</h4>
           </div>
         </Route>
       </Switch>

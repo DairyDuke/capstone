@@ -16,63 +16,38 @@ const Footer = () => {
   return (
   <div className="footer-container">
     <div className="footer-content">
-        <div className="create-button-box">
+        {/* <div className="create-button-box">
           <span className="footer-heavy-text"> Create your own Groupup group. </span>
           {!sessionUser && <NavLink to="/signup" className="get-started-button">Get Started</NavLink>}
           {sessionUser && <NavLink to="/new-group" className="get-started-button">Get Started</NavLink>}
         </div>
         <br />
-        <br />
+        <br /> */}
       <span className="bottom-menu">
-        <div className="width-third">
-          <span className="footer-heavy-text">Your Account</span>
+        <div className="footer_width_half">
+          <span className="footer-heavy-text">COMPANY</span>
             <ul className="footer-item-padding">
-              {/* TODO switch signup to logout */}
-              {sessionUser && <li className="footer-item-padding"><div className="footer-menu-links" onClick={logout}>Log out</div></li>}
-              {!sessionUser &&
-              <>
-              <li className="footer-item-padding"><NavLink to="/signup" className="footer-menu-links">Sign up</NavLink>
-              </li> <li className="footer-item-padding"><NavLink to="/login" className="footer-menu-links">Log in</NavLink>
+              <li className="footer-item-padding">
+                <NavLink to="/" className="footer-menu-links">
+                  About us
+                </NavLink>
               </li>
-              </>
-              }
+              <li className="footer-item-padding">
+                <NavLink to="/login" className="footer-menu-links">
+                  Placeholder
+                </NavLink>
+              </li>
             </ul>
         </div>
-        {/* <div className="width-third">
-          <span className="footer-heavy-text">Discover</span>
-            <ul className="footer-item-padding">
-              <li className="footer-item-padding"><NavLink to="/find" className="footer-menu-links">Groups</NavLink></li> */}
-          {/* <li className="footer-item-padding">Calendar</li>
-          <li className="footer-item-padding">Topics</li>
-          <li className="footer-item-padding">Cities</li> */}
-              {/* <li className="footer-item-padding"><NavLink to="/find" className="footer-menu-links">Online Events</NavLink></li> */}
-          {/* <li className="footer-item-padding">Local Guides</li> */}
-            {/* </ul> */}
-        {/* </div> */}
-        {/* <div className="width-third">
-          <span className="footer-heavy-text">Groupup</span>
-            <ul className="footer-item-padding">
-              <li className="footer-item-padding"><NavLink to="" className="footer-menu-links">About</NavLink></li> */}
-          {/* <li className="footer-item-padding">Blog</li>
-          <li className="footer-item-padding">Groupup Pro</li>
-          <li className="footer-item-padding">Careers</li>
-          <li className="footer-item-padding">Apps</li>
-          <li className="footer-item-padding">Podcast</li> */}
-            {/* </ul>
-        </div> */}
-      </span>
-          {/* <div className="bottom-menu">
-            <span className="footer-heavy-text">Follow us</span>
-            <span> multiple icons here </span>
-            <span> get it on links </span>
-          </div>*/}
-        <div className="footer-menu-copyright">
-          <span>@ 2022 Groupup</span>
-             {/* <div>Terms of Service</div>
-             <div>Privacy Policy</div>
-             <div>Cookie Policy</div>
-             <div>Help</div> */}
+        <div className="footer_width_half">
+          <span className="footer-heavy-text">Connect</span>
+            <div className="footer-item-padding">
+              Placeholder EMOJIS
+              <br/>
+              ℹ️🐤📥
+            </div>
         </div>
+      </span>
     </div>
   </div>
   )
