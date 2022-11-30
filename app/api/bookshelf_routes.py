@@ -81,7 +81,7 @@ def create_bookshelf():
             db.session.commit()
             shelf_dict = new_shelf_create.to_dict()
             return shelf_dict
-        return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+        return {'errors': validation_errors_to_error_messages(shelf_form.errors)}, 401
     else:
         return {'message': "Shelf already exists!"}, 300
 
@@ -111,12 +111,14 @@ def edit_bookshelf(shelfId):
             return {'message': "Read, Want to read, Currently Reading shelves can not be edited!"}, 403
     else:
         if shelf_form.validate_on_submit():
-            if shelf_form.data['bookshelf_name']:
+            if shelf_form.data['bookshelf_name'] and current_shelf.bookshelf_name != shelf_form.data['bookshelf_name']:
                 current_shelf.bookshelf_name = shelf_form.data['bookshelf_name']
-            db.session.commit()
+                db.session.commit()
+            else:
+                return {'message': "Nothing Changed!"}, 300
             shelf_dict = current_shelf.to_dict()
             return shelf_dict
-        return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+        return {'errors': validation_errors_to_error_messages(shelf_form.errors)}, 401
 
 # DELETE - Delete a Bookshelf.
 @bookshelf_routes.route('/<int:shelfId>', methods=["DELETE"])
