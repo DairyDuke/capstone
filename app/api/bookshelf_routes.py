@@ -23,18 +23,14 @@ bookshelf_routes = Blueprint('bookshelves', __name__)
 @login_required
 def bookshelves():
     # pass
-    bookshelves = Bookshelf.query.order_by(Bookshelf.created_at.desc()).options(joinedload(Bookshelf.stacks), joinedload(Bookshelf.user)).all()
-
+    bookshelves = Bookshelf.query.order_by(Bookshelf.id.desc()).options(joinedload(Bookshelf.stacks),joinedload(Bookshelf.user)).filter_by(user_id=current_user.get_id()).all()
     response = {
         "Bookshelves": []
     }
 
     for shelf in bookshelves:
         shelf_dict = shelf.to_dict()
-        shelf_user_list = shelf.user.to_dict()
-        # [user.to_dict() for user in shelf.user]
         shelf_stack_list = [stack.to_dict() for stack in shelf.stacks]
-        shelf_dict['Users'] = shelf_user_list
         shelf_dict['Stacks'] = shelf_stack_list
         response["Bookshelves"].append(shelf_dict)
 
@@ -59,7 +55,7 @@ def bookshelf_details(shelfId):
     return shelf_dict
 
 
-# POST- CCreate a new Bookshelf.
+# POST- Create a new Bookshelf.
 @bookshelf_routes.route('', methods=["POST"])
 @login_required
 def create_bookshelf():

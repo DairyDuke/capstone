@@ -7,13 +7,16 @@ import { ModalProvider } from './context/Modal';
 import './index.css';
 import App from './App';
 import configureStore from './store';
+import * as sessionActions from "./store/session";
+import * as bookActions from "./store/book";
 
 const store = configureStore();
 
 if (process.env !== 'production') {
   window.store = store;
-
-  // window.sessionActions = sessionActions;
+  // window.
+  window.sessionActions = sessionActions;
+  window.bookActions = bookActions;
 }
 
 ReactDOM.render(

@@ -98,6 +98,10 @@ export const createBookThunk = (bookData) => async (dispatch) => {
   const response = await fetch('/api/books',{
     method: 'POST',
     body: JSON.stringify({
+      "title": bookData["title"],
+      "genre": bookData["genre"],
+      "summary": bookData["summary"],
+      "cover_image_url": bookData["cover_image_url"],
     })
   });
 
@@ -176,7 +180,7 @@ export const removeBookFromShelfThunk = (bookshelfData, bookId) => async (dispat
 
 // --- NORMALIZE DATA SPACE --- \\
 const initialState = {
-  books: {}
+  "books": {}
 }
 
 
@@ -188,22 +192,31 @@ const booksReducer = (state = initialState, action) => {
     //   return
 
     case GET_ALL_BOOKS:
-      // for (let )
+      action.payload.Books.forEach(
+        book => {
+          newState[book.id] = book
+        }
+      )
       return newState;
 
     case GET_SINGLE_BOOK:
+        newState["singleBook"] = action.payload
       return newState;
 
     case REMOVE_SINGLE_BOOK:
+        newState["singleBook"] = null
       return newState;
 
     case CREATE_BOOK:
-      return newState;
-
-    case DELETE_BOOK:
+        newState[action.payload.id] = action.payload
       return newState;
 
     case EDIT_BOOK:
+        newState[action.payload.id] = action.payload
+      return newState;
+
+    case DELETE_BOOK:
+        delete newState[action.bookId]
       return newState;
 
     case ADD_BOOK_TO_SHELF:

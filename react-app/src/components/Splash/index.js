@@ -1,10 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, Redirect } from 'react-router-dom';
+import { Redirect, useHistory, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
 import './Splash.css'
 import * as bookActions from '../../store/book'
 
 const Splash = ()=>{
+  const dispatch = useDispatch();
+  const bookobj = useSelector(state => state.books);
+  const books = Object.values(bookobj) || [];
+  const history = useHistory();
+  const [errors, setErrors] = useState([]);
+
+  useEffect(()=> {
+    dispatch(bookActions.getAllBooksThunk())
+  },[dispatch])
+
+  // let DisplayBooks;
+  // if (books.length > 1 ) {
+  //   DisplayBooks =  groups.map((group) => <GroupDetail group={group}/>)
+
+  // } else {
+  //   DisplayGroups = (
+  //   <>
+  //    <h2> No groups yet! </h2>
+  //   </>
+  //   )
+  // }
+
+
    const imgAddress = "https://juneau.org/wp-content/uploads/2021/09/Fall-in-love-with-reading-banner-1200x382.jpg"
   return(
     <>
