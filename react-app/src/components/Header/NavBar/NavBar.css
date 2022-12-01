@@ -29,6 +29,13 @@
   width: 100%;
 }
 
+#navbar_auth_buttons {
+  display: flex;
+  width: 15%;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
 #navbar_profile_button {
   display: flex;
   flex-direction: row;
