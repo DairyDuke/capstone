@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux"
 import './Splash.css'
 import * as bookActions from '../../store/book'
 import * as bookshelfActions from '../../store/bookshelf'
+import * as creatorActions from '../../store/creator'
 
 const Splash = ()=>{
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const Splash = ()=>{
     dispatch(bookActions.getSingleBookThunk(2))
     dispatch(bookshelfActions.getAllBookshelvesThunk())
     dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
+    dispatch(creatorActions.getAllCreatorsThunk())
   },[dispatch])
 
   // let DisplayBooks;
@@ -37,7 +39,7 @@ const Splash = ()=>{
     <>
       <div className="splash_main_container">
         <div className="splash_full_length_banner">
-          <img src={imgAddress} />
+          <img src={imgAddress} alt="Reading is Love Banner" />
           <h1>Welcome👋</h1>
            <div id="splash_login_module">
               <h2>Discover & read more</h2>

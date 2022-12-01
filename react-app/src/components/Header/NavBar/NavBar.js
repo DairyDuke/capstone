@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import LoginFormModal from '../../auth/Login/LoginFormModal';
 import LogoutButton from '../../auth/LogoutButton';
+import SignUpFormModal from '../../auth/Signup/SignUpFormModal';
 import './NavBar.css'
 
 // Modal Imports
 
 const NavBar = () => {
   const sessionUser = useSelector(state => state.session.user)
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
   const [showMenu, setShowMenu] = useState(false);
   const toggleMenu = () => setShowMenu(!showMenu);
 
@@ -30,9 +32,9 @@ const NavBar = () => {
       <nav>
         {!sessionUser && (
           <div id='navbar_auth_buttons'>
-            {/* <DemoUserButton />
+            {/* <DemoUserButton /> */}
             <LoginFormModal />
-            <SignUpFormModal /> */}
+            <SignUpFormModal />
           </div>)
         }
         {sessionUser && (
@@ -56,7 +58,7 @@ const NavBar = () => {
                 <div id='profile-dropdown'>
                   <div id="dropdown-header">
                     <p>Account</p>
-                    <LogoutButton />
+                      <LogoutButton />
                   </div>
                   <div>
                     <NavLink to={`/users/${sessionUser.id}`} exact={true} className='dropdown-option image-option'>
@@ -127,7 +129,6 @@ const NavBar = () => {
         <li>
         </li>
       </ul> */}
-          <LogoutButton />
     </nav>
   </div>
   );

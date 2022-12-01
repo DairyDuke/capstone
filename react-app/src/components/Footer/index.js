@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
-import * as sessionActions from '../../store/session';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, Redirect, NavLink, useLocation } from 'react-router-dom';
+import React from 'react';
+// , { useState }
+// import * as sessionActions from '../../store/session';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { useHistory, Redirect, NavLink, useLocation } from 'react-router-dom';
 import './Footer.css';
 
 const Footer = () => {
-  const location = useLocation()
-  const sessionUser = useSelector(state => state.session.user)
-  const dispatch = useDispatch()
-  const logout = () => {
-    dispatch(sessionActions.logout());
-  };
+  // const location = useLocation()
+  // const sessionUser = useSelector(state => state.session.user)
+  // const dispatch = useDispatch()
+  // const logout = () => {
+  //   dispatch(sessionActions.logout());
+  // };
   return (
   <div className="footer_container">
     <div className="footer_content">
