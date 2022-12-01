@@ -46,9 +46,9 @@ const NavBar = () => {
               <NavLink to="/mybooks" exact={true}>
                 <span className="navbar_menu_text">My Books</span>
               </NavLink>
-              <NavLink to="/mybooks" exact={true}>
+              {/* <NavLink to="/mybooks" exact={true}>
                 <span className="header_menu_text">My Books</span>
-              </NavLink>
+              </NavLink> */}
             </div>
             <div onClick={toggleMenu} id='navbar_profile_button'>
               <img src="https://i.imgur.com/pZlkRiA.png" alt="User Menu" />
