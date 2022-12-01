@@ -23,18 +23,14 @@ bookshelf_routes = Blueprint('bookshelves', __name__)
 @login_required
 def bookshelves():
     # pass
-    bookshelves = Bookshelf.query.order_by(Bookshelf.created_at.desc()).options(joinedload(Bookshelf.stacks), joinedload(Bookshelf.user)).all()
-
+    bookshelves = Bookshelf.query.order_by(Bookshelf.id.desc()).options(joinedload(Bookshelf.stacks),joinedload(Bookshelf.user)).filter_by(user_id=current_user.get_id()).all()
     response = {
         "Bookshelves": []
     }
 
     for shelf in bookshelves:
         shelf_dict = shelf.to_dict()
-        shelf_user_list = shelf.user.to_dict()
-        # [user.to_dict() for user in shelf.user]
         shelf_stack_list = [stack.to_dict() for stack in shelf.stacks]
-        shelf_dict['Users'] = shelf_user_list
         shelf_dict['Stacks'] = shelf_stack_list
         response["Bookshelves"].append(shelf_dict)
 
@@ -59,7 +55,7 @@ def bookshelf_details(shelfId):
     return shelf_dict
 
 
-# POST- CCreate a new Bookshelf.
+# POST- Create a new Bookshelf.
 @bookshelf_routes.route('', methods=["POST"])
 @login_required
 def create_bookshelf():
@@ -81,7 +77,7 @@ def create_bookshelf():
             db.session.commit()
             shelf_dict = new_shelf_create.to_dict()
             return shelf_dict
-        return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+        return {'errors': validation_errors_to_error_messages(shelf_form.errors)}, 401
     else:
         return {'message': "Shelf already exists!"}, 300
 
@@ -111,12 +107,14 @@ def edit_bookshelf(shelfId):
             return {'message': "Read, Want to read, Currently Reading shelves can not be edited!"}, 403
     else:
         if shelf_form.validate_on_submit():
-            if shelf_form.data['bookshelf_name']:
+            if shelf_form.data['bookshelf_name'] and current_shelf.bookshelf_name != shelf_form.data['bookshelf_name']:
                 current_shelf.bookshelf_name = shelf_form.data['bookshelf_name']
-            db.session.commit()
+                db.session.commit()
+            else:
+                return {'message': "Nothing Changed!"}, 300
             shelf_dict = current_shelf.to_dict()
             return shelf_dict
-        return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+        return {'errors': validation_errors_to_error_messages(shelf_form.errors)}, 401
 
 # DELETE - Delete a Bookshelf.
 @bookshelf_routes.route('/<int:shelfId>', methods=["DELETE"])

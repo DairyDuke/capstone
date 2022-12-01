@@ -14,5 +14,5 @@ class CreatorForm(FlaskForm):
         max=200), DataRequired()])
     creator_image_url = StringField(
         "Creator Image URL", validators=[URL(), Optional()])
-    author_summary = TextAreaField("Text", validators=[Length(
+    creator_summary = TextAreaField("Text", validators=[Length(
         max=1500), Optional()])

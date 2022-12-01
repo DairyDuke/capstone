@@ -48,9 +48,9 @@ def all_books():
         # print(filtered_user_list)
         # book_user = book_user_dict.filter(x => currentuser.id = x.userId)
         if current_user.get_id():
-          filtered_user_list = filter(lambda shelf: current_user and shelf.id == current_user.get_id(), book_user_dict)
-          shelf_location = filtered_user_list[0]
-          [shelf.userId == current_user.get_id() for shelf in book_user_dict]
+          filtered_user_list = list(filter(lambda shelf: int(shelf["userId"]) == int(current_user.get_id()) and shelf["protected"] == True, book_user_dict))
+          shelf_location = filtered_user_list
+        #   [shelf.userId == current_user.get_id() for shelf in book_user_dict]
         else:
           shelf_location = "unread"
         book_dict['Shelved'] = shelf_location
@@ -58,7 +58,10 @@ def all_books():
         # Getting the average review rating.
         book_review_dict = []
         [book_review_dict.append(review.to_dict_rating()) for review in book.reviewed]
-        book_dict['AverageRating'] = sum(book_review_dict) / len(book_review_dict)
+        if len(book_review_dict) > 0:
+            book_dict['AverageRating'] = sum(book_review_dict) / len(book_review_dict)
+        else:
+            book_dict['AverageRating'] = 0
 
         response["Books"].append(book_dict)
 
@@ -83,7 +86,7 @@ def book_details(bookId):
       response['Reviewed'] = [review.to_dict() for review in single_book.reviewed]
       shelves = [shelf.to_dict() for shelf in single_book.shelved]
       if current_user.get_id():
-          shelf_location = [shelf.userId == current_user.get_id() for shelf in shelves]
+          shelf_location = [shelf["userId"] == current_user.get_id() for shelf in shelves]
       else:
           shelf_location = "unread"
 
@@ -134,10 +137,10 @@ def create_book():
               )
           db.session.add(new_book_cover)
           db.session.commit()
-          new_book.to_dict()
-          new_book['cover_image_url'] = new_book_cover.to_dict_less()
-          return new_book
-        return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+          response = new_book.to_dict()
+          response['cover_image_url'] = new_book_cover.to_dict_less()
+          return response
+        return {'errors': validation_errors_to_error_messages(book_form.errors)}, 401
     else:
         return {'message': "Book already exists!"}, 300
 
@@ -166,10 +169,10 @@ def edit_book(bookId):
                 current_book_cover = book_form.data['cover_image_url']
 
             db.session.commit()
-            current_book.to_dict()
-            current_book['cover_image_url'] = current_book_cover.to_dict_less()
-            return current_book
-        return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+            response = current_book.to_dict()
+            response['cover_image_url'] = current_book_cover
+            return response
+        return {'errors': validation_errors_to_error_messages(book_form.errors)}, 401
 
 
 # DELETE - Deletes a current Book entry.
