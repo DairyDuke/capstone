@@ -118,6 +118,10 @@ export const editBookThunk = (bookData, bookId) => async (dispatch) => {
   const response = await fetch(`/api/books/${bookId}`,{
     method: 'PUT',
     body: JSON.stringify({
+      "title": bookData["title"],
+      "genre": bookData["genre"],
+      "summary": bookData["summary"],
+      "cover_image_url": bookData["cover_image_url"],
     })
   });
 
@@ -179,9 +183,7 @@ export const removeBookFromShelfThunk = (bookshelfData, bookId) => async (dispat
 // --- REDUCER STUFF --- \\
 
 // --- NORMALIZE DATA SPACE --- \\
-const initialState = {
-  "books": {}
-}
+const initialState = {}
 
 
 const booksReducer = (state = initialState, action) => {

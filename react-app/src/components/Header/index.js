@@ -9,7 +9,7 @@ const Header = () => {
             <div className='header_inner_container'>
                 <div id='header_home_logo_link'>
                     <NavLink to='/' exact={true} >
-                        <img src="https://i.imgur.com/pUomO8z.jpg" alt="Placeholder Home Button" />
+                        <img src="./favicon.png" alt="Home Button" />
                     </NavLink>
                 </div>
                 <NavBar />

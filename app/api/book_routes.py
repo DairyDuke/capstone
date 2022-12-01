@@ -48,7 +48,7 @@ def all_books():
         # print(filtered_user_list)
         # book_user = book_user_dict.filter(x => currentuser.id = x.userId)
         if current_user.get_id():
-          filtered_user_list = list(filter(lambda shelf: int(shelf["userId"]) == int(current_user.get_id()) and shelf["protected"] == True, book_user_dict))
+          filtered_user_list = list(filter(lambda shelf: int(shelf["userId"]) == int(current_user.get_id()) and shelf["protected"] == 1, book_user_dict))
           shelf_location = filtered_user_list
         #   [shelf.userId == current_user.get_id() for shelf in book_user_dict]
         else:

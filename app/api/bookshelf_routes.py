@@ -18,12 +18,12 @@ from .auth_routes import validation_errors_to_error_messages
 bookshelf_routes = Blueprint('bookshelves', __name__)
 
 
-# GET - Get all Bookshelves owned by current User.
+# GET - Get all Bookshelves
 @bookshelf_routes.route('', methods=["GET"])
-@login_required
+# @login_required
 def bookshelves():
     # pass
-    bookshelves = Bookshelf.query.order_by(Bookshelf.id.desc()).options(joinedload(Bookshelf.stacks),joinedload(Bookshelf.user)).filter_by(user_id=current_user.get_id()).all()
+    bookshelves = Bookshelf.query.order_by(Bookshelf.id.desc()).options(joinedload(Bookshelf.stacks),joinedload(Bookshelf.user)).all()
     response = {
         "Bookshelves": []
     }
