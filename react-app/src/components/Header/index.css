@@ -8,12 +8,12 @@
 
 .header_inner_container {
   display: flex;
-  justify-content: space-between;
-  height: 55px;
+  /* justify-content:; */
+  height: 75px;
   align-items: center;
   padding-left: 50px;
   padding-right: 50px;
-  max-width: 1024px;
+  /* max-width: 1024px; */
   width: 100%;
 }
 
@@ -22,8 +22,9 @@
 }
 
 #header_home_logo_link {
-  display: flex;
-  align-items: center;
+  width: fit-content;
+  /* display: flex;
+  align-items: center; */
 }
 
 #header_home_logo_link img {

@@ -13,6 +13,7 @@ const Splash = ()=>{
 
   useEffect(()=> {
     dispatch(bookActions.getAllBooksThunk())
+    dispatch(bookActions.getSingleBookThunk(2))
   },[dispatch])
 
   // let DisplayBooks;

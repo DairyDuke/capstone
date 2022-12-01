@@ -2,20 +2,18 @@ import React, { useState } from 'react';
 import * as sessionActions from '../../store/session';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, Redirect, NavLink, useLocation } from 'react-router-dom';
-// import ModalFunctions from '../Modals';
 import './Footer.css';
 
 const Footer = () => {
   const location = useLocation()
-  // console.log("History "+location)
   const sessionUser = useSelector(state => state.session.user)
   const dispatch = useDispatch()
   const logout = () => {
     dispatch(sessionActions.logout());
   };
   return (
-  <div className="footer-container">
-    <div className="footer-content">
+  <div className="footer_container">
+    <div className="footer_content">
         {/* <div className="create-button-box">
           <span className="footer-heavy-text"> Create your own Groupup group. </span>
           {!sessionUser && <NavLink to="/signup" className="get-started-button">Get Started</NavLink>}
@@ -23,30 +21,26 @@ const Footer = () => {
         </div>
         <br />
         <br /> */}
-      <span className="bottom-menu">
+      <span className="foot_bottom_menu">
         <div className="footer_width_half">
-          <span className="footer-heavy-text">COMPANY</span>
-            <ul className="footer-item-padding">
-              <li className="footer-item-padding">
-                <NavLink to="/" className="footer-menu-links">
-                  About us
-                </NavLink>
+          <span className="footer_heavy_text">Bradley Lewter</span>
+            <ul className="footer_item_padding">
+              <li>
+                <a href="https://www.linkedin.com/in/bradley-lewter/" target="_blank" rel="noopener noreferrer"><i className="fa-brands fa-linkedin fa-2x"></i></a>
               </li>
-              <li className="footer-item-padding">
-                <NavLink to="/login" className="footer-menu-links">
-                  Placeholder
-                </NavLink>
+              <li>
+              <a href="https://github.com/DairyDuke" target="_blank" rel="noopener noreferrer"><i className="fa-brands fa-square-github fa-2x"></i></a>
               </li>
             </ul>
         </div>
-        <div className="footer_width_half">
-          <span className="footer-heavy-text">Connect</span>
-            <div className="footer-item-padding">
-              Placeholder EMOJIS
+        {/* <div className="footer_width_half">
+          <span className="footer_heavy_text">Placeholder - About Page Modal</span>
+            <div className="footer_social_medias">
+
               <br/>
-              ℹ️🐤📥
+              🐤📥
             </div>
-        </div>
+        </div> */}
       </span>
     </div>
   </div>
