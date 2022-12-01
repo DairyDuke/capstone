@@ -11,7 +11,7 @@ class CreatorForm(FlaskForm):
     role_type_list = SelectField("Role", validators=[
         DataRequired()], choices=role_type_list)
     name  = StringField("Name", validators=[Length(
-        max=200), DataRequired()])
+        max=50), DataRequired()])
     creator_image_url = StringField(
         "Creator Image URL", validators=[URL(), Optional()])
     creator_summary = TextAreaField("Text", validators=[Length(

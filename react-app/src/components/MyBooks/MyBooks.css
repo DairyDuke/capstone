@@ -1,0 +1,11 @@
+#splash_login_module {
+  display: flex;
+  flex-flow: column wrap;
+  margin: auto;
+}
+#splash_login_module div {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  padding-left: 15px;
+}

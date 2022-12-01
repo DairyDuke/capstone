@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory, Redirect } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+// import { useHistory, Redirect } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+// , useSelector
 import './CreateEditBookShelf.css'
 import * as bookshelfActions from '../../store/bookshelf'
 
 const CreateEditBookShelf = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
-  const bookshelves = useSelector(state => state.bookshelves.currentUser)
+  // const history = useHistory();
+  // const bookshelves = useSelector(state => state.bookshelves.currentUser)
   // Determines if the new comment button exists or not.
   const [showNewShelfForm, setShowNewShelfForm] = useState(false);
   // Determines if the edit form should show.
@@ -22,17 +23,21 @@ const CreateEditBookShelf = () => {
 
   const [disableSubmit, setDisableSubmit] = useState(0);
 
+  const cancelSubmit = async () => {
+    setShowNewShelfForm(false)
+    setShowEditShelfForm(false)
+    setShelfName("")
+    setErrors("")
+    setShelfNameCharCount(0)
+  }
 
   useEffect(() => {
     if (shelfNameCharCount > 35) {
       setDisableSubmit(true)
-      console.log("Bad ", shelfNameCharCount )
       setErrors("Bookshelf must be between 1 and 35 characters.")
     } else if (shelfNameCharCount > 0) {
       setDisableSubmit(false)
-      console.log("Good ", shelfNameCharCount )
     } else {
-      console.log("Normal ", shelfNameCharCount )
       setDisableSubmit(true)
     }
   }, [shelfNameCharCount])
@@ -53,22 +58,15 @@ const CreateEditBookShelf = () => {
       }
 
     if (newShelf.ok) {
-      cancelSubmit()
-      document.location.reload()
+      window.reload()
       window.scrollTo(0,0)
     }
   })
 }
-    const cancelSubmit = async () => {
-      setShowNewShelfForm(false)
-      setShowEditShelfForm(false)
-      setShelfName("")
-      setErrors("")
-      setShelfNameCharCount(0)
-    }
+
   return(
     <div>
-      {(showNewShelfForm && showEditShelfForm) == false && (
+      {showNewShelfForm === false && (
         <>
           <div id="create_edit_bookshelf_new_button" onClick={()=> setShowNewShelfForm(true)}>
             <span>Add Bookshelf</span>
@@ -76,20 +74,22 @@ const CreateEditBookShelf = () => {
         </>
       )}
 
-      {showNewShelfForm == true && showEditShelfForm == false && (
+      {showNewShelfForm === true && showEditShelfForm === false && (
         <>
           <form className="create_edit_bookshelf_form" onSubmit={onSubmit}>
           <div className="create_edit_bookshelf_form_input_box">
+            <label>Bookshelf Name:
             <input
               name='bookshelfName'
               type='text'
-              placeholder=''
+              placeholder='Give your bookshelf a Name!'
               value={shelfName}
               maxLength={35}
               onChange={(e)=> {
                 setShelfName(e.target.value)
                 setShelfNameCharCount(e.target.value.length)}}
               />
+              </label>
               <div className="create_edit_bookshelf_form_input_count">{shelfNameCharCount}/35</div>
               <div>
                 {!!errors && (

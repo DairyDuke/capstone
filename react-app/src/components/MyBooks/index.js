@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Redirect, useHistory, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
 import CreateEditBookShelf from '../CreateEditBookShelf'
+import CreateBook from '../CreateBook'
+import CreateCreator from '../CreateCreator'
 import './MyBooks.css'
 
 
@@ -39,34 +41,48 @@ const MyBooks = ()=>{
       <div className="splash_main_container">
         <div className="splash_full_length_banner">
           <img src={imgAddress} alt="Reading is Love Banner" />
-          {/* <h1>Welcome👋</h1> */}
+          <h1>Welcome👋</h1>
+          <h2> This page is being used as a temp testing grounds!</h2>
            <div id="splash_login_module">
-              <h2>Discover & read more</h2>
               <div>
-                "Create Bookshelf"
-                <CreateEditBookShelf />
+                <h3>Create Book --></h3>
+                <span>
+                  <CreateBook />
+                </span>
               </div>
               <div>
-                "Already a Member?" "Log In"
+                <h3>Create Bookshelf --></h3>
+                <span>
+                  <CreateEditBookShelf />
+                </span>
+              </div>
+              <div>
+                <h3>Create Creator --></h3>
+                <span>
+                  <CreateCreator />
+                </span>
+              </div>
+              <div>
+
               </div>
            </div>
         </div>
         <div className="splash_content_container">
             <div className="splash_description_box_container">
               <div id="splash_description_box_left">
-                <h2>Deciding what to read next?</h2>
+                {/* <h2>Deciding what to read next?</h2>
 
-                <p>You’re in the right place. Tell us what titles or genres you’ve enjoyed in the past, and we’ll give you surprisingly insightful recommendations.</p>
+                <p>You’re in the right place. Tell us what titles or genres you’ve enjoyed in the past, and we’ll give you surprisingly insightful recommendations.</p> */}
               </div>
               <div id="splash_description_box_right">
-                <h2>What are your friends reading?</h2>
+                {/* <h2>What are your friends reading?</h2>
 
-                <p>Chances are your friends are discussing their favorite (and least favorite) books on Goodreads.</p>
+                <p>Chances are your friends are discussing their favorite (and least favorite) books on Goodreads.</p> */}
               </div>
             </div>
             <div id="splash_discover_reccomendations">
                 <span id="splash_what_discover_box">
-                  What will you discover?
+                  {/* What will you discover? */}
                 </span>
                 <div className="splash_discover_reccomendations_books">
                 </div>
