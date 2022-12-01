@@ -65,11 +65,9 @@ const deleteBookshelf = (shelfId) => {
 // --- THUNKS --- \\
 export const getAllBookshelvesThunk = () => async (dispatch) => {
   const response = await fetch('/api/bookshelves')
-  console.log("Test2", response)
 
   if (response.ok){
     const allShelves = await response.json()
-    console.log("Test1", allShelves)
     dispatch(getAllBookshelves(allShelves))
     return allShelves
   } else {
@@ -107,8 +105,9 @@ export const removeSingleBookshelfThunk = () => async (dispatch) => {
 }
 
 export const createBookshelfThunk = (shelfData) => async (dispatch) => {
-  const response = await fetch(`/api/bookshelves/`,{
+  const response = await fetch(`/api/bookshelves`, {
     method: 'POST',
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       "bookshelf_name": shelfData,
     })
