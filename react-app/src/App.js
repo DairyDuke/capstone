@@ -7,9 +7,9 @@ import SignUpForm from './components/auth/Signup/SignUpForm';
 import Header from './components/Header';
 import Footer from './components/Footer'
 import Splash from './components/Splash'
-import ProtectedRoute from './components/auth/ProtectedRoute';
-import UsersList from './components/Header/UsersList';
-import User from './components/Header/User';
+// import ProtectedRoute from './components/auth/ProtectedRoute';
+// import UsersList from './components/Header/UsersList';
+// import User from './components/Header/User';
 import { authenticate } from './store/session';
 
 function App() {

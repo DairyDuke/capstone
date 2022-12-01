@@ -56,7 +56,7 @@ const addBookToShelf = (addedShelf, bookId) => {
 };
 const removeBookFromShelf = (removedShelf, bookId) => {
   return {
-    type: ADD_BOOK_TO_SHELF,
+    type: REMOVE_BOOK_FROM_SHELF,
     payload: removedShelf,
     bookId: bookId,
   };
@@ -106,9 +106,9 @@ export const createBookThunk = (bookData) => async (dispatch) => {
   });
 
   if (response.ok){
-    const createBook = await response.json()
-    dispatch(createBook(createBook))
-    return createBook
+    const createdBook = await response.json()
+    dispatch(createBook(createdBook))
+    return createdBook
   } else {
     return ['Unable to fetch.']
   }
@@ -126,9 +126,9 @@ export const editBookThunk = (bookData, bookId) => async (dispatch) => {
   });
 
   if (response.ok){
-    const editBook = await response.json()
-    dispatch(getAllBooks(editBook))
-    return editBook
+    const editedBook = await response.json()
+    dispatch(editBook(editedBook))
+    return editedBook
   } else {
     return ['Unable to fetch.']
   }
@@ -224,7 +224,7 @@ const booksReducer = (state = initialState, action) => {
     case ADD_BOOK_TO_SHELF:
       return newState;
 
-    case ADD_BOOK_TO_SHELF:
+    case REMOVE_BOOK_FROM_SHELF:
       return newState;
 
     default:

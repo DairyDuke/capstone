@@ -9,14 +9,15 @@ import App from './App';
 import configureStore from './store';
 import * as sessionActions from "./store/session";
 import * as bookActions from "./store/book";
+import * as creatorActions from "./store/creator";
 
 const store = configureStore();
 
 if (process.env !== 'production') {
   window.store = store;
-  // window.
   window.sessionActions = sessionActions;
   window.bookActions = bookActions;
+  window.creatorActions = creatorActions;
 }
 
 ReactDOM.render(

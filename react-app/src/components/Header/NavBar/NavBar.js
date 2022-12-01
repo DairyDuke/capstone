@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import LoginFormModal from '../../auth/Login/LoginFormModal';
 import LogoutButton from '../../auth/LogoutButton';
@@ -10,7 +10,7 @@ import './NavBar.css'
 
 const NavBar = () => {
   const sessionUser = useSelector(state => state.session.user)
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
   const [showMenu, setShowMenu] = useState(false);
   const toggleMenu = () => setShowMenu(!showMenu);
 
