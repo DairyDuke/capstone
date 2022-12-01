@@ -7,6 +7,7 @@ import SignUpForm from './components/auth/Signup/SignUpForm';
 import Header from './components/Header';
 import Footer from './components/Footer'
 import Splash from './components/Splash'
+import MyBooks from './components/MyBooks'
 // import ProtectedRoute from './components/auth/ProtectedRoute';
 // import UsersList from './components/Header/UsersList';
 // import User from './components/Header/User';
@@ -47,7 +48,7 @@ function App() {
           <Splash />
         </Route>
         <Route path='/mybooks'>
-
+          <MyBooks />
         </Route>
         <Route path='/books/:bookId'>
 

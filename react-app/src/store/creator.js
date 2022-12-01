@@ -60,8 +60,17 @@ export const getAllCreatorsThunk = () => async (dispatch) => {
     return ['Unable to fetch.']
   }
 }
-export const createCreatorThunk = () => async (dispatch) => {
-  const response = await fetch('/api/creators')
+export const createCreatorThunk = ({role_type_list, name, creator_image_url, creator_summary}) => async (dispatch) => {
+  const response = await fetch('/api/creators', {
+    method: 'POST',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      "role_type_list": role_type_list,
+      "name": name,
+      "creator_image_url": creator_image_url,
+      "creator_summary": creator_summary
+    })
+  });
 
   if (response.ok){
     const newCreator = await response.json()
@@ -71,8 +80,17 @@ export const createCreatorThunk = () => async (dispatch) => {
     return ['Unable to fetch.']
   }
 }
-export const updateCreatorThunk = (creatorId) => async (dispatch) => {
-  const response = await fetch(`/api/creators/${creatorId}`)
+export const updateCreatorThunk = (creatorId, {role_type_list, name, creator_image_url, creator_summary}) => async (dispatch) => {
+  const response = await fetch(`/api/creators/${creatorId}`,{
+    method: 'PUT',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      "role_type_list": role_type_list,
+      "name": name,
+      "creator_image_url": creator_image_url,
+      "creator_summary": creator_summary
+    })
+  });
 
   if (response.ok){
     const editedCreator = await response.json()
