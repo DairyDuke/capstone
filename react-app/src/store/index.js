@@ -3,13 +3,13 @@ import thunk from 'redux-thunk';
 // Individual Reducer Files
 import session from './session'
 import booksReducer from './book'
-// import bookshelfReducer from './bookshelf'
+import bookshelfReducer from './bookshelf'
 // import reviewReducer from './review'
 
 const rootReducer = combineReducers({
   session,
   books: booksReducer,
-  // bookshelves: bookshelfReducer,
+  bookshelves: bookshelfReducer,
   // reviews: reviewReducer
 });
 

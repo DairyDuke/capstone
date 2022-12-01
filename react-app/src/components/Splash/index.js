@@ -3,6 +3,7 @@ import { Redirect, useHistory, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
 import './Splash.css'
 import * as bookActions from '../../store/book'
+import * as bookshelfActions from '../../store/bookshelf'
 
 const Splash = ()=>{
   const dispatch = useDispatch();
@@ -14,6 +15,8 @@ const Splash = ()=>{
   useEffect(()=> {
     dispatch(bookActions.getAllBooksThunk())
     dispatch(bookActions.getSingleBookThunk(2))
+    dispatch(bookshelfActions.getAllBookshelvesThunk())
+    dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
   },[dispatch])
 
   // let DisplayBooks;
