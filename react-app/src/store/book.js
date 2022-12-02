@@ -94,22 +94,25 @@ export const removeSingleBookThunk = ()=> async dispatch =>{
   return
 }
 
-export const createBookThunk = (bookData) => async (dispatch) => {
-  const response = await fetch('/api/books',{
+export const createBookThunk = ({title, genre, summary, cover_imagE_url}) => async (dispatch) => {
+  const response = await fetch('/api/books', {
     method: 'POST',
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      "title": bookData["title"],
-      "genre": bookData["genre"],
-      "summary": bookData["summary"],
-      "cover_image_url": bookData["cover_image_url"],
+      "title":title,
+      "genre":genre,
+      "summary":summary,
+      "cover_imagE_url": cover_imagE_url
     })
-  });
+  })
 
   if (response.ok){
+    console.log("THIS IS OKAY")
     const createdBook = await response.json()
     dispatch(createBook(createdBook))
     return createdBook
   } else {
+    console.log("THIS IS NOT OKAY")
     return ['Unable to fetch.']
   }
 }
@@ -210,7 +213,11 @@ const booksReducer = (state = initialState, action) => {
       return newState;
 
     case CREATE_BOOK:
+      if (newState[action.payload.id]) {
         newState[action.payload.id] = action.payload
+      } else {
+        newState[action.payload.id] = action.payload
+      }
       return newState;
 
     case EDIT_BOOK:

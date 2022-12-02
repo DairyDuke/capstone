@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-// import { useHistory, Redirect } from 'react-router-dom';
+import { useHistory} from 'react-router-dom';
+// , Redirect
 import { useDispatch } from 'react-redux';
 // , useSelector
 import './CreateBook.css'
@@ -7,7 +8,7 @@ import * as bookActions from '../../store/book'
 
 const CreateBook = () => {
   const dispatch = useDispatch();
-  // const history = useHistory();
+  const history = useHistory();
   // const creators = useSelector(state => state.creators)
   // Determines if the new comment button exists or not.
   const [showNewBookForm, setShowNewBookForm] = useState(false);
@@ -67,9 +68,7 @@ const CreateBook = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     setErrors([]);
-    if (errors) {
-
-    }
+    if (errors) { }
     const bookDataObject = {
      "title": bookTitle,
      "genre": bookGenre,
@@ -77,20 +76,22 @@ const CreateBook = () => {
      "cover_image_url": bookCoverImageUrl
     }
     const newBook = await dispatch(bookActions.createBookThunk(bookDataObject))
-    .catch(async (response) =>{
-      const data = await response.json();
+    .then(() => {
+      cancelSubmit()
+    })
+    .catch(async (newBook) => {
+      const data = await newBook.json();
       if (data && data.errors) {
         setErrors(Object.values(data.errors));
         // This console log is to make react happy - do not delete
         console.log("Errors "+errors)
       }
-
-    if (newBook.ok) {
-      window.reload()
-      window.scrollTo(0,0)
-    }
-  })
-}
+    })
+  };
+    // if (newBook.ok) {
+    //   window.reload()
+    //   window.scrollTo(0,0)
+    // }
 
   return(
     <div>

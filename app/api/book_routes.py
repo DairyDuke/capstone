@@ -15,11 +15,11 @@ from sqlalchemy.orm import joinedload
 from .auth_routes import validation_errors_to_error_messages
 
 
-book_routes = Blueprint('books', __name__)
+book_routes = Blueprint("books", __name__)
 
 
 # GET - Gets all Books available on website.
-@book_routes.route('', methods=["GET"])
+@book_routes.route('')
 def all_books():
     # pass
     """
@@ -67,6 +67,54 @@ def all_books():
 
     return jsonify(response)
 
+
+# POST- Creates a new book.
+@book_routes.route('', methods=["POST"])
+def create_book():
+    """
+    Queries the database to check if book exists.
+    If it doesn't creates the book.
+    First adds it to the database, then adds the cover.
+    Queries the database for the Author, if author is not found,
+    creates a new author before creating the association.
+    Else, just creates an association.
+    """
+    # pass
+    book_form = BookForm()
+    book_form['csrf_token'].data = request.cookies['csrf_token']
+
+    new_book = Book.query.filter_by(title=book_form.data['title']).first()
+    # print(new_book)
+    if new_book:
+        return {'message': "Book already exists!"}, 300
+
+    if book_form.validate_on_submit():
+        new_book = Book(
+        title=book_form.data['title'],
+        genre=book_form.data['genre'],
+        summary=book_form.data['summary']
+        )
+        db.session.add(new_book)
+        db.session.commit()
+
+        if book_form.data['cover_image_url']:
+            new_book_cover = BookCover(
+            book_id= new_book.id,
+            cover_image_url = book_form.data['cover_image_url']
+            )
+        else:
+            new_book_cover = BookCover(
+            book_id= new_book.id,
+            cover_image_url = ""
+            )
+        db.session.add(new_book_cover)
+        db.session.commit()
+        response = new_book.to_dict()
+        response['cover_image_url'] = new_book_cover.to_dict_less()
+        return response
+    return {'errors': validation_errors_to_error_messages(book_form.errors)}, 401
+
+
 # GET - Gets specific Book details.
 @book_routes.route('/<int:bookId>', methods=["GET"])
 def book_details(bookId):
@@ -94,56 +142,6 @@ def book_details(bookId):
       # single_book.reviewed.to_dict()
 
       return response
-
-
-# POST- Creates a new book.
-@book_routes.route('', methods=["POST"])
-def create_book():
-    """
-    Queries the database to check if book exists.
-    If it doesn't creates the book.
-    First adds it to the database, then adds the cover.
-    Queries the database for the Author, if author is not found,
-    creates a new author before creating the association.
-    Else, just creates an association.
-    """
-    # pass
-    book_form = BookForm()
-    book_form['csrf_token'].data = request.cookies['csrf_token']
-    try:
-      new_book = Book.query.filter_by(title=book_form.data['title']).first()
-      # print(new_book)
-      if new_book == None:
-          raise Exception()
-    except:
-        if book_form.validate_on_submit():
-          new_book = Book(
-            title=book_form.data['title'],
-            genre=book_form.data['genre'],
-            summary=book_form.data['summary']
-          )
-          db.session.add(new_book)
-          db.session.commit()
-
-          if book_form.data['cover_image_url']:
-              new_book_cover = BookCover(
-                book_id= new_book.id,
-                cover_image_url = book_form.data['cover_image_url']
-              )
-          else:
-              new_book_cover = BookCover(
-                book_id= new_book.id,
-                cover_image_url = ""
-              )
-          db.session.add(new_book_cover)
-          db.session.commit()
-          response = new_book.to_dict()
-          response['cover_image_url'] = new_book_cover.to_dict_less()
-          return response
-        return {'errors': validation_errors_to_error_messages(book_form.errors)}, 401
-    else:
-        return {'message': "Book already exists!"}, 300
-
 
 # PUT - Edits a current Book entry.
 @book_routes.route('/<int:bookId>', methods=["PUT"])

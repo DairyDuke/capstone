@@ -70,6 +70,7 @@ def create_creator():
 
         response = new_creator.to_dict()
         return response
+    print( creator_form.errors)
     return {'errors': validation_errors_to_error_messages(creator_form.errors)}, 401
 
 
