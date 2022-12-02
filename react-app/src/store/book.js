@@ -107,12 +107,10 @@ export const createBookThunk = ({title, genre, summary, cover_imagE_url}) => asy
   })
 
   if (response.ok){
-    console.log("THIS IS OKAY")
     const createdBook = await response.json()
     dispatch(createBook(createdBook))
     return createdBook
   } else {
-    console.log("THIS IS NOT OKAY")
     return ['Unable to fetch.']
   }
 }

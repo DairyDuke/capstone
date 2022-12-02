@@ -4,7 +4,7 @@ import { useHistory} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 // , useSelector
 import './CreateBook.css'
-import * as bookActions from '../../store/book'
+import * as bookActions from '../../../store/book'
 
 const CreateBook = () => {
   const dispatch = useDispatch();
