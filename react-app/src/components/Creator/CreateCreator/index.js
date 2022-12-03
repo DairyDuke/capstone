@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 // , useSelector
 import './CreateCreator.css'
-import * as creatorActions from '../../store/creator'
+import * as creatorActions from '../../../store/creator'
 
 const CreateCreator = () => {
   const dispatch = useDispatch();

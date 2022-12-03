@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Redirect, useHistory, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
-import CreateEditBookShelf from '../CreateEditBookShelf'
+// Bookshelf
+import CreateBookShelf from '../Bookshelf/CreateBookShelf'
+import EditBookshelf from '../Bookshelf/EditBookshelf'
+import DeleteBookshelfModal from '../Bookshelf/DeleteBookshelf/DeleteBookshelfModal.js'
+// Book
 import CreateBook from '../Book/CreateBook'
-import CreateCreator from '../CreateCreator'
-import DeleteBookModal from '../Book/DeleteBook/DeleteBookModal.js'
 import EditBookModal from '../Book/EditBook/EditBookModal.js'
+import DeleteBookModal from '../Book/DeleteBook/DeleteBookModal.js'
+// Creator
+import CreateCreator from '../Creator/CreateCreator'
+
 import * as bookActions from '../../store/book'
 import './MyBooks.css'
 
@@ -14,6 +20,7 @@ const MyBooks = ()=>{
   const dispatch = useDispatch();
   const bookobj = useSelector(state => state.books);
   const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [showShelfDeleteModal, setShowShelfDeleteModal] = useState(false)
   const [showEditModal, setShowEditModal] = useState(false)
   const books = Object.values(bookobj) || [];
   const history = useHistory();
@@ -61,7 +68,7 @@ const MyBooks = ()=>{
                 </div>
                 <div className='comment-edit-option delete-reply-option' onClick={() => setShowDeleteModal(true)}>
                   <button id="delete-reply-button" className='delete-post-button edit-delete-post interface-text'>
-                    Delete Book
+                    Delete
                   </button>
                 </div>
               </div>
@@ -71,9 +78,17 @@ const MyBooks = ()=>{
               <div>
                 <h3>Create Bookshelf --></h3>
                 <span>
-                  <CreateEditBookShelf />
+                  <CreateBookShelf />
                 </span>
+                  <EditBookshelf shelfname={1} shelfId={1} />
+                <div className='comment-edit-option delete-reply-option' onClick={() => setShowShelfDeleteModal(true)}>
+                  <button id="delete-reply-button" className='delete-post-button edit-delete-post interface-text'>
+                    Delete
+                  </button>
+                </div>
               </div>
+              <DeleteBookshelfModal showDeleteModal={showShelfDeleteModal} setShowDeleteModal={setShowShelfDeleteModal} bookshelfid={1} />
+
               <div>
                 <h3>Create Creator --></h3>
                 <span>
