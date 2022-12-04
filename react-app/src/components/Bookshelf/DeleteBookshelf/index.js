@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux"
 import { useEffect } from "react"
 import * as bookshelfActions from '../../../store/bookshelf'
+import './DeleteBookshelf.css'
 
 const DeleteBookshelf = ({ bookshelfid, setShowDeleteModal, showDeleteModal }) => {
 
@@ -20,11 +21,11 @@ const DeleteBookshelf = ({ bookshelfid, setShowDeleteModal, showDeleteModal }) =
   }
 
   return (
-    <div id="confirm-delete-form">
-      <div id="confirm-delete-text">
+    <div id="confirm_delete_bookshelf_form">
+      <div id="confirm_delete_bookshelf_text">
         <h2>Librarian, are you really sure you want to delete this bookshelf?</h2>
       </div>
-      <div className="form-footer">
+      <div className="confirm_delete_footer">
         <button onClick={() => setShowDeleteModal(false)} className='cancel-button'>Cancel</button>
         <button onClick={() => deleteBookshelf(bookshelfid)} className="save-edit-button">YES</button>
       </div>

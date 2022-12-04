@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal } from '../../../context/Modal';
+import './DeleteCreator.css'
 
 import DeleteCreator from '.';
 
@@ -9,7 +10,7 @@ export default function DeleteCreatorModal({showDeleteModal, setShowDeleteModal,
   return (
       <>
         {showDeleteModal && (
-              <Modal id='create-post-modal' onClose={() => setShowDeleteModal(false)} >
+              <Modal id='delete_creator_modal' onClose={() => setShowDeleteModal(false)} >
                   <DeleteCreator creatorId={creatorId} showDeleteModal={showDeleteModal} setShowDeleteModal={setShowDeleteModal} />
               </Modal>
             )}

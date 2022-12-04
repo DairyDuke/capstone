@@ -30,3 +30,138 @@
 #header_home_logo_link img {
   height: 55px;
 }
+
+#header>a {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#header-links>nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  width: 300px;
+  font-size: 25px;
+}
+
+#session-buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+#profile-button:hover {
+  cursor: pointer;
+}
+
+.fa-compass {
+  color: #a5a5a5;
+}
+
+.fa-user {
+  color: #a5a5a5
+}
+
+#profile-dropdown {
+  position: relative;
+  width: 240px;
+  right: -62px;
+  top: 60px;
+  background-color: #fff;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+#dropdown-header {
+  font-size: 14px;
+  background-color: #fff;
+  height: 36px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #1e1915;
+  padding: 0px 10px 0px 10px;
+}
+
+.dropdown-option.image-option {
+  padding-top: 5px;
+  padding-bottom: 10px;
+}
+
+.navbar-username-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar-username {
+  margin: 0;
+}
+
+.your-posts {
+  color: #1e1915;
+  justify-self: flex-end;
+}
+
+.profile-img#navbar-profile-img {
+  height: 37px;
+  width: 37px;
+  padding-right: 10px;
+  margin-top: 5px;
+  object-fit: cover;
+}
+
+.dropdown-option {
+  /* padding: 0px 10px; */
+  font-size: 14px;
+  color: #1e1915;
+  display: flex;
+  align-items: center;
+  height: 41px;
+}
+
+.dropdown-option:hover {
+  background-color: #fff;
+}
+
+.dropdown-option.dropdown-followlink {
+  justify-content: space-between;
+}
+
+.dropdown-option i {
+  margin-right: 10px;
+}
+
+.dropdown-option-child {
+  display: flex;
+  color:#1e1915 ;
+  padding: 0px 10px;
+}
+
+.dropdown-option-child span {
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+#profile-dropdown-container {
+  width: 0px;
+  position: fixed;
+  top: 0px;
+  right: 360px;
+}
+
+#auth-buttons {
+  display: flex;
+  height: 36px;
+}
+
+#follow-icon {
+  display: flex;
+  width: 37px;
+  align-items: center;
+  font-size: 20px;
+  color:#1e1915;
+  /* color: #b2b2b2; */
+  padding-right: 10px;
+}

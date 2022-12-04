@@ -9,7 +9,7 @@ export default function EditCreatorModal({showEditModal, setShowEditModal, creat
   return (
       <>
         {showEditModal && (
-              <Modal id='create-post-modal' onClose={() => setShowEditModal(false)} >
+              <Modal id='edit_creator_modal' onClose={() => setShowEditModal(false)} >
                   <EditCreator creatorData={creatorData} showEditModal={showEditModal} setShowEditModal={setShowEditModal} />
               </Modal>
             )}

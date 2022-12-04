@@ -65,10 +65,10 @@ const CreateEditBookShelf = () => {
 }
 
   return(
-    <div>
+    <div id="create_bookshelf_main_container">
       {showNewShelfForm === false && (
         <>
-          <div id="create_edit_bookshelf_new_button" onClick={()=> setShowNewShelfForm(true)}>
+          <div id="create_bookshelf_new_button" onClick={()=> setShowNewShelfForm(true)}>
             <span>Add Bookshelf</span>
           </div>
         </>
@@ -76,8 +76,8 @@ const CreateEditBookShelf = () => {
 
       {showNewShelfForm === true && showEditShelfForm === false && (
         <>
-          <form className="create_edit_bookshelf_form" onSubmit={onSubmit}>
-          <div className="create_edit_bookshelf_form_input_box">
+          <form className="create_bookshelf_form" onSubmit={onSubmit}>
+          <div className="create_bookshelf_form_input_box">
             <label>Bookshelf Name:
             <input
               name='bookshelfName'
@@ -90,7 +90,7 @@ const CreateEditBookShelf = () => {
                 setShelfNameCharCount(e.target.value.length)}}
               />
               </label>
-              <div className="create_edit_bookshelf_form_input_count">{shelfNameCharCount}/35</div>
+              <div className="create_bookshelf_form_input_count">{shelfNameCharCount}/35</div>
               <div>
                 {!!errors && (
                   <>
@@ -98,9 +98,9 @@ const CreateEditBookShelf = () => {
                   </>)}
               </div>
           </div>
-          <div className='create_edit_bookshelf_form_footer'>
-            <button className='create_edit_bookshelf_cancel_button' onClick={cancelSubmit}>cancel</button>
-            <button className='create_edit_bookshelf_submit_button' type="submit" disabled={disableSubmit}>add</button>
+          <div className='create_bookshelf_form_footer'>
+            <button className='create_bookshelf_cancel_button' onClick={cancelSubmit}>cancel</button>
+            <button className='create_bookshelf_submit_button' type="submit" disabled={disableSubmit}>add</button>
           </div>
           </form>
         </>

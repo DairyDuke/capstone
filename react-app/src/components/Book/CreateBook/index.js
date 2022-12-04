@@ -6,12 +6,12 @@ import { useDispatch } from 'react-redux';
 import './CreateBook.css'
 import * as bookActions from '../../../store/book'
 
-const CreateBook = () => {
+const CreateBook = ({status}) => {
   const dispatch = useDispatch();
   const history = useHistory();
   // const creators = useSelector(state => state.creators)
   // Determines if the new comment button exists or not.
-  const [showNewBookForm, setShowNewBookForm] = useState(false);
+  const [showNewBookForm, setShowNewBookForm] = useState(status || false);
   // Actual form data:
   const [bookTitle, setBookTitle] = useState("");
   const [bookGenre, setBookGenre] = useState("");
@@ -25,7 +25,15 @@ const CreateBook = () => {
   const [bookSummaryCharCount, setBookSummaryCharCount] = useState(0);
 
   const [disableSubmit, setDisableSubmit] = useState(0);
-
+  const tx = document.getElementsByTagName("textarea");
+  for (let i = 1; i < tx.length; i++) {
+    tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px");
+    tx[i].addEventListener("input", OnInput, false);
+  }
+  function OnInput() {
+    this.style.height = 0;
+    this.style.height = (this.scrollHeight) + "px";
+  }
   const cancelSubmit = async () => {
     setShowNewBookForm(false)
     setBookTitle("")
@@ -168,7 +176,7 @@ const CreateBook = () => {
           </div>
           <div className="create_book_form_input_box">
             <label>Book's Summary:
-            <input
+            <textarea
               name='Book Summary'
               type='text'
               placeholder='Concise, Spoiler-free Summary Here!'

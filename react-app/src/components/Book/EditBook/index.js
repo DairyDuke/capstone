@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from "react-redux"
 import * as bookActions from '../../../store/book'
+import './EditBook.css'
 
 const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
   const dispatch = useDispatch()
@@ -125,8 +126,8 @@ const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
   return (
 
 
-    <div id="confirm-delete-form">
-      <div id="confirm-delete-text">
+    <div id="edit_book_form_container">
+      <div id="edit_book_text">
         <h2>Librarian, are you really sure you want to delete this book?</h2>
       </div>
       <div>

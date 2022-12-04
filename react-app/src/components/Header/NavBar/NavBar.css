@@ -43,3 +43,10 @@
 #navbar_profile_button>img {
   height: 25px;
 }
+
+.dropdown_border-line {
+  color: #1e1915;
+  padding-left: 10px;
+  border-bottom: 0.1rem solid #ebebeb;
+  margin-bottom: 10px;
+}

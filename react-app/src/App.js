@@ -9,6 +9,7 @@ import Footer from './components/Footer'
 import Splash from './components/Splash'
 import MyBooks from './components/MyBooks'
 import BookDetails from './components/BookDetails'
+import CreateBook from './components/Book/CreateBook'
 // import ProtectedRoute from './components/auth/ProtectedRoute';
 // import UsersList from './components/Header/UsersList';
 // import User from './components/Header/User';
@@ -51,6 +52,9 @@ function App() {
         </Route>
         <Route path='/mybooks'>
           <MyBooks />
+        </Route>
+        <Route path='/create-book'>
+          <CreateBook />
         </Route>
         <Route path='/books/:bookId'>
           <BookDetails />

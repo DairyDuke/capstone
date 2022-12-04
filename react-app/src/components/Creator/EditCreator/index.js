@@ -109,8 +109,8 @@ const EditCreator = ({ creatorData, setShowEditModal, showEditModal }) => {
   return (
 
 
-    <div id="confirm-delete-form">
-      <div id="confirm-delete-text">
+    <div id="edit_creator_form_container">
+      <div id="edit_creator_form_text">
         <h2>Librarian, are you really sure you want to delete this book?</h2>
       </div>
       <div>

@@ -59,7 +59,7 @@ const EditBookshelf = ({shelfId, shelfname}) => {
 }
 
   return(
-    <div>
+    <div >
       {showEditShelfForm === false && (
         <>
           <div id="edit_bookshelf_new_button" onClick={()=> setShowEditShelfForm(true)}>

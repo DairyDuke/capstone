@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux"
 import { useEffect } from "react"
 import * as bookActions from '../../../store/book'
+import './DeleteBook.css'
 
 const DeleteBook = ({ bookid, setShowDeleteModal, showDeleteModal }) => {
 
@@ -20,13 +21,13 @@ const DeleteBook = ({ bookid, setShowDeleteModal, showDeleteModal }) => {
   }
 
   return (
-    <div id="confirm-delete-form">
-      <div id="confirm-delete-text">
+    <div id="confirm_delete_form">
+      <div id="confirm_delete_text">
         <h2>Librarian, are you really sure you want to delete this book?</h2>
       </div>
-      <div className="form-footer">
-        <button onClick={() => setShowDeleteModal(false)} className='cancel-button'>Cancel</button>
-        <button onClick={() => deleteBook(bookid)} className="save-edit-button">YES</button>
+      <div className="confirm_delete_form_footer">
+        <button onClick={() => setShowDeleteModal(false)} className='confirm_delete_cancel'>Cancel</button>
+        <button onClick={() => deleteBook(bookid)} className="confirm_delete_submit">YES</button>
       </div>
     </div>
   )

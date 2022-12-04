@@ -4,27 +4,42 @@ import { NavLink } from 'react-router-dom';
 import LoginFormModal from '../../auth/Login/LoginFormModal';
 import LogoutButton from '../../auth/LogoutButton';
 import SignUpFormModal from '../../auth/Signup/SignUpFormModal';
+
+import CreateBook from '../../Book/CreateBook'
 import './NavBar.css'
 
 // Modal Imports
 
 const NavBar = () => {
   const sessionUser = useSelector(state => state.session.user)
+  const [status, setStatus] = useState(false);
   // const dispatch = useDispatch()
   const [showMenu, setShowMenu] = useState(false);
   const toggleMenu = () => setShowMenu(!showMenu);
+  const handleCreate = (e)=> {
+    e.stopPropagation();
+    setStatus(!!status)
+  }
 
   useEffect(() => {
     if (!showMenu) return;
 
     const closeMenu = () => {
+      setStatus(false)
       setShowMenu(false);
     };
 
+    if (status === false) {
     document.addEventListener('click', closeMenu);
+  } else {
+    document.body.addEventListener('click', closeMenu);
+  }
 
-    return () => document.removeEventListener("click", closeMenu);
-  }, [showMenu]);
+    return () => {
+      document.removeEventListener("click", closeMenu)
+      document.body.removeEventListener("click", closeMenu)
+    };
+  }, [showMenu, status]);
 
 
   return (
@@ -50,51 +65,47 @@ const NavBar = () => {
                 <span className="header_menu_text">My Books</span>
               </NavLink> */}
             </div>
-            <div onClick={toggleMenu} id='navbar_profile_button'>
-              <img src="https://i.imgur.com/pZlkRiA.png" alt="User Menu" />
-            </div>
+            <div id="test">
+              <div onClick={toggleMenu} id='navbar_profile_button'>
+                <img src="https://i.imgur.com/pZlkRiA.png" alt="User Menu" />
+              </div>
+
             {showMenu && (
               <div id='profile-dropdown-container'>
                 <div id='profile-dropdown'>
                   <div id="dropdown-header">
-                    <p>Account</p>
+                    <NavLink to={`/users/${sessionUser.id}`} exact={true} className='dropdown-option image-option'>
+                      <img id='navbar-profile-img' className='profile-img' alt='profile' src={sessionUser.profileImageUrl} />
+                          <p>{sessionUser.username}</p>
+                    </NavLink>
                       <LogoutButton />
                   </div>
                   <div>
-                    <NavLink to={`/users/${sessionUser.id}`} exact={true} className='dropdown-option image-option'>
-                      <img id='navbar-profile-img' className='profile-img' alt='profile' src={sessionUser.profileImageUrl} />
-                      <div className='navbar-username-container'>
-                        <p className='navbar-username'>{sessionUser.username}</p>
-                        <p className='navbar-username your-posts'>Your posts</p>
-                      </div>
-                    </NavLink>
-                    <NavLink to='/following' exact={true} className='dropdown-option dropdown-followlink'>
+                    <NavLink to='/mybooks' exact={true} className='dropdown-option dropdown-followlink'>
                       <div className='dropdown-option-child'>
-                        <div id='follow-icon'>
-                          <i className="fa-solid fa-user-plus" />
-                        </div>
-                        <p>Following</p>
+                        <p>My Books</p>
                       </div>
                       <div className='dropdown-option-child'>
                         <p>{}</p>
                       </div>
                     </NavLink>
-                    <NavLink to='/followers' exact={true} className='dropdown-option dropdown-followlink'>
-                      <div className='dropdown-option-child'>
-                        <div id='follow-icon'>
-                          <i className="fa-solid fa-users"></i>
-                        </div>
-                        <p>Followers</p>
+                    <div className="dropdown_border-line">
+                      <span>Librarian Powers</span>
+                    </div>
+                    {/* <NavLink to='/create-book' exact={true} className='dropdown-option dropdown-followlink'> */}
+                      <div className='dropdown-option-child' onClick={handleCreate}>
+                        {/* <p>Create Book</p> */}
+                        <CreateBook status={status}/>
                       </div>
                       <div className='dropdown-option-child'>
-                        <p>{}</p>
+                        <span>{}</span>
                       </div>
-                    </NavLink>
-
+                    {/* </NavLink> */}
                   </div>
                 </div>
               </div>
             )}
+            </div>
             {/* <CreateFormModal /> */}
           </div>)
           }
