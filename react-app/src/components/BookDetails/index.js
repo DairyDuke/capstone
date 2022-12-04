@@ -25,49 +25,44 @@ const BookDetails = () => {
     <div className="bookdetails_main_container">
       <div className="bookdetails_left_column_sticky_container">
         <div className="bookdetails_left_column_box">
-          <div id="cover picture center">
+          <div id="bookdetails_left_column_book_cover">
           </div>
-          <div id="book actions -shelf status- review status">
+          <div id="bookdetails_left_column_book_status">
           </div>
         </div>
       </div>
       <div className="bookdetails_right_column_container">
-        <div id="main content container">
-          <div id="title of book">
+        <div id="bookdetails_right_column_main_content">
+          <div id="bookdetails_right_column_book_title">
           </div>
-          <div id="book details">
-            <div id="creator list">
+          <div id="bookdetails_right_column_book_details">
+            <div id="bookdetails_right_column_book_creator_list">
             </div>
-            <div id="review rating">
+            <div id="bookdetails_right_column_book_review_rating">
             </div>
-            <div id="book summary">
+            <div id="bookdetails_right_column_book_summary">
             </div>
-            <div id="genre">
+            <div id="bookdetails_right_column_book_genre">
             </div>
           </div>
-          <div id="About the author section">
-              <div id="about the {role}">
+          <div id="bookdetails_right_column_creator_section">
+              <div id="bookdetails_right_column_creator_role">
               </div>
-              <div id="author details">
-                <div id="author picture">
+              <div id="bookdetails_right_column_creator_details">
+                <div id="bookdetails_right_column_creator_picture">
                 </div>
-                <div id="author name">
+                <div id="bookdetails_right_column_creator_name">
                 </div>
               </div>
-              <div id="author summary">
+              <div id="bookdetails_right_column_creator_summary">
               </div>
           </div>
         </div>
-        <div id="Reccomendations">
+        <div id="bookdetails_right_column_reccomendations">
         </div>
-        <div id="Reviews, if any">
+        <div id="bookdetails_right_column_reviews">
         </div>
       </div>
-    {/* exterior book box details bin */}
-      {/* book details expanded */}
-      {/* creator details expanded */}
-      {/* book reccomendations */}
-      {/* reviews for book */}
     </div>
   )
 }

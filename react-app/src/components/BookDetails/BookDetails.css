@@ -1,0 +1,47 @@
+/* ---------- MAIN CONTAINER ---------- */
+.bookdetails_main_container {}
+
+/* ---------- LEFT CONTAINER ---------- */
+.bookdetails_left_column_sticky_container {}
+
+.bookdetails_left_column_box {}
+
+#bookdetails_left_column_book_cover {}
+
+#bookdetails_left_column_book_status {}
+
+/* ---------- RIGHT CONTAINER --------- */
+.bookdetails_right_column_container {}
+
+#bookdetails_right_column_main_content {
+
+}
+
+/* ---------- BOOK CONTENT  --------- */
+#bookdetails_right_column_book_title {}
+
+#bookdetails_right_column_book_details {
+
+}
+
+#bookdetails_right_column_book_creator_list {}
+
+#bookdetails_right_column_book_review_rating {}
+
+#bookdetails_right_column_book_summary {}
+
+#bookdetails_right_column_book_summary {}
+
+
+/* ---------- CREATOR CONTENT  --------- */
+#bookdetails_right_column_creator_section {}
+#bookdetails_right_column_creator_role {}
+#bookdetails_right_column_creator_details {}
+#bookdetails_right_column_creator_picture {}
+#bookdetails_right_column_creator_name {}
+#bookdetails_right_column_creator_summary {}
+
+
+/* ---------- RANDOM CONTENT  --------- */
+#bookdetails_right_column_reccomendations{}
+#bookdetails_right_column_reviews{}
