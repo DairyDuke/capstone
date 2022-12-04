@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import LoginFormModal from '../../auth/Login/LoginFormModal';
 import LogoutButton from '../../auth/LogoutButton';
 import SignUpFormModal from '../../auth/Signup/SignUpFormModal';
@@ -11,6 +11,8 @@ import './NavBar.css'
 // Modal Imports
 
 const NavBar = () => {
+  const location = useLocation();
+  // console.log(location.pathname)
   const sessionUser = useSelector(state => state.session.user)
   const [status, setStatus] = useState(false);
   // const dispatch = useDispatch()
@@ -55,9 +57,9 @@ const NavBar = () => {
         {sessionUser && (
           <div id="navbar_session_container">
             <div id="navbar_session_links">
-              <NavLink to="/" exact={true}>
+              {/* <NavLink to="/" exact={true}>
                 <span className="navbar_menu_text">Home</span>
-              </NavLink>
+              </NavLink> */}
               <NavLink to="/mybooks" exact={true}>
                 <span className="navbar_menu_text">My Books</span>
               </NavLink>

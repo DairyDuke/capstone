@@ -63,7 +63,7 @@ const LoginForm = ({showModal, setShowModal}) => {
           required
           maxLength={255}
         />
-       {emailCharCount > 0 (<div className='char-count'>{emailCharCount}/255</div>)}
+       {emailCharCount > 0 && (<div className='char-count'>{emailCharCount}/255</div>)}
       </div>
       <div className="login_input_container">
         <label htmlFor='password'>Password</label>
@@ -76,7 +76,7 @@ const LoginForm = ({showModal, setShowModal}) => {
           required
           maxLength={40}
         />
-        {passwordCharCount > 0 (<div className='char-count'>{passwordCharCount}/40</div>)}
+        {passwordCharCount > 0 && (<div className='char-count'>{passwordCharCount}/40</div>)}
       </div>
       <div id="login_form_buttons">
         <button id="login_form_cancel" type='button' onClick={()=> setShowModal(false)}>Close</button>

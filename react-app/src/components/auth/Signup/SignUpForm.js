@@ -95,7 +95,7 @@ const SignUpForm = ({showModal, setShowModal}) => {
           required
           maxLength={40}
         ></input>
-        {usernameCharCount > 0 (<div className='char-count'>{usernameCharCount}/40</div>)}
+        {usernameCharCount > 0 && (<div className='char-count'>{usernameCharCount}/40</div>)}
       </div>
       <div className="signup_input_container">
         <label>Email</label>
@@ -107,7 +107,7 @@ const SignUpForm = ({showModal, setShowModal}) => {
           required
           maxLength={255}
         ></input>
-        {emailCharCount > 0 (<div className='char-count'>{emailCharCount}/255</div>)}
+        {emailCharCount > 0 && (<div className='char-count'>{emailCharCount}/255</div>)}
       </div>
       <div className="signup_input_container">
         <label>Profile Picture</label>
@@ -118,7 +118,7 @@ const SignUpForm = ({showModal, setShowModal}) => {
           value={profileUrl}
           maxLength={255}
         ></input>
-        {profileUrlCharCount > 0 (<div className='char-count'>{profileUrlCharCount}/255</div>)}
+        {profileUrlCharCount > 0 && (<div className='char-count'>{profileUrlCharCount}/255</div>)}
       </div>
       <div className="signup_input_container">
         <label>Password</label>
@@ -130,7 +130,7 @@ const SignUpForm = ({showModal, setShowModal}) => {
           required
           maxLength={40}
         ></input>
-        {passwordCharCount > 0 (<div className='char-count'>{passwordCharCount}/40</div>)}
+        {passwordCharCount > 0 && (<div className='char-count'>{passwordCharCount}/40</div>)}
       </div>
       <div className="signup_input_container">
         <label>Re-enter Password</label>
@@ -143,7 +143,7 @@ const SignUpForm = ({showModal, setShowModal}) => {
           required
           maxLength={40}
         ></input>
-        {repeatPasswordCharCount > 0 (<div className='char-count'>{repeatPasswordCharCount}/40</div>)}
+        {repeatPasswordCharCount > 0 && (<div className='char-count'>{repeatPasswordCharCount}/40</div>)}
       </div>
       <div className="signup_buttons">
         <button id="cancel_button" type='button' onClick={() => setShowModal(false)}>Close</button>

@@ -23,8 +23,9 @@ const CreateBook = ({status}) => {
   const [bookTitleCharCount, setBookTitleCharCount] = useState(0);
   const [bookGenreCharCount, setBookGenreCharCount] = useState(0);
   const [bookSummaryCharCount, setBookSummaryCharCount] = useState(0);
+  const [bookUrlCharCount, setBookUrlCharCount] = useState(0);
 
-  const [disableSubmit, setDisableSubmit] = useState(0);
+  const [disableSubmit, setDisableSubmit] = useState(true);
   const tx = document.getElementsByTagName("textarea");
   for (let i = 1; i < tx.length; i++) {
     tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px");
@@ -44,6 +45,7 @@ const CreateBook = ({status}) => {
     setBookTitleCharCount(0)
     setBookGenreCharCount(0)
     setBookSummaryCharCount(0)
+    setBookUrlCharCount(0)
   }
 
   useEffect(() => {
@@ -57,7 +59,7 @@ const CreateBook = ({status}) => {
     }
     if (bookSummaryCharCount > 1500) {
       setDisableSubmit(true)
-      setErrors("Book summary must be between 1 and 1500 characters.")
+      setErrors("Book summary can be between 0 and 1500 characters.")
     } else if (bookTitleCharCount > 0) {
       setDisableSubmit(false)
     } else {
@@ -71,7 +73,15 @@ const CreateBook = ({status}) => {
     } else {
       setDisableSubmit(true)
     }
-  }, [bookTitleCharCount, bookGenreCharCount, bookSummaryCharCount])
+    if (bookUrlCharCount > 100) {
+      setDisableSubmit(true)
+      setErrors("Book Cover must be between 0 and 100 characters.")
+    } else if (bookUrlCharCount >= 0) {
+      setDisableSubmit(false)
+    } else {
+      setDisableSubmit(true)
+    }
+  }, [bookTitleCharCount, bookGenreCharCount, bookSummaryCharCount, bookUrlCharCount])
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -121,13 +131,14 @@ const CreateBook = ({status}) => {
               type='text'
               placeholder='Full Title Here'
               value={bookTitle}
+              required
               maxLength={250}
               onChange={(e)=> {
                 setBookTitle(e.target.value)
                 setBookTitleCharCount(e.target.value.length)}}
               />
               </label>
-              <div className="create_book_form_input_count">{bookTitleCharCount}/250</div>
+              {bookTitleCharCount > 0 && (<div className="create_book_form_input_count">{bookTitleCharCount}/250</div>)}
               {/* <div>
                 {!!errors && (
                   <>
@@ -142,13 +153,14 @@ const CreateBook = ({status}) => {
               type='text'
               placeholder='Pick the most relevant!'
               value={bookGenre}
+              required
               maxLength={100}
               onChange={(e)=> {
                 setBookGenre(e.target.value)
                 setBookGenreCharCount(e.target.value.length)}}
               />
               </label>
-              <div className="create_book_form_input_count">{bookGenreCharCount}/100</div>
+              {bookGenreCharCount > 0 && (<div className="create_book_form_input_count">{bookGenreCharCount}/100</div>)}
               {/* <div>
                 {!!errors && (
                   <>
@@ -163,10 +175,12 @@ const CreateBook = ({status}) => {
               type='text'
               placeholder='Full HTTPS or leave blank.'
               value={bookCoverImageUrl}
-              // maxLength={50}
+              maxLength={100}
               onChange={(e)=> setBookCoverImageUrl(e.target.value)}
               />
               </label>
+              {bookUrlCharCount > 0 && (<div className="create_book_form_input_count">{bookUrlCharCount}/100</div>)}
+
               {/* <div>
                 {!!errors && (
                   <>
@@ -187,7 +201,7 @@ const CreateBook = ({status}) => {
                 setBookSummaryCharCount(e.target.value.length)}}
               />
               </label>
-              <div className="create_book_form_input_count">{bookSummaryCharCount}/1500</div>
+              {bookSummaryCharCount > 0 && (<div className="create_book_form_input_count">{bookSummaryCharCount}/1500</div>)}
               {/* <div>
                 {!!errors && (
                   <>
