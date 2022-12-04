@@ -70,17 +70,17 @@ export const logout = () => async (dispatch) => {
 };
 
 
-export const signUp = (username, email, profile_image_url, password) => async (dispatch) => {
+export const signUp = ({username, email, profileImageUrl, password}) => async (dispatch) => {
   const response = await fetch('/api/auth/signup', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      username,
-      email,
-      profile_image_url:
-      password,
+      "username": username,
+      "email": email,
+      "password": password,
+      "profileImageUrl": profileImageUrl
     }),
   });
 
@@ -94,7 +94,7 @@ export const signUp = (username, email, profile_image_url, password) => async (d
       return data.errors;
     }
   } else {
-    return ['An error occurred. Please try again.']
+    return [{'fetch':'An error occurred. Please try again.'}]
   }
 }
 

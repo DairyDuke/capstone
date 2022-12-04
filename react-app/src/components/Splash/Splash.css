@@ -6,20 +6,32 @@
 
 .splash_full_length_banner {
   display: flex;
+  height: 275px;
   flex-direction: column;
   margin: auto;
   text-align: center;
 }
 
 .splash_full_length_banner>img {
-
-}
-
-.splash_full_length_banner>h1 {
-
+  position: absolute;
+  box-sizing: border-box;
+  width: 100%;
+  min-width:600px;
+  height: 270px;
+  /* max-width: 1080px; */
+  z-index: -1;
 }
 
 #splash_login_module {
+  width: 100%;
+  max-width: 600px;
+}
+
+#splash_login_module h1 {
+  color: #ffffff;
+  line-height: 4rem;
+  font-size: 72px;
+  text-align: left;
 
 }
 
@@ -58,11 +70,11 @@
 #splash_description_box_left>h2 {
   margin: 0px;
   color: #000;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 #splash_description_box_left>p {
-  font-size: 14px;
+  font-size: 16px;
   word-wrap: break-word;
 }
 
@@ -75,21 +87,30 @@
 #splash_description_box_right>h2 {
   margin: 0px;
   color: #000;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 #splash_description_box_right>p {
-  font-size: 14px;
+  font-size: 16px;
   word-wrap: break-word;
 }
 
 .splash_discover_reccomendations {
+  background-color: #f4f2e9;
 
 }
 
 #splash_what_discover_box {}
 
 .splash_discover_reccomendations_books {
+
+
+}
+
+.splash_discover_reccomendations_books img {
+  width: 80px;
+  height: 120px;
+
 
 }
 

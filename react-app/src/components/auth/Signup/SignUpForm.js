@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { signUp } from '../../../store/session';
 
 const SignUpForm = ({showModal, setShowModal}) => {
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState({});
   const [username, setUsername] = useState('');
   const [usernameCharCount, setUsernameCharCount] = useState(0);
   const [email, setEmail] = useState('');
@@ -38,14 +38,18 @@ const SignUpForm = ({showModal, setShowModal}) => {
   const onSignUp = async (e) => {
     e.preventDefault();
     if (password === repeatPassword) {
-      let profile_image_url = defaultProfilePictureImage
-      if (profileUrl) profile_image_url = profileUrl
-      const data = await dispatch(signUp(username, email, profile_image_url, password));
+      console.log("Pro", profileUrl)
+      let profileImageUrl = defaultProfilePictureImage
+      if (profileUrl) {
+        return profileImageUrl = profileUrl
+      }
+      const data = await dispatch(signUp({username, email, profileImageUrl, password}));
       if (data) {
         setErrors(data)
+        console.log("Errors ", errors)
       }
     } else {
-      setErrors(['Password and confirm password must match'])
+      setErrors([{'repeat_password':'Password and confirm password must match'}])
     }
   };
 
@@ -74,6 +78,12 @@ const SignUpForm = ({showModal, setShowModal}) => {
     setRepeatPasswordCharCount(e.target.value.length);
   };
 
+  const ErrorHandler = (errors) => {
+    for (let error in errors) {
+      return (<>{error}</>)
+      }
+    }
+
   if (user) {
     return <Redirect to='/' />;
   }
@@ -81,9 +91,8 @@ const SignUpForm = ({showModal, setShowModal}) => {
   return (
     <form id="signup_form" onSubmit={onSignUp}>
       <div>
-        {errors.map((error, ind) => (
-          <div key={ind}>{error}</div>
-        ))}
+        {/* {console.log(errors)}
+        {errors && <ErrorHandler />} */}
       </div>
       <div className="signup_input_container">
         <label>Your Name</label>
@@ -100,11 +109,12 @@ const SignUpForm = ({showModal, setShowModal}) => {
       <div className="signup_input_container">
         <label>Email</label>
         <input
-          type='text'
+          type='email'
           name='email'
           onChange={updateEmail}
           value={email}
           required
+          minLength={6}
           maxLength={255}
         ></input>
         {emailCharCount > 0 && (<div className='char-count'>{emailCharCount}/255</div>)}
@@ -112,7 +122,7 @@ const SignUpForm = ({showModal, setShowModal}) => {
       <div className="signup_input_container">
         <label>Profile Picture</label>
         <input
-          type='text'
+          type='url'
           name='profile picture'
           onChange={updateProfilePic}
           value={profileUrl}
@@ -128,6 +138,7 @@ const SignUpForm = ({showModal, setShowModal}) => {
           onChange={updatePassword}
           value={password}
           required
+          minLength={6}
           maxLength={40}
         ></input>
         {passwordCharCount > 0 && (<div className='char-count'>{passwordCharCount}/40</div>)}
@@ -140,7 +151,7 @@ const SignUpForm = ({showModal, setShowModal}) => {
           onChange={updateRepeatPassword}
           value={repeatPassword}
           required={true}
-          required
+          minLength={6}
           maxLength={40}
         ></input>
         {repeatPasswordCharCount > 0 && (<div className='char-count'>{repeatPasswordCharCount}/40</div>)}

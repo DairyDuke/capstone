@@ -13,8 +13,8 @@
   align-items: center;
   padding-left: 50px;
   padding-right: 50px;
-  /* max-width: 1024px; */
   width: 100%;
+  max-width: 700px;
 }
 
 .about-link:hover {

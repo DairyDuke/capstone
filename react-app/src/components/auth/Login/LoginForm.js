@@ -27,6 +27,7 @@ const LoginForm = ({showModal, setShowModal}) => {
     e.preventDefault();
     const data = await dispatch(login(email, password));
     if (data) {
+      console.log(data)
       setErrors(data);
     }
   };
@@ -40,6 +41,11 @@ const LoginForm = ({showModal, setShowModal}) => {
     setPassword(e.target.value);
     setPasswordCharCount(e.target.value.length);
   };
+  const errorHandler = (errors) => {
+    for (let error in errors) {
+      return (<div>{error}</div>)
+      }
+    }
 
   if (user) {
     return <Redirect to='/' />;
@@ -47,11 +53,9 @@ const LoginForm = ({showModal, setShowModal}) => {
 
   return (
     <form id="login_form" onSubmit={onLogin}>
-      <div id="login_errors">
-        {errors.map((error, ind) => (
-          <div key={ind}>{error}</div>
-        ))}
-      </div>
+      {/* <div id="login_errors">
+        {errors && {errorHandler}}
+      </div> */}
       <div className="login_input_container">
         <label htmlFor='email'>Email</label>
         <input
