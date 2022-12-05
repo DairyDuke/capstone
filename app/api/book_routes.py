@@ -314,3 +314,16 @@ def remove_book_from_shelf(bookId):
     return response
     # return "cool"
     # books = Book.query.order_by(Book.created_at.desc()).options(joinedload(Book.creators), joinedload(Book.covered), joinedload(Book.shelved), joinedload(Book.reviewed)).all()
+
+# @book_routes.route('/', defaults={'path': ''})
+# @book_routes.route('/favicon.png', method=["GET"])
+# def react_root():
+#     """
+#     This route will direct to the public directory in our
+#     react builds in the production environment for favicon
+#     or index.html requests
+#     """
+#     print(".........................................")
+#     # if path == '/books/favicon.ico':
+#     return app.send_from_directory('public', 'favicon.png')
+#     # return app.send_static_file('index.html')

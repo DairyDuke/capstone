@@ -11,7 +11,7 @@ const Header = () => {
                 {location.pathname !== "/" ? (
                 <div id='header_home_logo_link'>
                    <NavLink to='/' exact={true} >
-                        <img src="./favicon.png" alt="Home Button" />
+                        <img src="/favicon.png" alt="Home Button" />
                     </NavLink>
                 </div>
                 ) : (

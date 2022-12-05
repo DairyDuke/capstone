@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import LoginForm from './components/auth/Login/LoginForm';
-import SignUpForm from './components/auth/Signup/SignUpForm';
+import LoginFormModal from './components/auth/Login/LoginFormModal.js';
+import SignUpFormModal from './components/auth/Signup/SignUpFormModal.js';
 import Home from './components/Home'
 import Header from './components/Header';
 import Footer from './components/Footer'
@@ -35,12 +35,12 @@ function App() {
     <BrowserRouter>
       <Header />
       <Switch>
-        <Route path='/login' exact={true}>
-          <LoginForm />
+        {/* <Route path='/login' exact={true}>
+          <LoginFormModal />
         </Route>
         <Route path='/sign-up' exact={true}>
-          <SignUpForm />
-        </Route>
+          <SignUpFormModal />
+        </Route> */}
         {/* <ProtectedRoute path='/users' exact={true} >
           <UsersList/>
         </ProtectedRoute>
@@ -53,9 +53,9 @@ function App() {
         <Route path='/mybooks'>
           <MyBooks />
         </Route>
-        <Route path='/create-book'>
+        {/* <Route path='/create-book'>
           <CreateBook />
-        </Route>
+        </Route> */}
         <Route path='/books/:bookId'>
           <BookDetails />
         </Route>
