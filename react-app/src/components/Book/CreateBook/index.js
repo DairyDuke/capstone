@@ -146,6 +146,10 @@ const CreateBook = ({showModal, setShowModal, status}) => {
       {showNewBookForm && (
         <>
           <form className="create_book_form" onSubmit={onSubmit}>
+          <div id="signin_declaration">
+        <h1>my reader's journey</h1>
+        <h3> Create Book </h3>
+      </div>
           <div className="create_book_form_input_box">
             <label>Book's Title:
             <input
