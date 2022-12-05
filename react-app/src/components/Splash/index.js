@@ -23,16 +23,27 @@ const Splash = ()=>{
     dispatch(creatorActions.getAllCreatorsThunk())
   },[dispatch])
 
-  let UserBooks
-  UserBooks = books.map((book)=> (
-    <NavLink to={`/books/${book.id}`}>
-        <div key={book.id} className="splash_discover_reccomendations_books">
-          <img src={book.Cover} alt={book.title} />
-          "Testing"
-        </div>
-    </NavLink>
-      ))
-      console.log("ND ", UserBooks)
+  let UserBooks = []
+  let RenderElement
+
+  for (let book in bookobj) {
+    if (book !== "singleBook") {
+      UserBooks.push(bookobj[book])
+    }
+  }
+  if (UserBooks && UserBooks.length > 1) {
+      RenderElement = UserBooks.map((book)=>
+    (
+      <NavLink to={`/books/${book.id}`} key={book.id}>
+          <div className="splash_discover_reccomendations_books">
+            <img src={book.Cover} alt={book.title} />
+            "Testing"
+          </div>
+      </NavLink>
+        )
+  )}
+
+
 
    const imgAddress = "https://i.imgur.com/RmycZv9.png"
   return(
@@ -61,7 +72,7 @@ const Splash = ()=>{
                 <span id="splash_what_discover_box">
                   What will you discover?
                 </span>
-                {UserBooks}
+                {RenderElement}
 
             </div>
             <div className="splash_best_books_rating_container">
