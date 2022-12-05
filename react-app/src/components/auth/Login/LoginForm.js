@@ -1,43 +1,62 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { login } from '../../../store/session';
 
-const LoginForm = () => {
+const LoginForm = ({showModal, setShowModal}) => {
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [emailCharCount, setEmailCharCount] = useState(0)
+  const [passwordCharCount, setPasswordCharCount] = useState(0)
+
   const user = useSelector(state => state.session.user);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+      setShowModal(false)
+    }
+  }, [showModal, setShowModal])
 
   const onLogin = async (e) => {
     e.preventDefault();
     const data = await dispatch(login(email, password));
     if (data) {
+      console.log(data)
       setErrors(data);
     }
   };
 
   const updateEmail = (e) => {
     setEmail(e.target.value);
+    setEmailCharCount(e.target.value.length);
   };
 
   const updatePassword = (e) => {
     setPassword(e.target.value);
+    setPasswordCharCount(e.target.value.length);
   };
+  const errorHandler = (errors) => {
+    for (let error in errors) {
+      return (<div>{error}</div>)
+      }
+    }
 
   if (user) {
     return <Redirect to='/' />;
   }
 
   return (
-    <form onSubmit={onLogin}>
-      <div>
-        {errors.map((error, ind) => (
-          <div key={ind}>{error}</div>
-        ))}
-      </div>
-      <div>
+    <form id="login_form" onSubmit={onLogin}>
+      {/* <div id="login_errors">
+        {errors && {errorHandler}}
+      </div> */}
+      <div className="login_input_container">
         <label htmlFor='email'>Email</label>
         <input
           name='email'
@@ -45,9 +64,12 @@ const LoginForm = () => {
           placeholder='Email'
           value={email}
           onChange={updateEmail}
+          required
+          maxLength={255}
         />
+       {emailCharCount > 0 && (<div className='char-count'>{emailCharCount}/255</div>)}
       </div>
-      <div>
+      <div className="login_input_container">
         <label htmlFor='password'>Password</label>
         <input
           name='password'
@@ -55,8 +77,14 @@ const LoginForm = () => {
           placeholder='Password'
           value={password}
           onChange={updatePassword}
+          required
+          maxLength={40}
         />
-        <button type='submit'>Login</button>
+        {passwordCharCount > 0 && (<div className='char-count'>{passwordCharCount}/40</div>)}
+      </div>
+      <div id="login_form_buttons">
+        <button id="login_form_cancel" type='button' onClick={()=> setShowModal(false)}>Close</button>
+        <button id="login_form_submit" type='submit'>Login</button>
       </div>
     </form>
   );

@@ -80,8 +80,8 @@ export const createCreatorThunk = ({role_type_list, name, creator_image_url, cre
     return ['Unable to fetch.']
   }
 }
-export const updateCreatorThunk = (creatorId, {role_type_list, name, creator_image_url, creator_summary}) => async (dispatch) => {
-  const response = await fetch(`/api/creators/${creatorId}`,{
+export const updateCreatorThunk = ({id, role_type_list, name, creator_image_url, creator_summary}) => async (dispatch) => {
+  const response = await fetch(`/api/creators/${id}`,{
     method: 'PUT',
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({

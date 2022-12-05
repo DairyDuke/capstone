@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
-// import { useHistory, Redirect } from 'react-router-dom';
+import { useHistory} from 'react-router-dom';
+// , Redirect
 import { useDispatch } from 'react-redux';
 // , useSelector
 import './CreateBook.css'
-import * as bookActions from '../../store/book'
+import * as bookActions from '../../../store/book'
 
-const CreateBook = () => {
+const CreateBook = ({status}) => {
   const dispatch = useDispatch();
-  // const history = useHistory();
+  const history = useHistory();
   // const creators = useSelector(state => state.creators)
   // Determines if the new comment button exists or not.
-  const [showNewBookForm, setShowNewBookForm] = useState(false);
+  const [showNewBookForm, setShowNewBookForm] = useState(status || false);
   // Actual form data:
   const [bookTitle, setBookTitle] = useState("");
   const [bookGenre, setBookGenre] = useState("");
@@ -22,9 +23,18 @@ const CreateBook = () => {
   const [bookTitleCharCount, setBookTitleCharCount] = useState(0);
   const [bookGenreCharCount, setBookGenreCharCount] = useState(0);
   const [bookSummaryCharCount, setBookSummaryCharCount] = useState(0);
+  const [bookUrlCharCount, setBookUrlCharCount] = useState(0);
 
-  const [disableSubmit, setDisableSubmit] = useState(0);
-
+  const [disableSubmit, setDisableSubmit] = useState(true);
+  const tx = document.getElementsByTagName("textarea");
+  for (let i = 1; i < tx.length; i++) {
+    tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px");
+    tx[i].addEventListener("input", OnInput, false);
+  }
+  function OnInput() {
+    this.style.height = 0;
+    this.style.height = (this.scrollHeight) + "px";
+  }
   const cancelSubmit = async () => {
     setShowNewBookForm(false)
     setBookTitle("")
@@ -35,6 +45,7 @@ const CreateBook = () => {
     setBookTitleCharCount(0)
     setBookGenreCharCount(0)
     setBookSummaryCharCount(0)
+    setBookUrlCharCount(0)
   }
 
   useEffect(() => {
@@ -48,7 +59,7 @@ const CreateBook = () => {
     }
     if (bookSummaryCharCount > 1500) {
       setDisableSubmit(true)
-      setErrors("Book summary must be between 1 and 1500 characters.")
+      setErrors("Book summary can be between 0 and 1500 characters.")
     } else if (bookTitleCharCount > 0) {
       setDisableSubmit(false)
     } else {
@@ -62,14 +73,20 @@ const CreateBook = () => {
     } else {
       setDisableSubmit(true)
     }
-  }, [bookTitleCharCount, bookGenreCharCount, bookSummaryCharCount])
+    if (bookUrlCharCount > 100) {
+      setDisableSubmit(true)
+      setErrors("Book Cover must be between 0 and 100 characters.")
+    } else if (bookUrlCharCount >= 0) {
+      setDisableSubmit(false)
+    } else {
+      setDisableSubmit(true)
+    }
+  }, [bookTitleCharCount, bookGenreCharCount, bookSummaryCharCount, bookUrlCharCount])
 
   const onSubmit = async (e) => {
     e.preventDefault();
     setErrors([]);
-    if (errors) {
-
-    }
+    if (errors) { }
     const bookDataObject = {
      "title": bookTitle,
      "genre": bookGenre,
@@ -77,20 +94,22 @@ const CreateBook = () => {
      "cover_image_url": bookCoverImageUrl
     }
     const newBook = await dispatch(bookActions.createBookThunk(bookDataObject))
-    .catch(async (response) =>{
-      const data = await response.json();
+    .then(() => {
+      cancelSubmit()
+    })
+    .catch(async (newBook) => {
+      const data = await newBook.json();
       if (data && data.errors) {
         setErrors(Object.values(data.errors));
         // This console log is to make react happy - do not delete
         console.log("Errors "+errors)
       }
-
-    if (newBook.ok) {
-      window.reload()
-      window.scrollTo(0,0)
-    }
-  })
-}
+    })
+  };
+    // if (newBook.ok) {
+    //   window.reload()
+    //   window.scrollTo(0,0)
+    // }
 
   return(
     <div>
@@ -112,13 +131,14 @@ const CreateBook = () => {
               type='text'
               placeholder='Full Title Here'
               value={bookTitle}
+              required
               maxLength={250}
               onChange={(e)=> {
                 setBookTitle(e.target.value)
                 setBookTitleCharCount(e.target.value.length)}}
               />
               </label>
-              <div className="create_book_form_input_count">{bookTitleCharCount}/250</div>
+              {bookTitleCharCount > 0 && (<div className="create_book_form_input_count">{bookTitleCharCount}/250</div>)}
               {/* <div>
                 {!!errors && (
                   <>
@@ -133,13 +153,14 @@ const CreateBook = () => {
               type='text'
               placeholder='Pick the most relevant!'
               value={bookGenre}
+              required
               maxLength={100}
               onChange={(e)=> {
                 setBookGenre(e.target.value)
                 setBookGenreCharCount(e.target.value.length)}}
               />
               </label>
-              <div className="create_book_form_input_count">{bookGenreCharCount}/100</div>
+              {bookGenreCharCount > 0 && (<div className="create_book_form_input_count">{bookGenreCharCount}/100</div>)}
               {/* <div>
                 {!!errors && (
                   <>
@@ -154,10 +175,12 @@ const CreateBook = () => {
               type='text'
               placeholder='Full HTTPS or leave blank.'
               value={bookCoverImageUrl}
-              // maxLength={50}
+              maxLength={100}
               onChange={(e)=> setBookCoverImageUrl(e.target.value)}
               />
               </label>
+              {bookUrlCharCount > 0 && (<div className="create_book_form_input_count">{bookUrlCharCount}/100</div>)}
+
               {/* <div>
                 {!!errors && (
                   <>
@@ -167,7 +190,7 @@ const CreateBook = () => {
           </div>
           <div className="create_book_form_input_box">
             <label>Book's Summary:
-            <input
+            <textarea
               name='Book Summary'
               type='text'
               placeholder='Concise, Spoiler-free Summary Here!'
@@ -178,7 +201,7 @@ const CreateBook = () => {
                 setBookSummaryCharCount(e.target.value.length)}}
               />
               </label>
-              <div className="create_book_form_input_count">{bookSummaryCharCount}/1500</div>
+              {bookSummaryCharCount > 0 && (<div className="create_book_form_input_count">{bookSummaryCharCount}/1500</div>)}
               {/* <div>
                 {!!errors && (
                   <>

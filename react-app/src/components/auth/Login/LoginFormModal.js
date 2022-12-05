@@ -9,7 +9,7 @@ export default function LoginFormModal() {
 
     return (
         <>
-            <div id="login-button" className='signup-login-button' onClick={() => setShowModal(true)}>
+            <div id="login_modal_button" onClick={() => setShowModal(true)}>
                 <p>Log in</p>
             </div>
             {showModal && (

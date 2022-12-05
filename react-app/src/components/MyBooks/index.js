@@ -1,26 +1,42 @@
 import React, { useEffect, useState } from "react";
 import { Redirect, useHistory, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
-import CreateEditBookShelf from '../CreateEditBookShelf'
-import CreateBook from '../CreateBook'
-import CreateCreator from '../CreateCreator'
+// Bookshelf
+import CreateBookShelf from '../Bookshelf/CreateBookShelf'
+import EditBookshelf from '../Bookshelf/EditBookshelf'
+import DeleteBookshelfModal from '../Bookshelf/DeleteBookshelf/DeleteBookshelfModal.js'
+// Book
+import CreateBook from '../Book/CreateBook'
+import EditBookModal from '../Book/EditBook/EditBookModal.js'
+import DeleteBookModal from '../Book/DeleteBook/DeleteBookModal.js'
+// Creator
+import CreateCreator from '../Creator/CreateCreator'
+import EditCreatorModal from '../Creator/EditCreator/EditCreatorModal.js'
+import DeleteCreatorModal from '../Creator/DeleteCreator/DeleteCreatorModal.js'
+
+import * as bookActions from '../../store/book'
 import './MyBooks.css'
 
 
 const MyBooks = ()=>{
   const dispatch = useDispatch();
   const bookobj = useSelector(state => state.books);
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [showShelfDeleteModal, setShowShelfDeleteModal] = useState(false)
+  const [showCreatorDeleteModal, setShowCreatorDeleteModal] = useState(false)
+  const [showEditModal, setShowEditModal] = useState(false)
+  const [showCreatorEditModal, setShowCreatorEditModal] = useState(false)
   const books = Object.values(bookobj) || [];
   const history = useHistory();
   const [errors, setErrors] = useState([]);
 
-  // useEffect(()=> {
-  //   dispatch(bookActions.getAllBooksThunk())
-  //   dispatch(bookActions.getSingleBookThunk(2))
-  //   dispatch(bookshelfActions.getAllBookshelvesThunk())
-  //   dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
-  //   dispatch(creatorActions.getAllCreatorsThunk())
-  // },[dispatch])
+  useEffect(()=> {
+    dispatch(bookActions.getAllBooksThunk())
+    dispatch(bookActions.getSingleBookThunk(2))
+    // dispatch(bookshelfActions.getAllBookshelvesThunk())
+    // dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
+    // dispatch(creatorActions.getAllCreatorsThunk())
+  },[dispatch])
 
   // let DisplayBooks;
   // if (books.length > 1 ) {
@@ -49,19 +65,53 @@ const MyBooks = ()=>{
                 <span>
                   <CreateBook />
                 </span>
+                <div className='comment-edit-option edit-reply-option' onClick={() => setShowEditModal(true)}>
+                  <button id="edit-reply-button" className='edit-post-button edit-delete-post interface-text'>
+                    Edit
+                  </button>
+                </div>
+                <div className='comment-edit-option delete-reply-option' onClick={() => setShowDeleteModal(true)}>
+                  <button id="delete-reply-button" className='delete-post-button edit-delete-post interface-text'>
+                    Delete
+                  </button>
+                </div>
               </div>
+              <DeleteBookModal showDeleteModal={showDeleteModal} setShowDeleteModal={setShowDeleteModal} bookid={books.pop()} />
+              <EditBookModal showEditModal={showEditModal} setShowEditModal={setShowEditModal} bookData={books.pop()} />
+
               <div>
                 <h3>Create Bookshelf --></h3>
                 <span>
-                  <CreateEditBookShelf />
+                  <CreateBookShelf />
                 </span>
+                  <EditBookshelf shelfname={1} shelfId={1} />
+                <div className='comment-edit-option delete-reply-option' onClick={() => setShowShelfDeleteModal(true)}>
+                  <button id="delete-reply-button" className='delete-post-button edit-delete-post interface-text'>
+                    Delete
+                  </button>
+                </div>
               </div>
+              <DeleteBookshelfModal showDeleteModal={showShelfDeleteModal} setShowDeleteModal={setShowShelfDeleteModal} bookshelfid={1} />
+
               <div>
                 <h3>Create Creator --></h3>
                 <span>
                   <CreateCreator />
                 </span>
+                <div className='comment-edit-option edit-reply-option' onClick={() => setShowCreatorEditModal(true)}>
+                  <button id="edit-reply-button" className='edit-post-button edit-delete-post interface-text'>
+                    Edit
+                  </button>
+                </div>
+                <div className='comment-edit-option delete-reply-option' onClick={() => setShowCreatorDeleteModal(true)}>
+                  <button id="delete-reply-button" className='delete-post-button edit-delete-post interface-text'>
+                    Delete
+                  </button>
+                </div>
               </div>
+              <DeleteCreatorModal showDeleteModal={showCreatorDeleteModal} setShowDeleteModal={setShowCreatorDeleteModal} creatorId={books.pop()} />
+              <EditCreatorModal showEditModal={showCreatorEditModal} setShowEditModal={setShowCreatorEditModal} creatorData={books.pop()} />
+
               <div>
 
               </div>

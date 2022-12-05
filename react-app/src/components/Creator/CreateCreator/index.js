@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 // , useSelector
 import './CreateCreator.css'
-import * as creatorActions from '../../store/creator'
+import * as creatorActions from '../../../store/creator'
 
 const CreateCreator = () => {
   const dispatch = useDispatch();
@@ -70,20 +70,17 @@ const CreateCreator = () => {
       "creator_summary": creatorSummary
     }
     const newCreator = await dispatch(creatorActions.createCreatorThunk(creatorDataObject))
-    .catch(async (response) =>{
-      const data = await response.json();
+    .then(() => {
+      cancelSubmit()
+    })
+    .catch(async (newCreator) =>{
+      const data = await newCreator.json();
       if (data && data.errors) {
         setErrors(Object.values(data.errors));
         // This console log is to make react happy - do not delete
         console.log("Errors "+errors)
-      }
-
-    if (newCreator.ok) {
-      window.reload()
-      window.scrollTo(0,0)
+      }})
     }
-  })
-}
 
   return(
     <div>
@@ -160,11 +157,13 @@ const CreateCreator = () => {
           </div>
           <div className="create_creator_form_input_box">
             <label>Select Creator's Role:
-              <select name='Creator Role'>
-                <option value="author" onChange={(e)=> creatorRole(e.target.value)}>Author</option>
-                <option value="illustrator" onChange={(e)=> creatorRole(e.target.value)}>Illustrator</option>
-                <option value="illustrator" onChange={(e)=> creatorRole(e.target.value)}>Translator</option>
+              <select name='Creator Role' defaultValue={'DEFAULT'} value={creatorRole} onChange={(e)=> setCreatorRole(e.target.value)}>
+                <option value='DEFAULT' hidden>Select Best</option>
+                <option value="author" >Author</option>
+                <option value="illustrator" >Illustrator</option>
+                <option value="illustrator" >Translator</option>
               </select>
+              {console.log("TEST",creatorRole)}
             </label>
               {/* <div>
                 {!!errors && (

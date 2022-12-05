@@ -6,20 +6,32 @@
 
 .splash_full_length_banner {
   display: flex;
+  height: 275px;
   flex-direction: column;
   margin: auto;
   text-align: center;
 }
 
 .splash_full_length_banner>img {
-
-}
-
-.splash_full_length_banner>h1 {
-
+  position: absolute;
+  box-sizing: border-box;
+  width: 100%;
+  min-width:600px;
+  height: 270px;
+  /* max-width: 1080px; */
+  z-index: -1;
 }
 
 #splash_login_module {
+  width: 100%;
+  max-width: 600px;
+}
+
+#splash_login_module h1 {
+  color: #ffffff;
+  line-height: 4rem;
+  font-size: 72px;
+  text-align: left;
 
 }
 
@@ -30,15 +42,19 @@
 #splash_login_module>div {
 
 }
+.splash_creator_list{
+  padding: 5px;
+}
 
 .splash_content_container {
   display: flex;
   flex-direction: column;
   margin: 0px auto;
   width: 625px;
-  height: 700px;
+  min-height: 700px;
   text-align: left;
   background-color: #ffffff;
+  margin-bottom: 10px;
 }
 
 .splash_description_box_container {
@@ -58,11 +74,11 @@
 #splash_description_box_left>h2 {
   margin: 0px;
   color: #000;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 #splash_description_box_left>p {
-  font-size: 14px;
+  font-size: 16px;
   word-wrap: break-word;
 }
 
@@ -75,24 +91,52 @@
 #splash_description_box_right>h2 {
   margin: 0px;
   color: #000;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 #splash_description_box_right>p {
-  font-size: 14px;
+  font-size: 16px;
   word-wrap: break-word;
 }
 
 .splash_discover_reccomendations {
+  background-color: #f4f2e9;
 
 }
 
 #splash_what_discover_box {}
 
 .splash_discover_reccomendations_books {
+  display: flex;
+  flex-flow: row nowrap;
+  max-height: 300px;
+
+}
+
+.splash_discover_reccomendations_books img {
+  width: 80px;
+  height: 120px;
+  margin-top: 20px;
+  padding-right: 5px;
+
 
 }
 
 .splash_best_books_rating_container {
 
+}
+.splash_discover_reccomendations_details{
+  width: 700px;
+  height: 100%;
+}
+.splash_discover_reccomendations_summary p {
+  white-space: wrap;
+  word-break: break-word;
+  width: 100%;
+  height: 100px;
+  /* max-height: 120px; */
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  overflow-y:auto;
+  scrollbar-width: none;
 }

@@ -31,7 +31,7 @@
 
 #navbar_auth_buttons {
   display: flex;
-  width: 15%;
+  width: 25%;
   flex-direction: row;
   justify-content: space-evenly;
 }
@@ -42,4 +42,11 @@
 }
 #navbar_profile_button>img {
   height: 25px;
+}
+
+.dropdown_border-line {
+  color: #1e1915;
+  padding-left: 10px;
+  border-bottom: 0.1rem solid #ebebeb;
+  margin-bottom: 10px;
 }

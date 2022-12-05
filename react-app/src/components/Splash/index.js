@@ -9,46 +9,77 @@ import * as creatorActions from '../../store/creator'
 const Splash = ()=>{
   const dispatch = useDispatch();
   const bookobj = useSelector(state => state.books);
+  const bookshelvobj = useSelector(state => state.bookshelves);
   const books = Object.values(bookobj) || [];
   const history = useHistory();
   const [errors, setErrors] = useState([]);
 
+  // const tx = document.getElementsByClassName("growing_paragraph");
+  // for (let i = 1; i < tx.length; i++) {
+  //   tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px");
+  //   tx[i].addEventListener("input", OnInput, false);
+  // }
+  // function OnInput() {
+  //   this.style.height = 0;
+  //   this.style.height = (this.scrollHeight) + "px";
+  // }
+
   useEffect(()=> {
     dispatch(bookActions.getAllBooksThunk())
-    dispatch(bookActions.getSingleBookThunk(2))
+    // dispatch(bookActions.getSingleBookThunk())
+    // dispatch(bookActions.removeSingleBookThunk())
     dispatch(bookshelfActions.getAllBookshelvesThunk())
     dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
     dispatch(creatorActions.getAllCreatorsThunk())
   },[dispatch])
 
-  // let DisplayBooks;
-  // if (books.length > 1 ) {
-  //   DisplayBooks =  groups.map((group) => <GroupDetail group={group}/>)
+  let UserBooks = []
+  let RenderElement
 
-  // } else {
-  //   DisplayGroups = (
-  //   <>
-  //    <h2> No groups yet! </h2>
-  //   </>
-  //   )
-  // }
+  for (let book in bookobj) {
+    if (book !== "singleBook") {
+      UserBooks.push(bookobj[book])
+    }
+  }
+  if (UserBooks && UserBooks.length > 1) {
+      RenderElement = UserBooks.map((book)=>
+    (
+      <NavLink to={`/books/${book.id}`} key={book.id}>
+          <div className="splash_discover_reccomendations_books">
+            <img src={book.Cover} alt={book.title} />
+            <div className="splash_discover_reccomendations_details">
+              <div className="splash_discover_reccomendations_title">
+                <h2>{book.title}</h2>
+              </div>
+              <div className="splash_discover_reccomendations_averagerating">
+                <h3>{book.AverageRating}</h3>
+              </div>
+              <div className="splash_discover_reccomendations_averagerating">
+                <h3>{book.Creators.map((creator)=> (
+                  <span className="splash_creator_list">
+                  {creator.role}: {creator.name}
+                  </span>
+                ))}</h3>
+              </div>
+              <div className="splash_discover_reccomendations_summary">
+                <p className="growing_paragraph">{book.summary}</p>
+              </div>
+            </div>
+          </div>
+      </NavLink>
+        )
+  )}
 
 
-   const imgAddress = "https://juneau.org/wp-content/uploads/2021/09/Fall-in-love-with-reading-banner-1200x382.jpg"
+
+   const imgAddress = "https://i.imgur.com/RmycZv9.png"
   return(
     <>
       <div className="splash_main_container">
         <div className="splash_full_length_banner">
           <img src={imgAddress} alt="Reading is Love Banner" />
-          <h1>Welcome👋</h1>
            <div id="splash_login_module">
-              <h2>Discover & read more</h2>
-              <div>
-                "Signup"
-              </div>
-              <div>
-                "Already a Member?" "Log In"
-              </div>
+            <h1>Meet your next favorite book.</h1>
            </div>
         </div>
         <div className="splash_content_container">
@@ -68,12 +99,8 @@ const Splash = ()=>{
                 <span id="splash_what_discover_box">
                   What will you discover?
                 </span>
-                <div className="splash_discover_reccomendations_books">
-                </div>
-                <div className="splash_discover_reccomendations_books">
-                </div>
-                <div className="splash_discover_reccomendations_books">
-                </div>
+                {RenderElement}
+
             </div>
             <div className="splash_best_books_rating_container">
             </div>
