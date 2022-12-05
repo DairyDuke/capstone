@@ -67,11 +67,11 @@
 #profile-dropdown {
   position: relative;
   width: 240px;
-  right: -62px;
-  top: 60px;
   background-color: #fff;
   border-radius: 3px;
   overflow: hidden;
+  left:  calc( 100% - 210px );
+  /* right: calc( 500px + - 100% ); */
 }
 
 #dropdown-header {
@@ -147,8 +147,7 @@
 #profile-dropdown-container {
   width: 0px;
   position: fixed;
-  top: 0px;
-  right: 360px;
+  top: 60px;
 }
 
 #auth-buttons {

@@ -11,7 +11,7 @@ import './NavBar.css'
 // Modal Imports
 
 const NavBar = () => {
-  const location = useLocation();
+  // const location = useLocation();
   // console.log(location.pathname)
   const sessionUser = useSelector(state => state.session.user)
   const [status, setStatus] = useState(false);
@@ -76,11 +76,14 @@ const NavBar = () => {
               <div id='profile-dropdown-container'>
                 <div id='profile-dropdown'>
                   <div id="dropdown-header">
-                    <NavLink to={`/users/${sessionUser.id}`} exact={true} className='dropdown-option image-option'>
+                    {/* <NavLink to={`/users/${sessionUser.id}`} exact={true} className='dropdown-option image-option'> */}
+                    <div className='dropdown-option image-option'>
                       <img id='navbar-profile-img' className='profile-img' alt='profile' src={sessionUser.profileImageUrl} />
                           <p>{sessionUser.username}</p>
-                    </NavLink>
+                    </div>
+                    {/* </NavLink> */}
                       <LogoutButton />
+
                   </div>
                   <div>
                     <NavLink to='/mybooks' exact={true} className='dropdown-option dropdown-followlink'>

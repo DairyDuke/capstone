@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory} from 'react-router-dom';
+// import { useHistory} from 'react-router-dom';
 // , Redirect
 import { useDispatch } from 'react-redux';
 // , useSelector
@@ -8,7 +8,7 @@ import * as bookActions from '../../../store/book'
 
 const CreateBook = ({status}) => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  // const history = useHistory();
   // const creators = useSelector(state => state.creators)
   // Determines if the new comment button exists or not.
   const [showNewBookForm, setShowNewBookForm] = useState(status || false);

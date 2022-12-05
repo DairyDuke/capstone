@@ -23,27 +23,25 @@ const CurrentlyReadingPreview = () => {
     dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
     // dispatch(creatorActions.getAllCreatorsThunk())
   },[dispatch])
-  console.log(bookshelfobj)
-  // console.log("Bookshelves",bookshelves)
-  console.log(bookobj)
+
   // need to pull books, then pull author/creator
   // title, summary, id, genre, createdAt, updatedAt
   let UserShelves;
   for (let shelf in bookshelfobj){
-    console.log("Before If", shelf)
+
     if (bookshelfobj[shelf].bookshelfName === "read") {
-      console.log("FIRED",bookshelfobj[shelf])
+
       UserShelves = bookshelfobj[shelf]
     }
   }
-  console.log("PUSER", UserShelves)
+
 // id genre summary title cat,uat
 // bookobj[book.id].Cover
 // bookobj[book.id].Creators
 // bookobj[book.id].AverageRating
   let PreviewBook = []
   if (UserShelves && UserShelves.Stacks.length > 1 ){
-    console.log("DJSLJFS..........................")
+
       PreviewBook = UserShelves['Stacks'].map((book)=>
   (
     <div className="currently_reading_preview_container">

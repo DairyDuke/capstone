@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Redirect, useHistory, NavLink } from "react-router-dom";
+// import { Redirect, useHistory, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
 // Bookshelf
 import CreateBookShelf from '../Bookshelf/CreateBookShelf'
@@ -27,8 +27,8 @@ const MyBooks = ()=>{
   const [showEditModal, setShowEditModal] = useState(false)
   const [showCreatorEditModal, setShowCreatorEditModal] = useState(false)
   const books = Object.values(bookobj) || [];
-  const history = useHistory();
-  const [errors, setErrors] = useState([]);
+  // const history = useHistory();
+  // const [errors, setErrors] = useState([]);
 
   useEffect(()=> {
     dispatch(bookActions.getAllBooksThunk())
