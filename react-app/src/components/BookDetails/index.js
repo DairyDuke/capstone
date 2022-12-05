@@ -9,6 +9,7 @@ import DeleteBookModal from '../Book/DeleteBook/DeleteBookModal.js'
 const BookDetails = () => {
   const dispatch = useDispatch();
   const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [showOnShelf, setShowOnShelf] = useState(false)
   const [showEditModal, setShowEditModal] = useState(false)
   const sessionUser = useSelector(state => state.session.user)
   const bookobj = useSelector(state => state.books.singleBook) || [];
@@ -61,18 +62,18 @@ const BookDetails = () => {
           <div id="bookdetails_left_column_book_cover">
             <img src={bookobj.Cover} alt={bookobj.title} />
           </div>
-          <div id="bookdetails_left_column_book_status">
-            <h3>Shelf {bookobj.Shelved}</h3>
+          <div id="bookdetails_left_column_book_status" onClick={()=> addBookToShelf()}>
+            {/* <h3>Shelf: {showOnShelf ? showOnShelf : "Unread"}</h3> */}
           </div>
           <div id="quick_box">
          {sessionUser && (<div className='bookdetails_edit_button' onClick={() => setShowEditModal(true)}>
             <button id="edit-reply-button" className='edit-post-button edit-delete-post interface-text'>
-              Edit
+              Edit Book
             </button>
           </div>)}
           {sessionUser && (<div className='bookdetails_delete_button' onClick={() => setShowDeleteModal(true)}>
           <button id="delete-reply-button" className='delete-post-button edit-delete-post interface-text'>
-              Delete
+              Delete Book
             </button>
           </div>)}
           <DeleteBookModal showDeleteModal={showDeleteModal} setShowDeleteModal={setShowDeleteModal} bookid={bookId.bookId} />

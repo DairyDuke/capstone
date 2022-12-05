@@ -21,6 +21,8 @@
   top: 80px;
 }
 #quick_box {
+  border: 1px solid gray;
+  border-radius: 15%;
   display: flex;
   flex-direction: row;
   justify-content:space-evenly;
@@ -43,6 +45,7 @@
 }
 
 #bookdetails_left_column_book_status {
+  cursor: pointer;
   margin: auto;
   text-transform: capitalize;
 }
