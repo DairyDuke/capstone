@@ -29,7 +29,7 @@ def seed_book_covers():
   )
 
   book6 = BookCover(
-    book_id = 3,
+    book_id = 6,
     cover_image_url = "https://i.imgur.com/nhyr6gN.jpg"
   )
 
