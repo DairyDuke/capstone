@@ -13,6 +13,7 @@ const Home = ()=>{
   const dispatch = useDispatch();
   const bookobj = useSelector(state => state.books);
   const bookshelvobj = useSelector(state => state.bookshelves);
+  const userBookshelvobj = useSelector(state => state.bookshelves.currentUser);
   const books = Object.values(bookobj) || [];
   const history = useHistory();
   const [errors, setErrors] = useState([]);
@@ -35,6 +36,49 @@ const Home = ()=>{
     dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
     dispatch(creatorActions.getAllCreatorsThunk())
   },[dispatch])
+
+
+  let UserShelves=[];
+  let ShowCurrent;
+  let UserShelfList = [];
+  let ShowShelfList;
+  let UserWantRead = [];
+  let ShowWantRead;
+  for (let shelf in userBookshelvobj){
+    if (userBookshelvobj[shelf].bookshelfName === "currently reading") {
+      if (userBookshelvobj[shelf].Stacks.length > 0) {
+        userBookshelvobj[shelf].Stacks.map((stack)=>
+          UserShelves.push(stack)
+          )
+      }
+    }
+    UserShelfList.push([[userBookshelvobj[shelf].bookshelfName], userBookshelvobj[shelf].Stacks.length])
+    if (userBookshelvobj[shelf].bookshelfName === "want to read") {
+      if (userBookshelvobj[shelf].Stacks.length > 0) {
+        userBookshelvobj[shelf].Stacks.map((stack)=>
+          UserWantRead.push(stack)
+        )
+      }
+    }
+  }
+
+  ShowShelfList = UserShelfList.map((shelf)=> (
+      <div>
+        <span>{shelf[1]}    {shelf[0]}</span>
+      </div>
+  ))
+
+  ShowWantRead = UserWantRead.map((book)=> (
+    <NavLink to={`/books/${book.id}`} key={book.id}>
+      <div>
+        <img src={bookobj[book.id].Cover} alt={book.title}/>
+      </div>
+    </NavLink>
+  ))
+
+  ShowCurrent = UserShelves.map((stack)=> (
+    <CurrentlyReadingPreview book={stack}/>
+  ))
 
   let UserBooks = []
   let RenderElement
@@ -77,39 +121,27 @@ const Home = ()=>{
 
    const imgAddress = "https://i.imgur.com/RmycZv9.png"
   return(
-    <>
-      <div className="splash_main_container">
-        <div className="splash_full_length_banner">
-          <img src={imgAddress} alt="Reading is Love Banner" />
-           <div id="splash_login_module">
-            <h1>Meet your next favorite book.</h1>
-           </div>
+    <div className="home_main_container">
+      <div className="home_left_container">
+        <div className="home_currently_reading_container">
+          <h3>CURRENTLY READING</h3>
+          {ShowCurrent}
         </div>
-        <div className="splash_content_container">
-            <div className="splash_description_box_container">
-              <div id="splash_description_box_left">
-                <h2>Deciding what to read next?</h2>
-
-                <p>You’re in the right place. Tell us what titles or genres you’ve enjoyed in the past, and we’ll give you surprisingly insightful recommendations.</p>
-              </div>
-              <div id="splash_description_box_right">
-                <h2>What are your friends reading?</h2>
-
-                <p>Chances are your friends are discussing their favorite (and least favorite) books on Goodreads.</p>
-              </div>
-            </div>
-            <div id="splash_discover_reccomendations">
-                <span id="splash_what_discover_box">
-                  What will you discover?
-                </span>
-                {RenderElement}
-
-            </div>
-            <div className="splash_best_books_rating_container">
-            </div>
+        <div className="home_want_to_read_container">
+          <h3>WANT TO READ</h3>
+          {ShowWantRead}
+        </div>
+        <div className="home_bookshelves_list">
+          <h3>BOOKSHELVES</h3>
+          {ShowShelfList}
         </div>
       </div>
-    </>
+      <div className="home_right_container">
+        <div className="home_main_reccomendation_list">
+            {RenderElement}
+        </div>
+      </div>
+    </div>
   )
 }
 

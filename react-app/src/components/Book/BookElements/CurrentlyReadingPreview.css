@@ -1,5 +1,24 @@
-.currently_reading_preview_container{}
-.currently_reading_preview_info_box{}
+.currently_reading_preview_container{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+.currently_reading_preview_container img {
+  width: 80px;
+  height: 120px;
+  margin-top: 20px;
+  padding-right: 5px;
+}
+
+.currently_reading_preview_info_box{
+  flex-direction: column;
+  margin-top: 20px;
+}
 .currently_reading_preview_book_title{}
-.currently_reading_preview_author_name{}
+.currently_reading_preview_book_title h2{
+  margin: unset
+}
+.currently_reading_preview_author_name{
+  text-transform: capitalize;
+}
 .currently_reading_preview_summary{}
