@@ -1,152 +1,185 @@
 import React, { useEffect, useState } from "react";
-// import { Redirect, useHistory, NavLink } from "react-router-dom";
+import { useHistory, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
-// Bookshelf
-import CreateBookShelf from '../Bookshelf/CreateBookShelf'
-import EditBookshelf from '../Bookshelf/EditBookshelf'
-import DeleteBookshelfModal from '../Bookshelf/DeleteBookshelf/DeleteBookshelfModal.js'
-// Book
-import CreateBook from '../Book/CreateBook'
-import EditBookModal from '../Book/EditBook/EditBookModal.js'
-import DeleteBookModal from '../Book/DeleteBook/DeleteBookModal.js'
-// Creator
-import CreateCreator from '../Creator/CreateCreator'
-import EditCreatorModal from '../Creator/EditCreator/EditCreatorModal.js'
-import DeleteCreatorModal from '../Creator/DeleteCreator/DeleteCreatorModal.js'
-
 import * as bookActions from '../../store/book'
+import * as bookshelfActions from '../../store/bookshelf'
+import * as creatorActions from '../../store/creator'
+
 import './MyBooks.css'
+import CurrentlyReadingPreview from '../Book/BookElements/CurrentlyReadingPreview.js'
 
 
-const MyBooks = ()=>{
+const Home = ()=>{
   const dispatch = useDispatch();
-  const bookobj = useSelector(state => state.books);
-  const [showDeleteModal, setShowDeleteModal] = useState(false)
-  const [showShelfDeleteModal, setShowShelfDeleteModal] = useState(false)
-  const [showCreatorDeleteModal, setShowCreatorDeleteModal] = useState(false)
-  const [showEditModal, setShowEditModal] = useState(false)
-  const [showCreatorEditModal, setShowCreatorEditModal] = useState(false)
+  const bookobj = useSelector(state => state.books) || [];
+  const bookshelvobj = useSelector(state => state.bookshelves) || [];
+  const userBookshelvobj = useSelector(state => state.bookshelves.currentUser) || [];
   const books = Object.values(bookobj) || [];
-  // const history = useHistory();
-  // const [errors, setErrors] = useState([]);
-
-  useEffect(()=> {
-    dispatch(bookActions.getAllBooksThunk())
-    dispatch(bookActions.getSingleBookThunk(2))
-    // dispatch(bookshelfActions.getAllBookshelvesThunk())
-    // dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
-    // dispatch(creatorActions.getAllCreatorsThunk())
-  },[dispatch])
-
-  // let DisplayBooks;
-  // if (books.length > 1 ) {
-  //   DisplayBooks =  groups.map((group) => <GroupDetail group={group}/>)
-
-  // } else {
-  //   DisplayGroups = (
-  //   <>
-  //    <h2> No groups yet! </h2>
-  //   </>
-  //   )
+  const history = useHistory();
+  const [errors, setErrors] = useState([]);
+  const defaulImg = "https://i.imgur.com/iL99VfD.jpg"
+  // const tx = document.getElementsByClassName("growing_paragraph");
+  // for (let i = 1; i < tx.length; i++) {
+  //   tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px");
+  //   tx[i].addEventListener("input", OnInput, false);
+  // }
+  // function OnInput() {
+  //   this.style.height = 0;
+  //   this.style.height = (this.scrollHeight) + "px";
   // }
 
+  useEffect(async ()=> {
+    await dispatch(bookActions.getAllBooksThunk())
+    // dispatch(bookActions.getSingleBookThunk())
+    // dispatch(bookActions.removeSingleBookThunk())
+    await dispatch(bookshelfActions.getAllBookshelvesThunk())
+    await dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
+    await dispatch(creatorActions.getAllCreatorsThunk())
+  },[dispatch])
 
-   const imgAddress = "https://juneau.org/wp-content/uploads/2021/09/Fall-in-love-with-reading-banner-1200x382.jpg"
+
+  let UserShelves=[];
+  let ShowCurrent;
+  let UserShelfList = [];
+  let ShowShelfList;
+  let UserWantRead = [];
+  let ShowWantRead;
+  for (let shelf in userBookshelvobj){
+    if (userBookshelvobj[shelf].bookshelfName === "currently reading") {
+      if (userBookshelvobj[shelf].Stacks.length > 0) {
+        userBookshelvobj[shelf].Stacks.map((stack)=>
+          UserShelves.push(stack)
+          )
+      }
+    }
+    UserShelfList.push([[userBookshelvobj[shelf].bookshelfName], userBookshelvobj[shelf].Stacks.length])
+    if (userBookshelvobj[shelf].bookshelfName === "want to read") {
+      if (userBookshelvobj[shelf].Stacks.length > 0) {
+        userBookshelvobj[shelf].Stacks.map((stack)=>
+          UserWantRead.push(stack)
+        )
+      }
+    }
+  }
+
+  if (UserShelfList && UserShelfList.length >= 1) {
+  ShowShelfList = UserShelfList.map((shelf)=> (
+      <div key={shelf[0]}>
+        <span>{shelf[1]}    {shelf[0]}</span>
+      </div>
+  ))}
+
+  if (UserWantRead && UserWantRead.length >= 1) {
+  ShowWantRead = UserWantRead.map((book)=> (
+    <NavLink to={`/books/${book.id}`} key={book.id}>
+      <div>
+        <img src={bookobj[book.id].Cover || defaulImg} alt={book.title}/>
+      </div>
+    </NavLink>
+  ))}
+
+  if (UserShelves && UserShelves.length >= 1) {
+  ShowCurrent = UserShelves.map((stack)=> (
+    <CurrentlyReadingPreview key={stack.id} book={stack}/>
+  ))}
+
+  let UserBooks = []
+  let RenderElement
+
+  for (let book in bookobj) {
+    if (book !== "singleBook") {
+      UserBooks.push(bookobj[book])
+    }
+  }
+  // cover	title	author	avg rating	rating	shelves	review	date read	date added
+
+  if (UserBooks && UserBooks.length > 1) {
+      RenderElement = UserBooks.map((book)=>
+    (
+    <tr>
+      <NavLink to={`/books/${book.id}`} key={book.id}>
+          <div className="mybooks_right_column_books">
+            <img src={book.Cover} alt={book.title} />
+            <div className="mybooks_right_column_details">
+              <div className="mybooks_right_column_title">
+                <h2>{book.title}</h2>
+              </div>
+              <div className="mybooks_right_column_averagerating">
+                <h3>{book.AverageRating}</h3>
+              </div>
+              <div className="mybooks_right_column_averagerating">
+                <h3>{book.Creators.map((creator)=> (
+                  <span className="mybooks_right_column_creator_list">
+                  {creator.role}: {creator.name}
+                  </span>
+                ))}</h3>
+              </div>
+              <div className="mybooks_right_column_summary">
+                <p className="growing_paragraph">{book.summary}</p>
+              </div>
+            </div>
+          </div>
+      </NavLink>
+      </tr>
+        )
+  )}
+
+
+   const imgAddress = "https://i.imgur.com/RmycZv9.png"
   return(
-    <>
-      <div className="splash_main_container">
-        <div className="splash_full_length_banner">
-          <img src={imgAddress} alt="Reading is Love Banner" />
-          <h1>Welcome👋</h1>
-          <h2> This page is being used as a temp testing grounds!</h2>
-           <div id="splash_login_module">
-              <div>
-                <h3>Create Book --></h3>
-                <span>
-                  <CreateBook />
-                </span>
-                <div className='comment-edit-option edit-reply-option' onClick={() => setShowEditModal(true)}>
-                  <button id="edit-reply-button" className='edit-post-button edit-delete-post interface-text'>
-                    Edit
-                  </button>
-                </div>
-                <div className='comment-edit-option delete-reply-option' onClick={() => setShowDeleteModal(true)}>
-                  <button id="delete-reply-button" className='delete-post-button edit-delete-post interface-text'>
-                    Delete
-                  </button>
-                </div>
-              </div>
-              <DeleteBookModal showDeleteModal={showDeleteModal} setShowDeleteModal={setShowDeleteModal} bookid={books.pop()} />
-              <EditBookModal showEditModal={showEditModal} setShowEditModal={setShowEditModal} bookData={books.pop()} />
-
-              <div>
-                <h3>Create Bookshelf --></h3>
-                <span>
-                  <CreateBookShelf />
-                </span>
-                  <EditBookshelf shelfname={1} shelfId={1} />
-                <div className='comment-edit-option delete-reply-option' onClick={() => setShowShelfDeleteModal(true)}>
-                  <button id="delete-reply-button" className='delete-post-button edit-delete-post interface-text'>
-                    Delete
-                  </button>
-                </div>
-              </div>
-              <DeleteBookshelfModal showDeleteModal={showShelfDeleteModal} setShowDeleteModal={setShowShelfDeleteModal} bookshelfid={1} />
-
-              <div>
-                <h3>Create Creator --></h3>
-                <span>
-                  <CreateCreator />
-                </span>
-                <div className='comment-edit-option edit-reply-option' onClick={() => setShowCreatorEditModal(true)}>
-                  <button id="edit-reply-button" className='edit-post-button edit-delete-post interface-text'>
-                    Edit
-                  </button>
-                </div>
-                <div className='comment-edit-option delete-reply-option' onClick={() => setShowCreatorDeleteModal(true)}>
-                  <button id="delete-reply-button" className='delete-post-button edit-delete-post interface-text'>
-                    Delete
-                  </button>
-                </div>
-              </div>
-              <DeleteCreatorModal showDeleteModal={showCreatorDeleteModal} setShowDeleteModal={setShowCreatorDeleteModal} creatorId={books.pop()} />
-              <EditCreatorModal showEditModal={showCreatorEditModal} setShowEditModal={setShowCreatorEditModal} creatorData={books.pop()} />
-
-              <div>
-
-              </div>
-           </div>
+    <div className="mybooks_main_container">
+      <div className="mybooks_left_container">
+        <div className="mybooks_bookshelves_list">
+          <h3>BOOKSHELVES</h3>
+          {ShowShelfList}
         </div>
-        <div className="splash_content_container">
-            <div className="splash_description_box_container">
-              <div id="splash_description_box_left">
-                {/* <h2>Deciding what to read next?</h2>
-
-                <p>You’re in the right place. Tell us what titles or genres you’ve enjoyed in the past, and we’ll give you surprisingly insightful recommendations.</p> */}
-              </div>
-              <div id="splash_description_box_right">
-                {/* <h2>What are your friends reading?</h2>
-
-                <p>Chances are your friends are discussing their favorite (and least favorite) books on Goodreads.</p> */}
-              </div>
-            </div>
-            <div id="splash_discover_reccomendations">
-                <span id="splash_what_discover_box">
-                  {/* What will you discover? */}
-                </span>
-                <div className="splash_discover_reccomendations_books">
-                </div>
-                <div className="splash_discover_reccomendations_books">
-                </div>
-                <div className="splash_discover_reccomendations_books">
-                </div>
-            </div>
-            <div className="splash_best_books_rating_container">
-            </div>
+        <div className="mybooks_currently_reading_container">
+          <h3>CURRENTLY READING</h3>
+          {ShowCurrent}
+        </div>
+        <div className="mybooks_want_to_read_container">
+          <h3>WANT TO READ</h3>
+          {ShowWantRead}
         </div>
       </div>
-    </>
+      <div className="mybooks_right_container">
+        <div className="mybooks_main_reccomendation_list">
+          <table id="mybooks_table">
+            <th>
+              cover
+            </th>
+            <th>
+              title
+            </th>
+            <th>
+              author
+            </th>
+            <th>
+              avg rating
+            </th>
+            <th>
+              rating
+            </th>
+            <th>
+              shelves
+            </th>
+            <th>
+              review
+            </th>
+            <th>
+              date read
+            </th>
+            <th>
+              date added
+            </th>
+          </table>
+            <tbody>
+            {RenderElement}
+            </tbody>
+        </div>
+      </div>
+    </div>
   )
 }
 
-export default MyBooks
+export default Home

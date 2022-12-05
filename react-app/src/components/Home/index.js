@@ -78,7 +78,7 @@ const Home = ()=>{
     </NavLink>
   ))}
 
-  if (UserShelves && UserShelves.length > 1) {
+  if (UserShelves && UserShelves.length >= 1) {
   ShowCurrent = UserShelves.map((stack)=> (
     <CurrentlyReadingPreview key={stack.id} book={stack}/>
   ))}
