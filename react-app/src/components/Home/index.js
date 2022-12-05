@@ -11,13 +11,13 @@ import CurrentlyReadingPreview from '../Book/BookElements/CurrentlyReadingPrevie
 
 const Home = ()=>{
   const dispatch = useDispatch();
-  const bookobj = useSelector(state => state.books);
-  const bookshelvobj = useSelector(state => state.bookshelves);
-  const userBookshelvobj = useSelector(state => state.bookshelves.currentUser);
+  const bookobj = useSelector(state => state.books) || [];
+  const bookshelvobj = useSelector(state => state.bookshelves) || [];
+  const userBookshelvobj = useSelector(state => state.bookshelves.currentUser) || [];
   const books = Object.values(bookobj) || [];
   const history = useHistory();
   const [errors, setErrors] = useState([]);
-
+  const defaulImg = "https://i.imgur.com/iL99VfD.jpg"
   // const tx = document.getElementsByClassName("growing_paragraph");
   // for (let i = 1; i < tx.length; i++) {
   //   tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px");
@@ -28,13 +28,13 @@ const Home = ()=>{
   //   this.style.height = (this.scrollHeight) + "px";
   // }
 
-  useEffect(()=> {
-    dispatch(bookActions.getAllBooksThunk())
+  useEffect(async ()=> {
+    await dispatch(bookActions.getAllBooksThunk())
     // dispatch(bookActions.getSingleBookThunk())
     // dispatch(bookActions.removeSingleBookThunk())
-    dispatch(bookshelfActions.getAllBookshelvesThunk())
-    dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
-    dispatch(creatorActions.getAllCreatorsThunk())
+    await dispatch(bookshelfActions.getAllBookshelvesThunk())
+    await dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
+    await dispatch(creatorActions.getAllCreatorsThunk())
   },[dispatch])
 
 
@@ -62,23 +62,26 @@ const Home = ()=>{
     }
   }
 
+  if (UserShelfList && UserShelfList.length >= 1) {
   ShowShelfList = UserShelfList.map((shelf)=> (
-      <div>
+      <div key={shelf[0]}>
         <span>{shelf[1]}    {shelf[0]}</span>
       </div>
-  ))
+  ))}
 
+  if (UserWantRead && UserWantRead.length >= 1) {
   ShowWantRead = UserWantRead.map((book)=> (
     <NavLink to={`/books/${book.id}`} key={book.id}>
       <div>
-        <img src={bookobj[book.id].Cover} alt={book.title}/>
+        <img src={bookobj[book.id].Cover || defaulImg} alt={book.title}/>
       </div>
     </NavLink>
-  ))
+  ))}
 
+  if (UserShelves && UserShelves.length > 1) {
   ShowCurrent = UserShelves.map((stack)=> (
-    <CurrentlyReadingPreview book={stack}/>
-  ))
+    <CurrentlyReadingPreview key={stack.id} book={stack}/>
+  ))}
 
   let UserBooks = []
   let RenderElement

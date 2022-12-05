@@ -4,8 +4,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import LoginFormModal from '../../auth/Login/LoginFormModal';
 import LogoutButton from '../../auth/LogoutButton';
 import SignUpFormModal from '../../auth/Signup/SignUpFormModal';
-
-import CreateBook from '../../Book/CreateBook'
+import CreateBookModal from '../../Book/CreateBook/CreateBookModal.js'
 import './NavBar.css'
 
 // Modal Imports
@@ -100,7 +99,7 @@ const NavBar = () => {
                     {/* <NavLink to='/create-book' exact={true} className='dropdown-option dropdown-followlink'> */}
                       <div className='dropdown-option-child' onClick={handleCreate}>
                         {/* <p>Create Book</p> */}
-                        <CreateBook status={status}/>
+                        <CreateBookModal />
                       </div>
                       <div className='dropdown-option-child'>
                         <span>{}</span>

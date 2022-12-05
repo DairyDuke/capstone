@@ -3,8 +3,17 @@
 .create_book_form_input_box{}
 .create_book_form_input_count{}
 .create_book_form_footer{}
-.create_book_cancel_button{}
-.create_book_submit_button{}
+.create_book_cancel_button{
+  cursor: pointer;
+}
+.create_book_submit_button{
+  /* cursor: pointer; */
+  color: gray;
+}
+.create_book_submit_button:active {
+  color: blue;
+  cursor: pointer;
+}
 
 
 .create_book_form_input_box textarea {

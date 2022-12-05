@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import './CreateBook.css'
 import * as bookActions from '../../../store/book'
 
-const CreateBook = ({status}) => {
+const CreateBook = ({showModal, setShowModal, status}) => {
   const dispatch = useDispatch();
   // const history = useHistory();
   // const creators = useSelector(state => state.creators)
@@ -48,12 +48,22 @@ const CreateBook = ({status}) => {
     setBookUrlCharCount(0)
   }
 
+  const handleHidden = () => {
+  //   let element = document.getElementsByClassName("create_book_submit_button");
+  //   if (element && element.hidden) {
+  //     element[0].hidden = false;
+  //  } else {
+  //   element[0].hidden = true;
+  //  }
+  }
+
   useEffect(() => {
     if (bookTitleCharCount > 250) {
       setDisableSubmit(true)
       setErrors("Title must be between 1 and 250 characters.")
     } else if (bookTitleCharCount > 0) {
       setDisableSubmit(false)
+      handleHidden()
     } else {
       setDisableSubmit(true)
     }
@@ -62,6 +72,7 @@ const CreateBook = ({status}) => {
       setErrors("Book summary can be between 0 and 1500 characters.")
     } else if (bookTitleCharCount > 0) {
       setDisableSubmit(false)
+      handleHidden()
     } else {
       setDisableSubmit(true)
     }
@@ -70,6 +81,7 @@ const CreateBook = ({status}) => {
       setErrors("Genre must be between 1 and 100 characters.")
     } else if (bookTitleCharCount > 0) {
       setDisableSubmit(false)
+      handleHidden()
     } else {
       setDisableSubmit(true)
     }
@@ -78,10 +90,21 @@ const CreateBook = ({status}) => {
       setErrors("Book Cover must be between 0 and 100 characters.")
     } else if (bookUrlCharCount >= 0) {
       setDisableSubmit(false)
+      handleHidden()
     } else {
       setDisableSubmit(true)
     }
   }, [bookTitleCharCount, bookGenreCharCount, bookSummaryCharCount, bookUrlCharCount])
+
+  useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+      setShowModal(false)
+    }
+  }, [showModal, setShowModal])
 
   const onSubmit = async (e) => {
     e.preventDefault();
