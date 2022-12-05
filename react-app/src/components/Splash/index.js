@@ -14,6 +14,16 @@ const Splash = ()=>{
   const history = useHistory();
   const [errors, setErrors] = useState([]);
 
+  // const tx = document.getElementsByClassName("growing_paragraph");
+  // for (let i = 1; i < tx.length; i++) {
+  //   tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px");
+  //   tx[i].addEventListener("input", OnInput, false);
+  // }
+  // function OnInput() {
+  //   this.style.height = 0;
+  //   this.style.height = (this.scrollHeight) + "px";
+  // }
+
   useEffect(()=> {
     dispatch(bookActions.getAllBooksThunk())
     // dispatch(bookActions.getSingleBookThunk())
@@ -37,7 +47,24 @@ const Splash = ()=>{
       <NavLink to={`/books/${book.id}`} key={book.id}>
           <div className="splash_discover_reccomendations_books">
             <img src={book.Cover} alt={book.title} />
-            "Testing"
+            <div className="splash_discover_reccomendations_details">
+              <div className="splash_discover_reccomendations_title">
+                <h2>{book.title}</h2>
+              </div>
+              <div className="splash_discover_reccomendations_averagerating">
+                <h3>{book.AverageRating}</h3>
+              </div>
+              <div className="splash_discover_reccomendations_averagerating">
+                <h3>{book.Creators.map((creator)=> (
+                  <span className="splash_creator_list">
+                  {creator.role}: {creator.name}
+                  </span>
+                ))}</h3>
+              </div>
+              <div className="splash_discover_reccomendations_summary">
+                <p className="growing_paragraph">{book.summary}</p>
+              </div>
+            </div>
           </div>
       </NavLink>
         )

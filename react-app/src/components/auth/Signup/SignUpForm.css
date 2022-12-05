@@ -3,4 +3,6 @@
 .signup_input_container {}
 .signup_buttons{}
 #cancel_button {}
-#signup_button{}
+.signup_button{
+    cursor: pointer;
+}
