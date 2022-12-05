@@ -39,6 +39,7 @@
 #navbar_profile_button {
   display: flex;
   flex-direction: row;
+  cursor: pointer;
 }
 #navbar_profile_button>img {
   height: 25px;
@@ -49,4 +50,5 @@
   padding-left: 10px;
   border-bottom: 0.1rem solid #ebebeb;
   margin-bottom: 10px;
+  font-weight: 800;
 }

@@ -1,11 +1,11 @@
 import React from 'react';
 import { useState } from 'react';
 import { Modal } from '../../../context/Modal';
-import CreateBook from './CreateBook';
+import CreateBook from './';
 import "./CreateBook.css";
 
-export default function CreateBookModal() {
-    const [showModal, setShowModal] = useState(false);
+export default function CreateBookModal({showModal, setShowModal}) {
+
 
     return (
         <>

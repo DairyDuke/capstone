@@ -11,7 +11,7 @@ const CreateBook = ({showModal, setShowModal, status}) => {
   // const history = useHistory();
   // const creators = useSelector(state => state.creators)
   // Determines if the new comment button exists or not.
-  const [showNewBookForm, setShowNewBookForm] = useState(status || false);
+  const [showNewBookForm, setShowNewBookForm] = useState(showModal || false);
   // Actual form data:
   const [bookTitle, setBookTitle] = useState("");
   const [bookGenre, setBookGenre] = useState("");
@@ -96,15 +96,15 @@ const CreateBook = ({showModal, setShowModal, status}) => {
     }
   }, [bookTitleCharCount, bookGenreCharCount, bookSummaryCharCount, bookUrlCharCount])
 
-  useEffect(() => {
-    if (showModal) {
-      document.body.style.overflow = 'hidden';
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
-      setShowModal(false)
-    }
-  }, [showModal, setShowModal])
+  // useEffect(() => {
+  //   if (showModal) {
+  //     document.body.style.overflow = 'hidden';
+  //   }
+  //   return () => {
+  //     document.body.style.overflow = 'unset';
+  //     setShowModal(false)
+  //   }
+  // }, [showModal, setShowModal])
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -136,13 +136,13 @@ const CreateBook = ({showModal, setShowModal, status}) => {
 
   return(
     <div>
-      {showNewBookForm === false && (
+      {/* {showNewBookForm === false && (
         <>
           <div id="create_book_new_button" onClick={()=> setShowNewBookForm(true)}>
             <span>Create Book</span>
           </div>
         </>
-      )}
+      )} */}
 
       {showNewBookForm && (
         <>

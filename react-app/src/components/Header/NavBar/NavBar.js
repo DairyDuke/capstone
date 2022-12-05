@@ -16,6 +16,7 @@ const NavBar = () => {
   const [status, setStatus] = useState(false);
   // const dispatch = useDispatch()
   const [showMenu, setShowMenu] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const toggleMenu = () => setShowMenu(!showMenu);
   const handleCreate = (e)=> {
     e.stopPropagation();
@@ -99,7 +100,7 @@ const NavBar = () => {
                     {/* <NavLink to='/create-book' exact={true} className='dropdown-option dropdown-followlink'> */}
                       <div className='dropdown-option-child' onClick={handleCreate}>
                         {/* <p>Create Book</p> */}
-                        <CreateBookModal />
+                        <CreateBookModal showModal={showModal} setShowModal={setShowModal}/>
                       </div>
                       <div className='dropdown-option-child'>
                         <span>{}</span>

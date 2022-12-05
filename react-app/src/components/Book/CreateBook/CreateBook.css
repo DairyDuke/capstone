@@ -14,7 +14,9 @@
   color: blue;
   cursor: pointer;
 }
-
+#create_book_modal_button{
+  cursor: pointer;
+}
 
 .create_book_form_input_box textarea {
   height: auto;
