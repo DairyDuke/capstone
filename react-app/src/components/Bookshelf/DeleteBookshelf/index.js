@@ -16,8 +16,13 @@ const DeleteBookshelf = ({ bookshelfid, setShowDeleteModal, showDeleteModal }) =
     }
   }, [showDeleteModal])
 
-  const deleteBookshelf = (bookshelfid) => {
-    dispatch(bookshelfActions.deleteBookshelfThunk(bookshelfid))
+  const deleteBookshelf = async (bookshelfid) => {
+    await dispatch(bookshelfActions.deleteBookshelfThunk(bookshelfid))
+    .then(()=> {
+    setShowDeleteModal(false)
+    window.location.reload()
+  }
+    )
   }
 
   return (

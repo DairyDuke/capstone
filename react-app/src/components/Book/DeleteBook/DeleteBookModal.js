@@ -10,7 +10,7 @@ export default function DeleteBookModal({showDeleteModal, setShowDeleteModal, bo
       <>
         {showDeleteModal && (
               <Modal id='delete_book_modal' onClose={() => setShowDeleteModal(false)} >
-                  <DeleteBook bookid={bookid.id} showDeleteModal={showDeleteModal} setShowDeleteModal={setShowDeleteModal} />
+                  <DeleteBook bookid={bookid} showDeleteModal={showDeleteModal} setShowDeleteModal={setShowDeleteModal} />
               </Modal>
             )}
       </>

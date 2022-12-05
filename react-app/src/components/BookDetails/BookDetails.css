@@ -1,17 +1,59 @@
 /* ---------- MAIN CONTAINER ---------- */
-.bookdetails_main_container {}
+.bookdetails_main_container {
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+}
 
 /* ---------- LEFT CONTAINER ---------- */
-.bookdetails_left_column_sticky_container {}
+.bookdetails_left_column_sticky_container {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  margin: 25px;
 
-.bookdetails_left_column_box {}
+}
 
-#bookdetails_left_column_book_cover {}
+.bookdetails_left_column_box {
+  position: sticky;
+  display: flex;
+  flex-direction: column;
+  top: 80px;
+}
+#quick_box {
+  border: 1px solid gray;
+  border-radius: 15%;
+  display: flex;
+  flex-direction: row;
+  justify-content:space-evenly;
+}
+.bookdetails_edit_button button{
+  cursor: pointer;
 
-#bookdetails_left_column_book_status {}
+}
+.bookdetails_delete_button button{
+  cursor: pointer;
+}
+
+
+#bookdetails_left_column_book_cover {
+  margin: auto;
+
+}
+#bookdetails_left_column_book_cover img{
+  width: 190px;
+}
+
+#bookdetails_left_column_book_status {
+  cursor: pointer;
+  margin: auto;
+  text-transform: capitalize;
+}
 
 /* ---------- RIGHT CONTAINER --------- */
-.bookdetails_right_column_container {}
+.bookdetails_right_column_container {
+  width: 800px;
+}
 
 #bookdetails_right_column_main_content {
 
@@ -21,6 +63,7 @@
 #bookdetails_right_column_book_title {}
 
 #bookdetails_right_column_book_details {
+  text-transform: capitalize;
 
 }
 
@@ -34,11 +77,27 @@
 
 
 /* ---------- CREATOR CONTENT  --------- */
-#bookdetails_right_column_creator_section {}
-#bookdetails_right_column_creator_role {}
+#bookdetails_right_column_creator_section {
+  display: flex;
+  flex-wrap: row;
+}
+#bookdetails_right_column_creator_role {
+  text-transform: capitalize;
+}
 #bookdetails_right_column_creator_details {}
-#bookdetails_right_column_creator_picture {}
-#bookdetails_right_column_creator_name {}
+#bookdetails_right_column_creator_picture {
+  width: 80px;
+  height: 80px;
+}
+#bookdetails_right_column_creator_picture img{
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+#bookdetails_right_column_creator_name {
+  text-transform: capitalize;
+}
 #bookdetails_right_column_creator_summary {}
 
 

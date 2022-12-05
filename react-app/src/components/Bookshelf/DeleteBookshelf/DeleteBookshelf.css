@@ -1,4 +1,6 @@
 #delete_bookshelf_modal{}
 #confirm_delete_bookshelf_form{}
 #confirm_delete_bookshelf_text{}
-.confirm_delete_footer{}
+.confirm_delete_footer button{
+  cursor: pointer;
+}

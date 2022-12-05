@@ -3,9 +3,223 @@
   flex-flow: column wrap;
   margin: auto;
 }
+.mybooks_full_length_banner {
+  display: flex;
+  height: 275px;
+  flex-direction: column;
+  margin: auto;
+  text-align: center;
+}
+.mybooks_full_length_banner>img {
+  position: absolute;
+  box-sizing: border-box;
+  width: 100%;
+  min-width:600px;
+  height: 270px;
+  /* max-width: 1080px; */
+  z-index: -1;
+}
+
+#mybooks_login_module {
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+}
+
+#mybooks_login_module h1 {
+  color: #ffffff;
+  line-height: 4rem;
+  font-size: 72px;
+  text-align: left;
+}
+
 #splash_login_module div {
   display: flex;
   flex-flow: row wrap;
   align-items: center;
   padding-left: 15px;
+}
+.mybooks_main_container{
+  margin: auto;
+  width: 700px;
+  display: flex;
+  flex-direction: row;
+}
+
+.mybooks_left_container {
+  width: 260px;
+}
+
+.mybooks_currently_reading_container {
+  margin-top: 20px;
+}
+
+.mybooks_currently_reading_container h3{
+  margin: unset;
+}
+
+.mybooks_want_to_read_container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.mybooks_want_to_read_container img{
+  width: 75px;
+  height: 75px;
+  object-fit: cover;
+  padding: 1px;
+
+}
+
+.mybooks_want_to_read_container h3 {
+
+}
+
+.mybooks_want_to_read_container div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: fit-content;
+}
+.mybooks_want_to_read_container a {
+  width: fit-content;
+}
+
+.mybooks_create_bookshelf {
+  border-top: 1px solid black;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.mybooks_create_bookshelf:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.mybooks_create_bookshelf:active {
+  cursor: pointer;
+  text-decoration: unset;
+}
+.mybooks_delete_bookshelf_button {
+  cursor: pointer;
+  font-size: 10px;
+  padding-left: 5px;
+}
+
+.mybooks_bookshelves_list {
+  text-transform: capitalize;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  overflow-y:auto;
+  scrollbar-width: none;
+}
+
+.mybooks_bookshelves_list span{
+  display: flex;
+  flex-direction: row;
+}
+
+.mybooks_bookshelves_list h3{
+  /* margin: auto; */
+}
+
+/* RIGHT SIDE */
+.mybooks_right_container {
+  margin-left: 20px;
+  /* width: 400px; */
+  width: 100%;
+  /* max-width: 100%; */
+}
+.mybooks_table {
+  /* border: 1px solid black; */
+  width: 100%;
+}
+
+.mybooks_main_reccomendation_list {
+display: flex;
+flex-direction: column;
+}
+
+.mybooks_main_reccomendation_list {}
+
+.mybooks_right_column_books{
+  display: flex;
+  flex-direction: row;
+}
+
+.mybooks_right_column_cover {}
+.mybooks_right_column_cover img {
+  width: 50px;
+  /* height: 120px; */
+  margin-top: 15px;
+  padding-right: 5px;
+}
+.mybooks_right_column_title {
+  font-size: 14px;
+  width: 117px;
+}
+.mybooks_right_column_title a{
+  text-decoration: none;
+  color: black;
+  font-size: 12px;
+}
+.mybooks_right_column_creator {
+  text-transform: capitalize;
+  width: 80px;
+}
+.mybooks_right_column_creator_list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.mybooks_right_column_averagerating{
+  width: 80px;
+}
+.mybooks_right_column_shelves{
+  width: 65px;
+}
+.mybooks_right_column_review{
+  width: 190px;
+}
+.mybooks_right_column_date_read{
+  width: 35px;
+}
+.mybooks_right_column_date_added{
+  width: 35px;
+}
+
+
+.mybooks_table th{
+  text-align: left;
+  word-break: nowrap;
+}
+
+#column1 {
+  width: 50px;
+}
+#column2 {
+  width: 117px;
+}
+#column3 {
+  width: 80px;
+}
+#column4 {
+  width: 80px;
+}
+#column5 {
+  width: 111px;
+}
+#column6 {
+  width: 65px;
+}
+#column7 {
+  width: 190px;
+}
+#column8 {
+  width: 35px;
+}
+#column9 {
+  width: 35px;
 }

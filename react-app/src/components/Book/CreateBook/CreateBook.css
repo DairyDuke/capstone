@@ -1,11 +1,35 @@
+
+#create_book_modal_button {
+  cursor: pointer;
+}
+#create_book_modal_button:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 #create_book_new_button{}
-.create_book_form{}
-.create_book_form_input_box{}
+.create_book_form{
+  width: 450px;
+  border-radius: 3%;
+  object-fit: cover;
+  height: fit-content;
+}
+.create_book_form_input_box{
+
+}
 .create_book_form_input_count{}
 .create_book_form_footer{}
-.create_book_cancel_button{}
-.create_book_submit_button{}
-
+.create_book_cancel_button{
+  cursor: pointer;
+}
+.create_book_submit_button{
+  /* cursor: pointer; */
+  color: gray;
+}
+.create_book_submit_button:active {
+  color: blue;
+  cursor: pointer;
+}
 
 .create_book_form_input_box textarea {
   height: auto;

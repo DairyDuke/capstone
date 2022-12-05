@@ -65,13 +65,14 @@
 }
 
 #profile-dropdown {
+  border: 1px solid black;
   position: relative;
   width: 240px;
-  right: -62px;
-  top: 60px;
   background-color: #fff;
   border-radius: 3px;
   overflow: hidden;
+  left:  calc( 100% - 210px );
+  /* right: calc( 500px + - 100% ); */
 }
 
 #dropdown-header {
@@ -84,6 +85,11 @@
   color: #1e1915;
   padding: 0px 10px 0px 10px;
 }
+
+#dropdown-header button{
+  cursor: pointer;
+}
+
 
 .dropdown-option.image-option {
   padding-top: 5px;
@@ -108,7 +114,7 @@
   height: 37px;
   width: 37px;
   padding-right: 10px;
-  margin-top: 5px;
+  margin-top: 10px;
   object-fit: cover;
 }
 
@@ -147,8 +153,7 @@
 #profile-dropdown-container {
   width: 0px;
   position: fixed;
-  top: 0px;
-  right: 360px;
+  top: 60px;
 }
 
 #auth-buttons {

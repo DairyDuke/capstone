@@ -1,8 +1,21 @@
 #create_bookshelf_main_container{}
-#create_bookshelf_new_button{}
+#create_bookshelf_new_button{
+  cursor: pointer;
+}
 .create_bookshelf_form{}
-.create_bookshelf_form_input_box{}
+.create_bookshelf_form_input_box {
+  display: flex;
+  flex-direction: row;
+  text-decoration: unset;
+}
+.create_bookshelf_form_input_box:hover {
+  text-decoration: unset;
+}
 .create_bookshelf_form_input_count{}
 .create_bookshelf_form_footer{}
-.create_bookshelf_cancel_button{}
-.create_bookshelf_submit_button{}
+.create_bookshelf_cancel_button{
+  cursor: pointer;
+}
+.create_bookshelf_submit_button {
+  cursor: pointer;
+}

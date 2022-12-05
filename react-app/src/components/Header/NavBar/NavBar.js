@@ -4,19 +4,20 @@ import { NavLink, useLocation } from 'react-router-dom';
 import LoginFormModal from '../../auth/Login/LoginFormModal';
 import LogoutButton from '../../auth/LogoutButton';
 import SignUpFormModal from '../../auth/Signup/SignUpFormModal';
-
-import CreateBook from '../../Book/CreateBook'
+import CreateBookModal from '../../Book/CreateBook/CreateBookModal.js'
+import DemoUserButton from '../../auth/DemoUserButton';
 import './NavBar.css'
 
 // Modal Imports
 
 const NavBar = () => {
-  const location = useLocation();
+  // const location = useLocation();
   // console.log(location.pathname)
   const sessionUser = useSelector(state => state.session.user)
   const [status, setStatus] = useState(false);
   // const dispatch = useDispatch()
   const [showMenu, setShowMenu] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const toggleMenu = () => setShowMenu(!showMenu);
   const handleCreate = (e)=> {
     e.stopPropagation();
@@ -49,7 +50,7 @@ const NavBar = () => {
       <nav>
         {!sessionUser && (
           <div id='navbar_auth_buttons'>
-            {/* <DemoUserButton /> */}
+            <DemoUserButton />
             <LoginFormModal />
             <SignUpFormModal />
           </div>)
@@ -76,11 +77,14 @@ const NavBar = () => {
               <div id='profile-dropdown-container'>
                 <div id='profile-dropdown'>
                   <div id="dropdown-header">
-                    <NavLink to={`/users/${sessionUser.id}`} exact={true} className='dropdown-option image-option'>
+                    {/* <NavLink to={`/users/${sessionUser.id}`} exact={true} className='dropdown-option image-option'> */}
+                    <div className='dropdown-option image-option'>
                       <img id='navbar-profile-img' className='profile-img' alt='profile' src={sessionUser.profileImageUrl} />
                           <p>{sessionUser.username}</p>
-                    </NavLink>
+                    </div>
+                    {/* </NavLink> */}
                       <LogoutButton />
+
                   </div>
                   <div>
                     <NavLink to='/mybooks' exact={true} className='dropdown-option dropdown-followlink'>
@@ -97,7 +101,7 @@ const NavBar = () => {
                     {/* <NavLink to='/create-book' exact={true} className='dropdown-option dropdown-followlink'> */}
                       <div className='dropdown-option-child' onClick={handleCreate}>
                         {/* <p>Create Book</p> */}
-                        <CreateBook status={status}/>
+                        <CreateBookModal showModal={showModal} setShowModal={setShowModal}/>
                       </div>
                       <div className='dropdown-option-child'>
                         <span>{}</span>

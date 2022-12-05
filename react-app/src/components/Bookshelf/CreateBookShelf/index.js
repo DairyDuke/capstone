@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// import { useHistory, Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 // , useSelector
 import './EditBookShelf.css'
@@ -7,7 +7,7 @@ import * as bookshelfActions from '../../../store/bookshelf'
 
 const CreateEditBookShelf = () => {
   const dispatch = useDispatch();
-  // const history = useHistory();
+  const history = useHistory();
   // const bookshelves = useSelector(state => state.bookshelves.currentUser)
   // Determines if the new comment button exists or not.
   const [showNewShelfForm, setShowNewShelfForm] = useState(false);
@@ -49,6 +49,11 @@ const CreateEditBookShelf = () => {
 
     }
     const newShelf = await dispatch(bookshelfActions.createBookshelfThunk(shelfName))
+    .then(()=>{
+      cancelSubmit()
+      history.push('/mybooks')
+      window.location.reload();
+    })
     .catch(async (response) =>{
       const data = await response.json();
       if (data && data.errors) {
@@ -56,11 +61,6 @@ const CreateEditBookShelf = () => {
         // This console log is to make react happy - do not delete
         console.log("Errors "+errors)
       }
-
-    if (newShelf.ok) {
-      window.reload()
-      window.scrollTo(0,0)
-    }
   })
 }
 

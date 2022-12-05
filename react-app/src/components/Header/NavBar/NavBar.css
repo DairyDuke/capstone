@@ -2,7 +2,17 @@
   display: flex;
   width: 100%;
 }
-
+.navbar_menu_text {
+  text-decoration: unset;
+  color: black;
+  margin: 5px;
+  /* text-decoration: underline; */
+}
+.navbar_menu_text:hover {
+  text-decoration: unset;
+  margin: 5px;
+  text-decoration: underline;
+}
 .navbar_container>nav {
   display: flex;
   flex-flow: row nowrap;
@@ -31,7 +41,7 @@
 
 #navbar_auth_buttons {
   display: flex;
-  width: 25%;
+  width: 45%;
   flex-direction: row;
   justify-content: space-evenly;
 }
@@ -39,6 +49,7 @@
 #navbar_profile_button {
   display: flex;
   flex-direction: row;
+  cursor: pointer;
 }
 #navbar_profile_button>img {
   height: 25px;
@@ -49,4 +60,5 @@
   padding-left: 10px;
   border-bottom: 0.1rem solid #ebebeb;
   margin-bottom: 10px;
+  font-weight: 800;
 }

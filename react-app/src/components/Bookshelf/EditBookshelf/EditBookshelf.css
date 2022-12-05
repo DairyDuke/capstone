@@ -1,7 +1,20 @@
-#edit_bookshelf_new_button{}
-.edit_bookshelf_form{}
-.edit_bookshelf_form_input_box{}
+#edit_bookshelf_new_button{
+  padding-left: 5px;
+  cursor: pointer;
+  font-size: 10px;
+}
+.edit_bookshelf_form{
+  box-sizing: border-box;
+  border: 1px solid black;
+  position: relative;
+}
+.edit_bookshelf_form_input_box{
+}
 .edit_bookshelf_form_input_count{}
 .edit_bookshelf_form_footer{}
-.edit_bookshelf_cancel_button{}
-.edit_bookshelf_submit_button{}
+.edit_bookshelf_cancel_button{
+  cursor: pointer;
+}
+.edit_bookshelf_submit_button{
+  cursor: pointer;
+}
