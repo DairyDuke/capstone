@@ -27,6 +27,28 @@ def seed_creator_and_book():
         book_id =3
       )]
 
+    book4 = [
+      creator_and_book.insert().values(
+        creator_id = 5,
+        book_id =4
+      )]
+
+    book5 = [
+      creator_and_book.insert().values(
+        creator_id = 6,
+        book_id =5
+      ),
+      creator_and_book.insert().values(
+        creator_id = 7,
+        book_id =5
+      )]
+
+    book6 = [
+      creator_and_book.insert().values(
+        creator_id = 8,
+        book_id =6
+      )]
+
 
     for entry in book1:
         db.session.execute(entry)
@@ -35,6 +57,15 @@ def seed_creator_and_book():
         db.session.execute(entry)
 
     for entry in book3:
+        db.session.execute(entry)
+
+    for entry in book4:
+        db.session.execute(entry)
+
+    for entry in book5:
+        db.session.execute(entry)
+
+    for entry in book6:
         db.session.execute(entry)
 
     db.session.commit()
