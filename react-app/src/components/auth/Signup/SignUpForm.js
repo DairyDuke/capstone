@@ -94,6 +94,10 @@ const SignUpForm = ({showModal, setShowModal}) => {
         {/* {console.log(errors)}
         {errors && <ErrorHandler />} */}
       </div>
+      <div id="signin_declaration">
+        <h1>my reader's journey</h1>
+        <h3> Creant Your Account </h3>
+      </div>
       <div className="signup_input_container">
         <label>Your Name</label>
         <input

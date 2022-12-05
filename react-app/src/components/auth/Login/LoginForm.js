@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { login } from '../../../store/session';
+import './LoginForm.css'
 
 const LoginForm = ({showModal, setShowModal}) => {
   const [errors, setErrors] = useState([]);
@@ -56,6 +57,11 @@ const LoginForm = ({showModal, setShowModal}) => {
       {/* <div id="login_errors">
         {errors && {errorHandler}}
       </div> */}
+      <div id="signin_declaration">
+        <h1>my reader's journey</h1>
+        <h3> Sign In </h3>
+      </div>
+      <div id="alignment_buttons">
       <div className="login_input_container">
         <label htmlFor='email'>Email</label>
         <input
@@ -82,6 +88,7 @@ const LoginForm = ({showModal, setShowModal}) => {
         />
         {passwordCharCount > 0 && (<div className='char-count'>{passwordCharCount}/40</div>)}
       </div>
+    </div>
       <div id="login_form_buttons">
         <button id="login_form_cancel" type='button' onClick={()=> setShowModal(false)}>Close</button>
         <button id="login_form_submit" type='submit'>Login</button>
