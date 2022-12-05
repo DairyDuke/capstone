@@ -37,20 +37,11 @@ My Reader's Journey is a fullstack, stateful web-app that draws its functionalit
 ---
 ## App Screenshots
 
-### Sign Up Form
-![](https://i.imgur.com/W8Jc5He.png)
-
-### Log In Form
-![](https://i.imgur.com/yHvXcnS.png)
-
 ### Logged out splash page
 ![image](https://user-images.githubusercontent.com/32800127/205650654-142025af-6a38-4d5a-839b-7aa452b6b66f.png)
 
 ### Logged in splash page
 ![image](https://user-images.githubusercontent.com/32800127/205655449-5fadb582-6a77-41f9-98e5-3d8942383dc3.png)
-
-### Create Post Form
-![](https://i.imgur.com/5HibyDj.png)
 
 ### My Books Page
 ![image](https://user-images.githubusercontent.com/32800127/205655354-d76594fa-0dc2-44f7-bb69-29c6c376acee.png)
