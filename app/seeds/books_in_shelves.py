@@ -15,6 +15,18 @@ def seed_shelving():
             shelf_id = 3,
             book_id = 3,
         ),
+        books_in_shelve.insert().values(
+            shelf_id = 1,
+            book_id = 4,
+        ),
+        books_in_shelve.insert().values(
+            shelf_id = 2,
+            book_id = 5,
+        ),
+        books_in_shelve.insert().values(
+            shelf_id = 3,
+            book_id = 6,
+        ),
     ]
 
     user2 = [

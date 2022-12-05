@@ -18,9 +18,28 @@ def seed_book_covers():
     cover_image_url = "https://i.imgur.com/g2ZknTO.jpg"
   )
 
+  book4 = BookCover(
+    book_id = 4,
+    cover_image_url = "https://i.imgur.com/qq7JQvW.jpg"
+  )
+
+  book5 = BookCover(
+    book_id = 5,
+    cover_image_url = "https://i.imgur.com/MSowY3n.jpg"
+  )
+
+  book6 = BookCover(
+    book_id = 3,
+    cover_image_url = "https://i.imgur.com/nhyr6gN.jpg"
+  )
+
+
   db.session.add(book1)
   db.session.add(book2)
   db.session.add(book3)
+  db.session.add(book4)
+  db.session.add(book5)
+  db.session.add(book6)
   db.session.commit()
 
 

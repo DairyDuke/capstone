@@ -1,5 +1,7 @@
-.signup_button{}
-#signup_form {}
+#signup_button {
+  cursor: pointer;}
+#signup_form {
+  cursor: pointer;}
 .signup_input_container {}
 .signup_buttons{
     cursor: pointer;}
@@ -27,7 +29,7 @@
     height: 25px;
     background-color: #ffffff;
     border: none;
-    color: white;
+    color: black;
     font-size: 24px;
     width: 90%;
     border-radius: 50px;

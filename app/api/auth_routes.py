@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, session, request
-from app.models import User, db
+from app.models import User, db, Bookshelf
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
@@ -63,7 +63,7 @@ def sign_up():
     data = request.get_json()
     form = SignUpForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    print("data ", data)
+    # print("data ", data)
     if form.validate_on_submit():
         user = User(
             username=form.data['username'],
@@ -73,6 +73,26 @@ def sign_up():
         )
         db.session.add(user)
         db.session.commit()
+        shelf1 = Bookshelf(
+            user_id=user.id,
+            bookshelf_name = "read",
+            protected = True
+        )
+        shelf2 = Bookshelf(
+            user_id=user.id,
+            bookshelf_name = "want to read",
+            protected = True
+            )
+        shelf3 = Bookshelf(
+            user_id=user.id,
+            bookshelf_name = "currently reading",
+            protected = True
+        )
+        db.session.add(shelf1)
+        db.session.add(shelf2)
+        db.session.add(shelf3)
+        db.session.commit()
+
         login_user(user)
         return user.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
