@@ -21,6 +21,16 @@ const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
   const [bookUrlCharCount, setBookUrlCharCount] = useState(0);
 
   const [disableSubmit, setDisableSubmit] = useState(true);
+
+  const tx = document.getElementsByTagName("textarea");
+  for (let i = 1; i < tx.length; i++) {
+    tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px");
+    tx[i].addEventListener("input", OnInput, false);
+  }
+  function OnInput() {
+    this.style.height = 0;
+    this.style.height = (this.scrollHeight) + "px";
+  }
   const cancelSubmit = async () => {
     setShowEditModal(false)
     setBookTitle("")
@@ -195,7 +205,7 @@ const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
           </div>
           <div className="edit_book_form_input_box">
             <label>Book's Summary:
-            <input
+            <textarea
               name='Book Summary'
               type='text'
               placeholder='Concise, Spoiler-free Summary Here!'

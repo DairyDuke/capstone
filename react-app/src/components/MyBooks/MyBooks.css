@@ -70,21 +70,87 @@
   width: 100%;
   /* max-width: 100%; */
 }
+.mybooks_table {
+  border: 1px solid black;
+  width: 100%;
+}
 
 .mybooks_main_reccomendation_list {
-
+display: flex;
+flex-direction: column;
 }
 
-.mybooks_main_reccomendation_list img {
-  width: 80px;
-  height: 120px;
-  margin-top: 20px;
+.mybooks_main_reccomendation_list {}
+
+.mybooks_right_column_books{
+  display: flex;
+  flex-direction: row;
+}
+
+.mybooks_right_column_cover {}
+.mybooks_right_column_cover img {
+  width: 50px;
+  /* height: 120px; */
+  /* margin-top: 20px; */
   padding-right: 5px;
 }
-
-.mybooks_right_column_books{}
-.mybooks_right_column_details{}
-.mybooks_right_column_title{}
-.mybooks_right_column_averagerating{}
+.mybooks_right_column_title{
+  font-size: 14px;
+  width: 117px;
+}
+.mybooks_right_column_title a{
+  font-size: 12px;
+}
+.mybooks_right_column_creator {
+  width: 80px;
+}
 .mybooks_right_column_creator_list{}
-.mybooks_right_column_summary{}
+.mybooks_right_column_averagerating{
+  width: 35px;
+}
+.mybooks_right_column_shelves{
+  width: 65px;
+}
+.mybooks_right_column_review{
+  width: 190px;
+}
+.mybooks_right_column_date_read{
+  width: 35px;
+}
+.mybooks_right_column_date_added{
+  width: 35px;
+}
+
+
+.mybooks_table th{
+  text-align: left;
+
+}
+
+#column1 {
+  width: 50px;
+}
+#column2 {
+  width: 117px;
+}
+#column3 {
+  width: 80px;
+}
+#column4 {
+  width: 80px;
+}
+#column5 {
+  width: 35px;
+}
+#column6 {
+  width: 65px;
+}
+#column7 {
+  width: 190px;
+}
+#column8 {
+  width: 35px;
+}
+#column9 {
+  width: 35px;
+}

@@ -3,15 +3,18 @@ import { Redirect, useHistory, NavLink, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
 import './BookDetails.css'
 import * as bookActions from '../../store/book'
+import EditBookModal from '../Book/EditBook/EditBookModal.js'
+import DeleteBookModal from '../Book/DeleteBook/DeleteBookModal.js'
 
 const BookDetails = () => {
   const dispatch = useDispatch();
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [showEditModal, setShowEditModal] = useState(false)
   const bookobj = useSelector(state => state.books.singleBook) || [];
   const history = useHistory();
   const [errors, setErrors] = useState([]);
   const bookId = useParams()
-  console.log("HE", bookId.bookId)
-  // book traits
+
   // id, title, genre, Cover, Shelved, Creators - [{}], Reviewed [{}] cAt,uAt
 
   useEffect(()=> {
@@ -50,6 +53,20 @@ const BookDetails = () => {
           </div>
           <div id="bookdetails_left_column_book_status">
             {bookobj.Shelved}
+          </div>
+          <div id="quick_box">
+          <div className='bookdetails_edit_button' onClick={() => setShowEditModal(true)}>
+            <button id="edit-reply-button" className='edit-post-button edit-delete-post interface-text'>
+              Edit
+            </button>
+          </div>
+          <div className='bookdetails_delete_button' onClick={() => setShowDeleteModal(true)}>
+            <button id="delete-reply-button" className='delete-post-button edit-delete-post interface-text'>
+              Delete
+            </button>
+          </div>
+          <DeleteBookModal showDeleteModal={showDeleteModal} setShowDeleteModal={setShowDeleteModal} bookid={bookId.bookId} />
+          <EditBookModal showEditModal={showEditModal} setShowEditModal={setShowEditModal} bookData={bookobj} />
           </div>
         </div>
       </div>

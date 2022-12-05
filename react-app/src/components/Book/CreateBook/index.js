@@ -37,6 +37,7 @@ const CreateBook = ({showModal, setShowModal, status}) => {
   }
   const cancelSubmit = async () => {
     setShowNewBookForm(false)
+    setShowModal(false)
     setBookTitle("")
     setBookCoverImageUrl("")
     setBookSummary("")

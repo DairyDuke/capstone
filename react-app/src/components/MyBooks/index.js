@@ -96,30 +96,40 @@ const Home = ()=>{
   if (UserBooks && UserBooks.length > 1) {
       RenderElement = UserBooks.map((book)=>
     (
-    <tr>
-      <NavLink to={`/books/${book.id}`} key={book.id}>
-          <div className="mybooks_right_column_books">
-            <img src={book.Cover} alt={book.title} />
-            <div className="mybooks_right_column_details">
-              <div className="mybooks_right_column_title">
-                <h2>{book.title}</h2>
-              </div>
-              <div className="mybooks_right_column_averagerating">
-                <h3>{book.AverageRating}</h3>
-              </div>
-              <div className="mybooks_right_column_averagerating">
-                <h3>{book.Creators.map((creator)=> (
-                  <span className="mybooks_right_column_creator_list">
-                  {creator.role}: {creator.name}
-                  </span>
-                ))}</h3>
-              </div>
-              <div className="mybooks_right_column_summary">
-                <p className="growing_paragraph">{book.summary}</p>
-              </div>
-            </div>
-          </div>
-      </NavLink>
+    <tr className="mybooks_right_column_books">
+          <td className="mybooks_right_column_cover">
+            <NavLink to={`/books/${book.id}`} key={book.id}>
+              <img src={book.Cover} alt={book.title} />
+            </NavLink>
+          </td>
+          <td className="mybooks_right_column_title">
+            <NavLink to={`/books/${book.id}`} key={book.id}>
+              <h2>{book.title}</h2>
+            </NavLink>
+          </td>
+          <td className="mybooks_right_column_creator">
+              <h3>{book.Creators.map((creator)=> (<span className="mybooks_right_column_creator_list">
+                  {creator.role}: {creator.name}</span>))}
+              </h3>
+          </td>
+          <td className="mybooks_right_column_averagerating">
+              <h3>{book.AverageRating}</h3>
+          </td>
+          <td className="mybooks_right_column_rating">
+            ddd
+          </td>
+          <td className="mybooks_right_column_shelves">
+            ddd
+          </td>
+          <td className="mybooks_right_column_review">
+            fff
+          </td>
+          <td className="mybooks_right_column_date_read">
+            ggg
+          </td>
+          <td className="mybooks_right_column_date_added">
+            hhh
+          </td>
       </tr>
         )
   )}
@@ -144,38 +154,24 @@ const Home = ()=>{
       </div>
       <div className="mybooks_right_container">
         <div className="mybooks_main_reccomendation_list">
-          <table id="mybooks_table">
-            <th>
-              cover
-            </th>
-            <th>
-              title
-            </th>
-            <th>
-              author
-            </th>
-            <th>
-              avg rating
-            </th>
-            <th>
-              rating
-            </th>
-            <th>
-              shelves
-            </th>
-            <th>
-              review
-            </th>
-            <th>
-              date read
-            </th>
-            <th>
-              date added
-            </th>
-          </table>
+          <table className="mybooks_table">
+            <thread>
+              <tr>
+                <th id="column1">cover</th>
+                <th id="column2">title</th>
+                <th id="column3">author</th>
+                <th id="column4">avg rating</th>
+                <th id="column5">rating</th>
+                <th id="column6">shelves</th>
+                <th id="column7">review</th>
+                <th id="column8">date read</th>
+                <th id="column9">date added</th>
+              </tr>
+            </thread>
             <tbody>
-            {RenderElement}
+              {RenderElement}
             </tbody>
+          </table>
         </div>
       </div>
     </div>
