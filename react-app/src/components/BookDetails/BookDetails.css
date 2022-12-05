@@ -42,7 +42,10 @@
   width: 190px;
 }
 
-#bookdetails_left_column_book_status {}
+#bookdetails_left_column_book_status {
+  margin: auto;
+  text-transform: capitalize;
+}
 
 /* ---------- RIGHT CONTAINER --------- */
 .bookdetails_right_column_container {

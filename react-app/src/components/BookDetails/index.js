@@ -10,6 +10,7 @@ const BookDetails = () => {
   const dispatch = useDispatch();
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [showEditModal, setShowEditModal] = useState(false)
+  const sessionUser = useSelector(state => state.session.user)
   const bookobj = useSelector(state => state.books.singleBook) || [];
   const history = useHistory();
   const [errors, setErrors] = useState([]);
@@ -21,6 +22,15 @@ const BookDetails = () => {
     if (bookId) dispatch(bookActions.getSingleBookThunk(bookId.bookId))
 
   },[dispatch])
+
+  const addBookToShelf = async (bookId, bookobj) => {
+    await dispatch(bookActions.addBookToShelfThunk(bookobj, bookId.bookId))
+    .then(()=> {
+    // setShowDeleteModal(false)
+    window.location.reload()
+  }
+    )
+  }
 
 
   let creators;
@@ -52,19 +62,19 @@ const BookDetails = () => {
             <img src={bookobj.Cover} alt={bookobj.title} />
           </div>
           <div id="bookdetails_left_column_book_status">
-            {bookobj.Shelved}
+            <h3>Shelf {bookobj.Shelved}</h3>
           </div>
           <div id="quick_box">
-          <div className='bookdetails_edit_button' onClick={() => setShowEditModal(true)}>
+         {sessionUser && (<div className='bookdetails_edit_button' onClick={() => setShowEditModal(true)}>
             <button id="edit-reply-button" className='edit-post-button edit-delete-post interface-text'>
               Edit
             </button>
-          </div>
-          <div className='bookdetails_delete_button' onClick={() => setShowDeleteModal(true)}>
-            <button id="delete-reply-button" className='delete-post-button edit-delete-post interface-text'>
+          </div>)}
+          {sessionUser && (<div className='bookdetails_delete_button' onClick={() => setShowDeleteModal(true)}>
+          <button id="delete-reply-button" className='delete-post-button edit-delete-post interface-text'>
               Delete
             </button>
-          </div>
+          </div>)}
           <DeleteBookModal showDeleteModal={showDeleteModal} setShowDeleteModal={setShowDeleteModal} bookid={bookId.bookId} />
           <EditBookModal showEditModal={showEditModal} setShowEditModal={setShowEditModal} bookData={bookobj} />
           </div>

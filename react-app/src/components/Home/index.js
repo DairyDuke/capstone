@@ -95,23 +95,23 @@ const Home = ()=>{
       RenderElement = UserBooks.map((book)=>
     (
       <NavLink to={`/books/${book.id}`} key={book.id}>
-          <div className="splash_discover_reccomendations_books">
+          <div className="home_center__books">
             <img src={book.Cover} alt={book.title} />
-            <div className="splash_discover_reccomendations_details">
-              <div className="splash_discover_reccomendations_title">
+            <div className="home_center__details">
+              <div className="home_center__title">
                 <h2>{book.title}</h2>
               </div>
-              <div className="splash_discover_reccomendations_averagerating">
+              <div className="home_center__averagerating">
                 <h3>{book.AverageRating}</h3>
               </div>
-              <div className="splash_discover_reccomendations_averagerating">
+              <div className="home_center__averagerating">
                 <h3>{book.Creators.map((creator)=> (
                   <span className="splash_creator_list">
                   {creator.role}: {creator.name}
                   </span>
                 ))}</h3>
               </div>
-              <div className="splash_discover_reccomendations_summary">
+              <div className="home_center__summary">
                 <p className="growing_paragraph">{book.summary}</p>
               </div>
             </div>
@@ -124,6 +124,13 @@ const Home = ()=>{
 
    const imgAddress = "https://i.imgur.com/RmycZv9.png"
   return(
+    <>
+      <div className="home_full_length_banner">
+        <img src={imgAddress} alt="Reading is Love Banner" />
+        <div id="home_login_module">
+          <h1>Find your next adventure here.</h1>
+        </div>
+      </div>
     <div className="home_main_container">
       <div className="home_left_container">
         <div className="home_currently_reading_container">
@@ -145,6 +152,7 @@ const Home = ()=>{
         </div>
       </div>
     </div>
+  </>
   )
 }
 

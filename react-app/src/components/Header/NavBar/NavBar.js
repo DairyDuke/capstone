@@ -5,6 +5,7 @@ import LoginFormModal from '../../auth/Login/LoginFormModal';
 import LogoutButton from '../../auth/LogoutButton';
 import SignUpFormModal from '../../auth/Signup/SignUpFormModal';
 import CreateBookModal from '../../Book/CreateBook/CreateBookModal.js'
+import DemoUserButton from '../../auth/DemoUserButton';
 import './NavBar.css'
 
 // Modal Imports
@@ -49,7 +50,7 @@ const NavBar = () => {
       <nav>
         {!sessionUser && (
           <div id='navbar_auth_buttons'>
-            {/* <DemoUserButton /> */}
+            <DemoUserButton />
             <LoginFormModal />
             <SignUpFormModal />
           </div>)

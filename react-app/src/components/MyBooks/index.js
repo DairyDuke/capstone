@@ -7,6 +7,9 @@ import * as creatorActions from '../../store/creator'
 
 import './MyBooks.css'
 import CurrentlyReadingPreview from '../Book/BookElements/CurrentlyReadingPreview.js'
+import CreateEditBookShelf from '../Bookshelf/CreateBookShelf'
+import EditBookshelf from '../Bookshelf/EditBookshelf'
+import DeleteBookshelfModal from '../Bookshelf/DeleteBookshelf/DeleteBookshelfModal.js'
 
 
 const Home = ()=>{
@@ -16,6 +19,8 @@ const Home = ()=>{
   const userBookshelvobj = useSelector(state => state.bookshelves.currentUser) || [];
   const books = Object.values(bookobj) || [];
   const history = useHistory();
+  const [showShelfDeleteModal, setShowShelfDeleteModal] = useState(false)
+  const [showShelfEditModal, setShowShelfEditModal] = useState([])
   const [errors, setErrors] = useState([]);
   const defaulImg = "https://i.imgur.com/iL99VfD.jpg"
   // const tx = document.getElementsByClassName("growing_paragraph");
@@ -27,7 +32,17 @@ const Home = ()=>{
   //   this.style.height = 0;
   //   this.style.height = (this.scrollHeight) + "px";
   // }
-
+          // function hideMySpan(id) {
+          //   setShowShelfEditModal(!showShelfEditModal)
+          //   var mySpan = document.getElementById(id);
+          //   if (mySpan) {
+          //     if (showShelfEditModal) {
+          //     mySpan.style.display = "none"}
+          //     else {mySpan.style.display = ""}
+          //  }
+    // mySpan.display = false
+    // mySpan.style.display = "";
+  // }
   useEffect(async ()=> {
     await dispatch(bookActions.getAllBooksThunk())
     // dispatch(bookActions.getSingleBookThunk())
@@ -36,7 +51,17 @@ const Home = ()=>{
     await dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
     await dispatch(creatorActions.getAllCreatorsThunk())
   },[dispatch])
-
+let myspan;
+  // useEffect(() => {
+  //   if (showShelfEditModal[1]) {
+  //     myspan = document.getElementByTagName('span').getElementById(showShelfEditModal[0])
+  //     if (myspan) myspan.style.display = "none"
+  //   }
+  //   return () => {
+  //     myspan = document.getElementById(showShelfEditModal[0])
+  //     if (myspan) myspan.style.display = ""
+  //   }
+  // }, [showShelfEditModal])
 
   let UserShelves=[];
   let ShowCurrent;
@@ -44,6 +69,8 @@ const Home = ()=>{
   let ShowShelfList;
   let UserWantRead = [];
   let ShowWantRead;
+  let ProtectedShelf =[];
+  let ShowProtected;
   for (let shelf in userBookshelvobj){
     if (userBookshelvobj[shelf].bookshelfName === "currently reading") {
       if (userBookshelvobj[shelf].Stacks.length > 0) {
@@ -52,7 +79,11 @@ const Home = ()=>{
           )
       }
     }
-    UserShelfList.push([[userBookshelvobj[shelf].bookshelfName], userBookshelvobj[shelf].Stacks.length])
+
+    if (userBookshelvobj[shelf].protected === true) {
+      ProtectedShelf.push([[userBookshelvobj[shelf].bookshelfName], userBookshelvobj[shelf].id, userBookshelvobj[shelf].Stacks.length])
+    } else {
+    UserShelfList.push([[userBookshelvobj[shelf].bookshelfName], userBookshelvobj[shelf].id, userBookshelvobj[shelf].Stacks.length])}
     if (userBookshelvobj[shelf].bookshelfName === "want to read") {
       if (userBookshelvobj[shelf].Stacks.length > 0) {
         userBookshelvobj[shelf].Stacks.map((stack)=>
@@ -61,11 +92,25 @@ const Home = ()=>{
       }
     }
   }
-
+  // `bookshelf${shelf[1]}`
+  // ProtectedShelf
+  if (ProtectedShelf && ProtectedShelf.length >= 1) {
+    ShowProtected = ProtectedShelf.map((shelf)=> (
+        <div key={shelf[0]} >
+          <span id={`bookshelf${shelf[1]}`}>{shelf[2]}    {shelf[0]}
+          </span>
+        </div>
+    ))}
   if (UserShelfList && UserShelfList.length >= 1) {
   ShowShelfList = UserShelfList.map((shelf)=> (
-      <div key={shelf[0]}>
-        <span>{shelf[1]}    {shelf[0]}</span>
+      <div key={shelf[0]} >
+        <span id={`bookshelf${shelf[1]}`} onClick={()=> setShowShelfEditModal([`bookshelf${shelf[1]}`, true])} >{shelf[2]}    {shelf[0]}
+          <EditBookshelf shelfId={shelf[1]} shelfname={shelf[0]} />
+          <button className='mybooks_delete_bookshelf_button'  onClick={() => setShowShelfDeleteModal(true)}>
+            <i class="fa-sharp fa-solid fa-x"></i>
+          </button>
+        </span>
+          <DeleteBookshelfModal showDeleteModal={showShelfDeleteModal} setShowDeleteModal={setShowShelfDeleteModal} bookshelfid={shelf[1]} />
       </div>
   ))}
 
@@ -116,32 +161,43 @@ const Home = ()=>{
               <h3>{book.AverageRating}</h3>
           </td>
           <td className="mybooks_right_column_rating">
-            ddd
+            "No Rating Yet!"
           </td>
-          <td className="mybooks_right_column_shelves">
-            ddd
-          </td>
+          {/* <td className="mybooks_right_column_shelves">
+
+          </td> */}
           <td className="mybooks_right_column_review">
-            fff
+            "No Review Yet!"
           </td>
-          <td className="mybooks_right_column_date_read">
-            ggg
+          {/* <td className="mybooks_right_column_date_read">
+          {bookobj[book.id]}
           </td>
           <td className="mybooks_right_column_date_added">
-            hhh
-          </td>
+
+          </td> */}
       </tr>
         )
   )}
 
-
    const imgAddress = "https://i.imgur.com/RmycZv9.png"
   return(
+    <>
+    <div className="mybooks_full_length_banner">
+          <img src={imgAddress} alt="Reading is Love Banner" />
+          <div id="mybooks_login_module">
+            <h1>Get a handle on your collection.</h1>
+          </div>
+    </div>
     <div className="mybooks_main_container">
       <div className="mybooks_left_container">
         <div className="mybooks_bookshelves_list">
           <h3>BOOKSHELVES</h3>
+          {ShowProtected}
+
           {ShowShelfList}
+        </div>
+        <div className="mybooks_create_bookshelf">
+          <CreateEditBookShelf />
         </div>
         <div className="mybooks_currently_reading_container">
           <h3>CURRENTLY READING</h3>
@@ -162,10 +218,10 @@ const Home = ()=>{
                 <th id="column3">author</th>
                 <th id="column4">avg rating</th>
                 <th id="column5">rating</th>
-                <th id="column6">shelves</th>
+                {/* <th id="column6">shelves</th> */}
                 <th id="column7">review</th>
-                <th id="column8">date read</th>
-                <th id="column9">date added</th>
+                {/* <th id="column8">date read</th>
+                <th id="column9">date added</th> */}
               </tr>
             </thread>
             <tbody>
@@ -175,6 +231,7 @@ const Home = ()=>{
         </div>
       </div>
     </div>
+    </>
   )
 }
 

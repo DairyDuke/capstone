@@ -3,7 +3,9 @@
   height: 100%;
   margin: 0px;
 }
-
+.splash_main_container a{
+color: black;
+}
 .splash_full_length_banner {
   display: flex;
   height: 275px;
@@ -98,10 +100,17 @@
   font-size: 16px;
   word-wrap: break-word;
 }
+.splash_discover_reccomendations_title h2 {
+  margin-bottom: 0px;
+}
 
 .splash_discover_reccomendations {
   background-color: #f4f2e9;
 
+}
+.splash_discover_reccomendations_averagerating h3{
+  text-transform: capitalize;
+  margin: 0px;
 }
 
 #splash_what_discover_box {}

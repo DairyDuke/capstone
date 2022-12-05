@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-// import { useHistory} from 'react-router-dom';
-// , Redirect
 import { useDispatch } from 'react-redux';
-// , useSelector
 import './CreateBook.css'
 import * as bookActions from '../../../store/book'
+
 
 const CreateBook = ({showModal, setShowModal, status}) => {
   const dispatch = useDispatch();
