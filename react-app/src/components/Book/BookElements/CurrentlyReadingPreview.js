@@ -1,25 +1,62 @@
-
+import React, { useEffect, useState } from "react";
+import { Redirect, useHistory, NavLink } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux"
+import * as bookActions from '../../../store/book'
+import * as bookshelfActions from '../../../store/bookshelf'
+import * as creatorActions from '../../../store/creator'
 import './CurrentlyReadingPreview'
 
 
-const CurrentlyReadingPreview = ({book}) => {
+const CurrentlyReadingPreview = () => {
+  const dispatch = useDispatch();
+  const bookobj = useSelector(state => state.books);
+  const books = Object.values(bookobj) || [];
+  const bookshelfobj = useSelector(state => state.bookshelves.currentUser);
+  // const bookshelves = Object.values(bookshelfobj) || [];
+  const history = useHistory();
+  const [errors, setErrors] = useState([]);
+
+  useEffect(()=> {
+    dispatch(bookActions.getAllBooksThunk())
+    // dispatch(bookActions.getSingleBookThunk(2))
+    // dispatch(bookshelfActions.getAllBookshelvesThunk())
+    dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
+    // dispatch(creatorActions.getAllCreatorsThunk())
+  },[dispatch])
+  console.log(bookshelfobj)
+  // console.log("Bookshelves",bookshelves)
+  console.log(bookobj)
   // need to pull books, then pull author/creator
   // title, summary, id, genre, createdAt, updatedAt
-  if (!book) {
-    return (
-      <>
-      </>
-    )
-  } else {
-  return (
+  let UserShelves;
+  for (let shelf in bookshelfobj){
+    console.log("Before If", shelf)
+    if (bookshelfobj[shelf].bookshelfName === "read") {
+      console.log("FIRED",bookshelfobj[shelf])
+      UserShelves = bookshelfobj[shelf]
+    }
+  }
+  console.log("PUSER", UserShelves)
+// id genre summary title cat,uat
+// bookobj[book.id].Cover
+// bookobj[book.id].Creators
+// bookobj[book.id].AverageRating
+  let PreviewBook = []
+  if (UserShelves && UserShelves.Stacks.length > 1 ){
+    console.log("DJSLJFS..........................")
+      PreviewBook = UserShelves['Stacks'].map((book)=>
+  (
     <div className="currently_reading_preview_container">
-      <a><img src={book.Cover} alt={book.title} /></a>
+      <a><img src={bookobj[book.id].Cover} alt={book.title} /></a>
       <div className="currently_reading_preview_info_box">
         <div className="currently_reading_preview_book_title">
           {book.title}
         </div>
         <div className="currently_reading_preview_author_name">
-          by {book.creator}
+          by {bookobj[book.id]["Creators"].find((creator)=> creator['role'] === "author")['name'].toUpperCase()}
+        </div>
+        <div>
+        {bookobj[book.id]['AverageRating']}
         </div>
         <div className="currently_reading_preview_summary">
           {book.summary}
@@ -27,6 +64,21 @@ const CurrentlyReadingPreview = ({book}) => {
       </div>
     </div>
   )
-}
+  )}
+
+
+  // if (!bookshelves) {
+  //   return (
+  //     <>
+  //     <h1>Get to Reading!</h1>
+  //     </>
+  //   )
+  // } else {
+  return (
+    <>
+    "hey"
+    {PreviewBook}
+    </>
+  )
 }
 export default CurrentlyReadingPreview
