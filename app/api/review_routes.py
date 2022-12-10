@@ -17,22 +17,6 @@ from .auth_routes import validation_errors_to_error_messages
 
 review_routes = Blueprint('reviews', __name__)
 
-
-# GET - Get all Reviews by current User.
-@review_routes.route('')
-def all_user_reviews():
-    pass
-
-# GET - Get all Reviews for specific Book.
-@review_routes.route('/<int:bookId>')
-def all_reviews(bookId):
-    pass
-
-# POST- Post a review for a specific Book.
-@review_routes.route('/<int:bookId>', methods=["POST"])
-def create_review(bookId):
-    pass
-
 # PUT - Edit a Review for a Book.
 @review_routes.route('/<int:bookId>', methods=["PUT"])
 def edit_review(bookId):

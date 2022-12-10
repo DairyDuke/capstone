@@ -86,7 +86,7 @@ def create_book():
     new_book = Book.query.filter_by(title=book_form.data['title']).first()
     # print(new_book)
     if new_book:
-        return {'message': "Book already exists!"}, 300
+        return {'errors':{'message': "Book already exists!"}}, 300
 
     if book_form.validate_on_submit():
         new_book = Book(
@@ -122,7 +122,7 @@ def book_details(bookId):
     try:
       single_book = Book.query.order_by(Book.created_at.desc()).options(joinedload(Book.creators), joinedload(Book.covered), joinedload(Book.shelved), joinedload(Book.reviewed)).get_or_404(bookId)
     except:
-        return {'message': "Book couldn't be found"}, 404
+        return {'errors':{'message': "Book couldn't be found"}}, 404
     else:
       single_data = single_book.to_dict()
       # single_book.creators.to_dict()
@@ -152,7 +152,7 @@ def edit_book(bookId):
     try:
         current_book = Book.query.get_or_404(bookId)
     except:
-        return {'message': "Book couldn't be found"}, 404
+        return {'errors':{'message': "Book couldn't be found"}}, 404
     else:
         if book_form.validate_on_submit():
             if book_form.data['title']:
@@ -327,3 +327,21 @@ def remove_book_from_shelf(bookId):
 #     # if path == '/books/favicon.ico':
 #     return app.send_from_directory('public', 'favicon.png')
 #     # return app.send_static_file('index.html')
+
+
+
+# ------------------------------------------------------------
+# Review Routes - (that have a prefix of /books/:bookId)
+# ------------------------------------------------------------
+
+# Route - Get all reviews of a post:
+@book_routes.route('/<int:id>/reviews', methods=['GET'])
+def get_all_reviews(id):
+    pass
+
+
+# Route - Add a review to a book:
+@book_routes.route('/<int:id>/reviews', methods=['POST'])
+@login_required
+def add_review(id):
+    pass

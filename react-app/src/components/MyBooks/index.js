@@ -43,13 +43,15 @@ const Home = ()=>{
     // mySpan.display = false
     // mySpan.style.display = "";
   // }
-  useEffect(async ()=> {
+  useEffect(()=> {
+    async function grabData() {
     await dispatch(bookActions.getAllBooksThunk())
     // dispatch(bookActions.getSingleBookThunk())
     // dispatch(bookActions.removeSingleBookThunk())
     await dispatch(bookshelfActions.getAllBookshelvesThunk())
     await dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
-    await dispatch(creatorActions.getAllCreatorsThunk())
+    await dispatch(creatorActions.getAllCreatorsThunk())}
+    grabData()
   },[dispatch])
 let myspan;
   // useEffect(() => {
@@ -153,7 +155,7 @@ let myspan;
             </NavLink>
           </td>
           <td className="mybooks_right_column_creator">
-              <h3>{book.Creators.map((creator)=> (<span className="mybooks_right_column_creator_list">
+              <h3>{book.Creators && book.Creators.map((creator)=> (<span className="mybooks_right_column_creator_list">
                   {creator.role}: {creator.name}</span>))}
               </h3>
           </td>

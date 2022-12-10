@@ -29,12 +29,14 @@ const Home = ()=>{
   // }
 
   useEffect(async ()=> {
+    async function grabData() {
     await dispatch(bookActions.getAllBooksThunk())
     // dispatch(bookActions.getSingleBookThunk())
     // dispatch(bookActions.removeSingleBookThunk())
     await dispatch(bookshelfActions.getAllBookshelvesThunk())
     await dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
-    await dispatch(creatorActions.getAllCreatorsThunk())
+    await dispatch(creatorActions.getAllCreatorsThunk())}
+    grabData()
   },[dispatch])
 
 
@@ -105,7 +107,7 @@ const Home = ()=>{
                 <h3>{book.AverageRating}</h3>
               </div>
               <div className="home_center__averagerating">
-                <h3>{book.Creators.map((creator)=> (
+                <h3>{book.Creators && book.Creators.map((creator)=> (
                   <span className="splash_creator_list">
                   {creator.role}: {creator.name}
                   </span>

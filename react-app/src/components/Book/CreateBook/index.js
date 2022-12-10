@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory, Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import './CreateBook.css'
 import * as bookActions from '../../../store/book'
@@ -6,7 +7,7 @@ import * as bookActions from '../../../store/book'
 
 const CreateBook = ({showModal, setShowModal, status}) => {
   const dispatch = useDispatch();
-  // const history = useHistory();
+  const history = useHistory();
   // const creators = useSelector(state => state.creators)
   // Determines if the new comment button exists or not.
   const [showNewBookForm, setShowNewBookForm] = useState(showModal || false);
@@ -16,7 +17,7 @@ const CreateBook = ({showModal, setShowModal, status}) => {
   const [bookSummary, setBookSummary] = useState("");
   const [bookCoverImageUrl, setBookCoverImageUrl] = useState("");
   // Error Handling
-  const [errors, setErrors] = useState("");
+  const [errors, setErrors] = useState([]);
   // Character Counter
   const [bookTitleCharCount, setBookTitleCharCount] = useState(0);
   const [bookGenreCharCount, setBookGenreCharCount] = useState(0);
@@ -40,7 +41,7 @@ const CreateBook = ({showModal, setShowModal, status}) => {
     setBookCoverImageUrl("")
     setBookSummary("")
     setBookGenre("")
-    setErrors("")
+    setErrors([])
     setBookTitleCharCount(0)
     setBookGenreCharCount(0)
     setBookSummaryCharCount(0)
@@ -116,13 +117,20 @@ const CreateBook = ({showModal, setShowModal, status}) => {
      "cover_image_url": bookCoverImageUrl
     }
     const newBook = await dispatch(bookActions.createBookThunk(bookDataObject))
-    .then(() => {
+    .then(async (newBook) => {
+      // const data = await newBook.json()
+      console.log(newBook)
       cancelSubmit()
+      history.push(`/books/${newBook.id}`)
+      window.scrollTo(0,0)
+
     })
     .catch(async (newBook) => {
-      const data = await newBook.json();
-      if (data && data.errors) {
-        setErrors(Object.values(data.errors));
+      console.log(newBook)
+      // const data = await newBook.JSON()
+      // const data = await newBook.json();
+      if (newBook && newBook.errors) {
+        setErrors(Object.values(newBook.errors));
         // This console log is to make react happy - do not delete
         console.log("Errors "+errors)
       }
