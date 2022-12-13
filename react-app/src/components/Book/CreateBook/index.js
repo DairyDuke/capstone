@@ -118,19 +118,17 @@ const CreateBook = ({showModal, setShowModal, status}) => {
       console.log("this is why, ", bookCoverImageUrl)
       currentImg = bookCoverImageUrl
     }
-    console.log("this is ds, ", currentImg)
+
     const bookDataObject = {
      "title": bookTitle,
      "genre": bookGenre,
      "summary": bookSummary,
      "cover_image_url": currentImg
     }
-    console.log(bookDataObject)
     const newBook = await dispatch(bookActions.createBookThunk(bookDataObject))
     .then(async (newBook) => await cancelSubmit()).then(async()=>
     history.push(`/books/${newBook.id}`))
     .catch(async (newBook) => {
-      console.log(newBook)
       // const data = await newBook.JSON()
       // const data = await newBook.json();
       if (newBook && newBook.errors) {

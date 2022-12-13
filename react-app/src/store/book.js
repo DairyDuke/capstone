@@ -116,23 +116,20 @@ export const createBookThunk = ({title, genre, summary, cover_image_url}) => asy
   }
 }
 
-export const editBookThunk = (bookData, bookId) => async (dispatch) => {
-  const response = await fetch(`/api/books/${bookId}`,{
+export const editBookThunk = (bookDataObject, id) => async (dispatch) => {
+  const response = await fetch(`/api/books/${id}`, {
     method: 'PUT',
-    body: JSON.stringify({
-      "title": bookData["title"],
-      "genre": bookData["genre"],
-      "summary": bookData["summary"],
-      "cover_image_url": bookData["cover_image_url"],
-    })
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(bookDataObject)
   });
 
   if (response.ok){
     const editedBook = await response.json()
     dispatch(editBook(editedBook))
-    return editedBook
+    // return response
   } else {
-    throw 404
+    const errors = await response.json()
+    return errors
   }
 }
 
