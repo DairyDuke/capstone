@@ -17,10 +17,22 @@ const BookDetails = () => {
   const [errors, setErrors] = useState([]);
   const bookId = useParams()
 
-  // id, title, genre, Cover, Shelved, Creators - [{}], Reviewed [{}] cAt,uAt
 
   useEffect(()=> {
-    if (bookId) dispatch(bookActions.getSingleBookThunk(bookId.bookId))
+    async function checkBookData(bookId) {
+      await dispatch(bookActions.getSingleBookThunk(bookId))
+      // .then((response)=> console.log('there'))
+      .catch(async (response) => {
+        await dispatch(bookActions.removeSingleBookThunk(bookId)).then(async ()=> await dispatch(bookActions.getAllBooksThunk())).then(()=>
+        history.push('/')
+        )
+      })
+    }
+    checkBookData(bookId.bookId)
+    // if (bookId) {
+    //   console.log("Book, ", bookId)
+    // }
+    // else {history.push('/')}
 
   },[dispatch])
 
@@ -32,6 +44,7 @@ const BookDetails = () => {
   }
     )
   }
+
 
 
   let creators;

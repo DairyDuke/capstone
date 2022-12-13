@@ -68,9 +68,9 @@ const CreateEditBookShelf = () => {
     <div id="create_bookshelf_main_container">
       {showNewShelfForm === false && (
         <>
-          <div id="create_bookshelf_new_button" onClick={()=> setShowNewShelfForm(true)}>
-            <span>Add Bookshelf</span>
-          </div>
+          <button id="create_bookshelf_new_button" onClick={()=> setShowNewShelfForm(true)}>
+            <span>Add shelf</span>
+          </button>
         </>
       )}
 

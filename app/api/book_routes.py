@@ -275,6 +275,7 @@ def remove_book_from_shelf(bookId):
     elif data["custom_bookshelf_name"]:
         response = {"message": f"{book_dict_message['title']} successfully removed from {data['custom_bookshelf_name']}!"}
 
+
     for shelf in user_shelves:
         shelf_dict = shelf.to_dict()
         # Staple Bookshelf Route
@@ -289,6 +290,9 @@ def remove_book_from_shelf(bookId):
                 shelf.stacks.remove(book_to_add)
         # Custom Bookshelf Route
         if data["custom_bookshelf_name"] == shelf_dict["bookshelfName"]:
+            if book_to_add in shelf.stacks:
+                shelf.stacks.remove(book_to_add)
+        if data["bookshelf_name"] == "all":
             if book_to_add in shelf.stacks:
                 shelf.stacks.remove(book_to_add)
             # else:

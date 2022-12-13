@@ -73,6 +73,8 @@ let myspan;
   let ShowWantRead;
   let ProtectedShelf =[];
   let ShowProtected;
+
+
   for (let shelf in userBookshelvobj){
     if (userBookshelvobj[shelf].bookshelfName === "currently reading") {
       if (userBookshelvobj[shelf].Stacks.length > 0) {
@@ -105,13 +107,13 @@ let myspan;
     ))}
   if (UserShelfList && UserShelfList.length >= 1) {
   ShowShelfList = UserShelfList.map((shelf)=> (
-      <div key={shelf[0]} >
+      <div key={shelf[0]} className="mybooks_custom_shelves">
         <span id={`bookshelf${shelf[1]}`} onClick={()=> setShowShelfEditModal([`bookshelf${shelf[1]}`, true])} >{shelf[2]}    {shelf[0]}
+        </span>
           <EditBookshelf shelfId={shelf[1]} shelfname={shelf[0]} />
           <button className='mybooks_delete_bookshelf_button'  onClick={() => setShowShelfDeleteModal(true)}>
             <i class="fa-sharp fa-solid fa-x"></i>
           </button>
-        </span>
           <DeleteBookshelfModal showDeleteModal={showShelfDeleteModal} setShowDeleteModal={setShowShelfDeleteModal} bookshelfid={shelf[1]} />
       </div>
   ))}
@@ -195,15 +197,22 @@ let myspan;
         <div className="mybooks_bookshelves_list">
           <h3>BOOKSHELVES</h3>
           {ShowProtected}
-
-          {ShowShelfList}
+        </div>
+        <div className="mybooks_spacer_line">
         </div>
         <div className="mybooks_create_bookshelf">
+          {ShowShelfList}
+        </div>
           <CreateEditBookShelf />
+
+        <div className="mybooks_spacer_line">
         </div>
         <div className="mybooks_currently_reading_container">
           <h3>CURRENTLY READING</h3>
           {ShowCurrent}
+        </div>
+
+        <div className="mybooks_spacer_line">
         </div>
         <div className="mybooks_want_to_read_container">
           <h3>WANT TO READ</h3>

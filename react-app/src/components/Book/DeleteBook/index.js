@@ -1,9 +1,11 @@
 import { useDispatch } from "react-redux"
+import { useHistory  } from "react-router-dom";
 import { useEffect } from "react"
 import * as bookActions from '../../../store/book'
 import './DeleteBook.css'
 
 const DeleteBook = ({ bookid, setShowDeleteModal, showDeleteModal }) => {
+  const history = useHistory();
 
   const dispatch = useDispatch()
 
@@ -16,8 +18,13 @@ const DeleteBook = ({ bookid, setShowDeleteModal, showDeleteModal }) => {
     }
   }, [showDeleteModal])
 
-  const deleteBook = (bookid) => {
-    dispatch(bookActions.deleteBookThunk(bookid))
+  const deleteBook = async (bookid) => {
+    // await dispatch(bookActions.deleteBookThunk(bookid)).then(async ()=> await dispatch(bookActions.removeSingleBookThunk(bookid))).then(async ()=> await dispatch(bookActions.getAllBooksThunk())).then(()=> history.push('/'))
+    await dispatch(bookActions.deleteBookThunk(bookid))
+    await dispatch(bookActions.removeSingleBookThunk(bookid))
+    await dispatch(bookActions.removeBookFromShelfThunk({"bookshelf_name":"all", "custom_bookshelf_name":null}, bookid))
+    await dispatch(bookActions.getAllBooksThunk())
+    history.push({pathname: '/'})
   }
 
   return (

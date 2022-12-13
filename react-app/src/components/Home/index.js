@@ -11,10 +11,10 @@ import CurrentlyReadingPreview from '../Book/BookElements/CurrentlyReadingPrevie
 
 const Home = ()=>{
   const dispatch = useDispatch();
-  const bookobj = useSelector(state => state.books) || [];
-  const bookshelvobj = useSelector(state => state.bookshelves) || [];
-  const userBookshelvobj = useSelector(state => state.bookshelves.currentUser) || [];
-  const books = Object.values(bookobj) || [];
+  const bookobj = useSelector(state => state.books);
+  const bookshelvobj = useSelector(state => state.bookshelves);
+  const userBookshelvobj = useSelector(state => state.bookshelves.currentUser);
+  const books = Object.values(bookobj);
   const history = useHistory();
   const [errors, setErrors] = useState([]);
   const defaulImg = "https://i.imgur.com/iL99VfD.jpg"
@@ -28,24 +28,15 @@ const Home = ()=>{
   //   this.style.height = (this.scrollHeight) + "px";
   // }
 
-  useEffect(async ()=> {
-    async function grabData() {
-    await dispatch(bookActions.getAllBooksThunk())
-    // dispatch(bookActions.getSingleBookThunk())
-    // dispatch(bookActions.removeSingleBookThunk())
-    await dispatch(bookshelfActions.getAllBookshelvesThunk())
-    await dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
-    await dispatch(creatorActions.getAllCreatorsThunk())}
-    grabData()
-  },[dispatch])
-
-
   let UserShelves=[];
   let ShowCurrent;
   let UserShelfList = [];
   let ShowShelfList;
   let UserWantRead = [];
   let ShowWantRead;
+  let UserBooks = []
+  let RenderElement
+  const runData = function() {
   for (let shelf in userBookshelvobj){
     if (userBookshelvobj[shelf].bookshelfName === "currently reading") {
       if (userBookshelvobj[shelf].Stacks.length > 0) {
@@ -62,8 +53,32 @@ const Home = ()=>{
         )
       }
     }
-  }
+  }}
 
+  useEffect(()=> {
+    async function grabData() {
+    await dispatch(bookActions.getAllBooksThunk())
+    // dispatch(bookActions.getSingleBookThunk())
+    // dispatch(bookActions.removeSingleBookThunk())
+    await dispatch(bookshelfActions.getAllBookshelvesThunk())
+    await dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
+    await dispatch(creatorActions.getAllCreatorsThunk())}
+    grabData()
+  },[dispatch])
+// console.log("This")
+  runData()
+
+  // useEffect (() => {
+  //   runData()
+  //   console.log("First UF")
+  //   },
+  // )
+  // useEffect (() => {
+  //   runData()
+  //   console.log("Second UF")
+  //   }, [history]
+  // )
+  console.log('1 ', UserShelfList)
   if (UserShelfList && UserShelfList.length >= 1) {
   ShowShelfList = UserShelfList.map((shelf)=> (
       <div key={shelf[0]}>
@@ -71,7 +86,8 @@ const Home = ()=>{
       </div>
   ))}
 
-  if (UserWantRead && UserWantRead.length >= 1) {
+  console.log('2 ', UserWantRead)
+  if (UserWantRead && UserWantRead.length > 0) {
   ShowWantRead = UserWantRead.map((book)=> (
     <NavLink to={`/books/${book.id}`} key={book.id}>
       <div>
@@ -80,13 +96,11 @@ const Home = ()=>{
     </NavLink>
   ))}
 
+  console.log('3 ', UserShelves)
   if (UserShelves && UserShelves.length >= 1) {
   ShowCurrent = UserShelves.map((stack)=> (
     <CurrentlyReadingPreview key={stack.id} book={stack}/>
   ))}
-
-  let UserBooks = []
-  let RenderElement
 
   for (let book in bookobj) {
     if (book !== "singleBook") {

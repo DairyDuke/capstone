@@ -81,11 +81,12 @@ export const getSingleBookThunk = (bookId) => async (dispatch) => {
   const response = await fetch(`/api/books/${bookId}`)
 
   if (response.ok){
+    console.log("Response,", response.ok)
     const singleBook = await response.json()
     dispatch(getSingleBook(singleBook))
     return singleBook
   } else {
-    return ['Unable to fetch.']
+    throw 404
   }
 }
 
@@ -167,9 +168,11 @@ export const addBookToShelfThunk = (bookshelfData, bookId) => async (dispatch) =
 }
 
 export const removeBookFromShelfThunk = (bookshelfData, bookId) => async (dispatch) => {
-  const response = await fetch('/api/books',{
+  const response = await fetch(`/api/books/${bookId}/bookshelf`,{
     method: 'DELETE',
     body: JSON.stringify({
+      "bookshelf_name": bookshelfData.bookshelf_name,
+      "custome_bookshelf_name": bookshelfData.custom_bookshelf_name
     })
   });
   if (response.ok){
