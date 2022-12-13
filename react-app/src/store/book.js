@@ -73,7 +73,7 @@ export const getAllBooksThunk = () => async (dispatch) => {
     dispatch(getAllBooks(allBooks))
     return allBooks
   } else {
-    return ['Unable to fetch.']
+    throw 404
   }
 }
 
@@ -95,7 +95,7 @@ export const removeSingleBookThunk = ()=> async dispatch =>{
   return
 }
 
-export const createBookThunk = ({title, genre, summary, cover_imagE_url}) => async (dispatch) => {
+export const createBookThunk = ({title, genre, summary, cover_image_url}) => async (dispatch) => {
   const response = await fetch('/api/books', {
     method: 'POST',
     headers: { "Content-Type": "application/json" },
@@ -103,7 +103,7 @@ export const createBookThunk = ({title, genre, summary, cover_imagE_url}) => asy
       "title":title,
       "genre":genre,
       "summary":summary,
-      "cover_imagE_url": cover_imagE_url
+      "coverImageURL":cover_image_url
     })
   })
 
@@ -112,7 +112,7 @@ export const createBookThunk = ({title, genre, summary, cover_imagE_url}) => asy
     dispatch(createBook(createdBook))
     return createdBook
   } else {
-    return ['Unable to fetch.']
+    throw 404
   }
 }
 
@@ -132,7 +132,7 @@ export const editBookThunk = (bookData, bookId) => async (dispatch) => {
     dispatch(editBook(editedBook))
     return editedBook
   } else {
-    return ['Unable to fetch.']
+    throw 404
   }
 }
 
@@ -146,7 +146,7 @@ export const deleteBookThunk = (bookId) => async (dispatch) => {
     dispatch(deleteBook(bookId))
     return deletedBook
   } else {
-    return ['Unable to fetch.']
+    throw 404
   }
 }
 
@@ -163,7 +163,7 @@ export const addBookToShelfThunk = (bookshelfData, bookId) => async (dispatch) =
     dispatch(addBookToShelf(addedShelf, bookId))
     return addedShelf
   } else {
-    return ['Unable to fetch.']
+    throw 404
   }
 }
 

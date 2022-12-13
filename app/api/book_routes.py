@@ -80,6 +80,7 @@ def create_book():
     Else, just creates an association.
     """
     # pass
+    data = request.get_json()
     book_form = BookForm()
     book_form['csrf_token'].data = request.cookies['csrf_token']
 
@@ -96,11 +97,10 @@ def create_book():
         )
         db.session.add(new_book)
         db.session.commit()
-
-        if book_form.data['cover_image_url']:
+        if book_form.data['coverImageURL']:
             new_book_cover = BookCover(
             book_id= new_book.id,
-            cover_image_url = book_form.data['cover_image_url']
+            cover_image_url = book_form.data['coverImageURL']
             )
         else:
             new_book_cover = BookCover(
@@ -319,7 +319,8 @@ def remove_book_from_shelf(bookId):
     # return "cool"
     # books = Book.query.order_by(Book.created_at.desc()).options(joinedload(Book.creators), joinedload(Book.covered), joinedload(Book.shelved), joinedload(Book.reviewed)).all()
 
-# @book_routes.route('/', defaults={'path': ''})
+
+# @book_routes.route('', defaults={'path': ''})
 # @book_routes.route('/favicon.png', method=["GET"])
 # def react_root():
 #     """
@@ -328,11 +329,9 @@ def remove_book_from_shelf(bookId):
 #     or index.html requests
 #     """
 #     print(".........................................")
-#     # if path == '/books/favicon.ico':
-#     return app.send_from_directory('public', 'favicon.png')
-#     # return app.send_static_file('index.html')
-
-
+#     if path == '/books/favicon.ico':
+#         return app.send_from_directory('public', 'favicon.png')
+#     return app.send_static_file('index.html')
 
 # ------------------------------------------------------------
 # Review Routes - (that have a prefix of /books/:bookId)

@@ -36,6 +36,19 @@ const Home = ()=>{
   let ShowWantRead;
   let UserBooks = []
   let RenderElement
+
+  // let experiment;
+  // useEffect(()=> {
+  //   async function runTest() {
+  //     for (let shelf in userBookshelvobj){
+  //     if (userBookshelvobj[shelf].bookshelfName === "want to read") {
+  //      experiment = await dispatch(bookshelfActions.getSingleBookshelfThunk(shelf))
+  //      console.log("Experiment, ", experiment)
+  //     }
+  //   }}
+  //   runTest()
+  // }, [dispatch])
+
   const runData = function() {
   for (let shelf in userBookshelvobj){
     if (userBookshelvobj[shelf].bookshelfName === "currently reading") {
@@ -53,7 +66,13 @@ const Home = ()=>{
         )
       }
     }
-  }}
+  }
+  for (let book in bookobj) {
+    if (book !== "singleBook") {
+      UserBooks.push(bookobj[book])
+    }
+  }
+}
 
   useEffect(()=> {
     async function grabData() {
@@ -78,7 +97,8 @@ const Home = ()=>{
   //   console.log("Second UF")
   //   }, [history]
   // )
-  console.log('1 ', UserShelfList)
+  // console.log("Book obj ", bookobj)
+  // console.log('1 ', UserShelfList)
   if (UserShelfList && UserShelfList.length >= 1) {
   ShowShelfList = UserShelfList.map((shelf)=> (
       <div key={shelf[0]}>
@@ -86,33 +106,33 @@ const Home = ()=>{
       </div>
   ))}
 
-  console.log('2 ', UserWantRead)
+  // console.log('2 ', UserWantRead)
   if (UserWantRead && UserWantRead.length > 0) {
-  ShowWantRead = UserWantRead.map((book)=> (
+  ShowWantRead = UserWantRead.map((book)=> {
+    if (bookobj[book.id]) {
+      return (
     <NavLink to={`/books/${book.id}`} key={book.id}>
       <div>
-        <img src={bookobj[book.id].Cover || defaulImg} alt={book.title}/>
+        <img src={bookobj[book.id]["Cover"]} alt={book.title}/>
       </div>
     </NavLink>
-  ))}
+  )}}
+  )}
 
-  console.log('3 ', UserShelves)
+  // console.log('3 ', UserShelves)
   if (UserShelves && UserShelves.length >= 1) {
   ShowCurrent = UserShelves.map((stack)=> (
     <CurrentlyReadingPreview key={stack.id} book={stack}/>
   ))}
 
-  for (let book in bookobj) {
-    if (book !== "singleBook") {
-      UserBooks.push(bookobj[book])
-    }
-  }
+
   if (UserBooks && UserBooks.length > 1) {
-      RenderElement = UserBooks.map((book)=>
-    (
+      RenderElement = UserBooks.map((book)=> {
+        if (bookobj[book.id]) {
+          return (
       <NavLink to={`/books/${book.id}`} key={book.id}>
           <div className="home_center__books">
-            <img src={book.Cover} alt={book.title} />
+            <img src={book["Cover"]} alt={book.title} />
             <div className="home_center__details">
               <div className="home_center__title">
                 <h2>{book.title}</h2>
@@ -133,7 +153,7 @@ const Home = ()=>{
             </div>
           </div>
       </NavLink>
-        )
+        )}}
   )}
 
 

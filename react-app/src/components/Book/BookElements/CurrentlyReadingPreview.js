@@ -24,9 +24,9 @@ const CurrentlyReadingPreview = ({book}) => {
     // dispatch(creatorActions.getAllCreatorsThunk())
   },[dispatch])
 
-  console.log("This is currently reading, ", book)
-  console.log("This is currently reading 2, ", bookobj)
-  console.log("This is currently reading 3, ", bookobj[book.id])
+  // console.log("This is currently reading, ", book)
+  // console.log("This is currently reading 2, ", bookobj)
+  // console.log("This is currently reading 3, ", bookobj[book.id])
   // console.log(bookobj[book.id].Creators)
   // need to pull books, then pull author/creator
   // title, summary, id, genre, createdAt, updatedAt

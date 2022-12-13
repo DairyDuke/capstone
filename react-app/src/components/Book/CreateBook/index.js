@@ -24,6 +24,8 @@ const CreateBook = ({showModal, setShowModal, status}) => {
   const [bookSummaryCharCount, setBookSummaryCharCount] = useState(0);
   const [bookUrlCharCount, setBookUrlCharCount] = useState(0);
 
+  const defaultImg = "https://i.imgur.com/iL99VfD.jpg"
+
   const [disableSubmit, setDisableSubmit] = useState(true);
   const tx = document.getElementsByTagName("textarea");
   for (let i = 1; i < tx.length; i++) {
@@ -110,21 +112,23 @@ const CreateBook = ({showModal, setShowModal, status}) => {
     e.preventDefault();
     setErrors([]);
     if (errors) { }
+
+    let currentImg = defaultImg
+    if (bookCoverImageUrl) {
+      console.log("this is why, ", bookCoverImageUrl)
+      currentImg = bookCoverImageUrl
+    }
+    console.log("this is ds, ", currentImg)
     const bookDataObject = {
      "title": bookTitle,
      "genre": bookGenre,
      "summary": bookSummary,
-     "cover_image_url": bookCoverImageUrl
+     "cover_image_url": currentImg
     }
+    console.log(bookDataObject)
     const newBook = await dispatch(bookActions.createBookThunk(bookDataObject))
-    .then(async (newBook) => {
-      // const data = await newBook.json()
-      console.log(newBook)
-      cancelSubmit()
-      history.push(`/books/${newBook.id}`)
-      window.scrollTo(0,0)
-
-    })
+    .then(async (newBook) => await cancelSubmit()).then(async()=>
+    history.push(`/books/${newBook.id}`))
     .catch(async (newBook) => {
       console.log(newBook)
       // const data = await newBook.JSON()
