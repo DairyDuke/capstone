@@ -148,18 +148,14 @@ def book_details(bookId):
 def edit_book(bookId):
     # pass
     data = request.get_json()
-    print(data)
     book_form = BookForm()
     book_form['csrf_token'].data = request.cookies['csrf_token']
     try:
         current_book = Book.query.get_or_404(bookId)
         current_book_Cover = BookCover.query.filter_by(book_id=bookId).first()
-        print(current_book)
-        print(current_book_Cover.cover_image_url)
     except:
         return {'errors':{'message': "Book couldn't be found"}}, 404
     else:
-        print("here")
         if book_form.validate_on_submit():
             if book_form.data['title']:
                 current_book.title = book_form.data['title']
@@ -175,10 +171,9 @@ def edit_book(bookId):
             response = current_book.to_dict()
             response['cover_image_url'] = current_book_Cover.cover_image_url
             return response
-        print("faulure")
-        print(book_form.errors)
+
         errorReturn = {'errors': validation_errors_to_error_messages(book_form.errors)}, 401
-        print(errorReturn)
+
         return {'errors': validation_errors_to_error_messages(book_form.errors)}, 401
 
 

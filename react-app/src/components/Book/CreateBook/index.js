@@ -126,8 +126,6 @@ const CreateBook = ({showModal, setShowModal, status}) => {
      "cover_image_url": currentImg
     }
     const newBook = await dispatch(bookActions.createBookThunk(bookDataObject))
-    .then(async (newBook) => await cancelSubmit()).then(async()=>
-    history.push(`/books/${newBook.id}`))
     .catch(async (newBook) => {
       // const data = await newBook.JSON()
       // const data = await newBook.json();
@@ -137,6 +135,11 @@ const CreateBook = ({showModal, setShowModal, status}) => {
         console.log("Errors "+errors)
       }
     })
+    if (newBook){
+    await dispatch(bookActions.getSingleBookThunk(newBook.id))
+    cancelSubmit()
+      history.push(`/books/${newBook.id}`)
+    }
   };
     // if (newBook.ok) {
     //   window.reload()
