@@ -8,10 +8,10 @@ const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
 
   // Actual form data:
   const [bookObj, setBookObj] = useState({...bookData})
-  const [bookTitle, setBookTitle] = useState("");
-  const [bookGenre, setBookGenre] = useState("");
-  const [bookSummary, setBookSummary] = useState("");
-  const [bookCoverImageUrl, setBookCoverImageUrl] = useState("");
+  // const [bookTitle, setBookTitle] = useState("");
+  // const [bookGenre, setBookGenre] = useState("");
+  // const [bookSummary, setBookSummary] = useState("");
+  // const [bookCoverImageUrl, setBookCoverImageUrl] = useState("");
   // Error Handling
   const [errors, setErrors] = useState([])
   // ({title: "", genre: "", summary: "", url: "", form: "", newError: "" });
@@ -35,10 +35,11 @@ const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
   }
   const cancelSubmit = async () => {
     setShowEditModal(false)
-    setBookTitle("")
-    setBookCoverImageUrl("")
-    setBookSummary("")
-    setBookGenre("")
+    setBookObj({...bookData})
+    // setBookTitle("")
+    // setBookCoverImageUrl("")
+    // setBookSummary("")
+    // setBookGenre("")
     setErrors([])
       // {title: "", genre: "", summary: "", url: "", form: "", newError: "" })
     setBookTitleCharCount(0)
@@ -55,9 +56,9 @@ const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
     }
   }, [showEditModal])
 
-  const editBook = (bookData) => {
-    dispatch(bookActions.editBookThunk(bookData))
-  }
+  // const editBook = (bookData) => {
+  //   dispatch(bookActions.editBookThunk(bookData))
+  // }
 
   useEffect(() => {
     if (bookTitleCharCount > 250) {
@@ -131,7 +132,7 @@ const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
       console.log("Test")
       setErrors(newBook.errors)
     } else {
-      dispatch(bookActions.getSingleBookThunk(bookDataObject.id))
+     await dispatch(bookActions.getSingleBookThunk(bookDataObject.id))
       cancelSubmit()
     }
 

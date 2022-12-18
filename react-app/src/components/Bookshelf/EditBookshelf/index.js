@@ -7,11 +7,13 @@ const EditBookshelf = ({shelfId, shelfname}) => {
   const dispatch = useDispatch();
   // Determines if the edit form should show.
   const [showEditShelfForm, setShowEditShelfForm] = useState(false);
+  const [id, setId] = useState(shelfId)
 
   // Actual form data:
-  const [shelfName, setShelfName] = useState(shelfname || "");
+  const [shelfName, setShelfName] = useState(shelfname);
   // Error Handling
-  const [errors, setErrors] = useState({bookshelf_name: "", newError: ""});
+  const [errors, setErrors] = useState([]);
+    // {bookshelf_name: "", newError: ""});
   // Character Counter
   const [shelfNameCharCount, setShelfNameCharCount] = useState(0);
 
@@ -19,8 +21,9 @@ const EditBookshelf = ({shelfId, shelfname}) => {
 
   const cancelSubmit = async () => {
     setShowEditShelfForm(false)
-    setShelfName("")
-    setErrors({bookshelf_name: "", newError: ""})
+    setId(shelfId)
+    setShelfName(shelfname)
+    setErrors([])
     setShelfNameCharCount(0)
   }
 
@@ -37,33 +40,41 @@ const EditBookshelf = ({shelfId, shelfname}) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    setErrors({bookshelf_name: ""});
-    if (errors) {
+    setErrors([]);
+    const editedShelf = await dispatch(bookshelfActions.editBookshelfThunk(id, shelfName))
 
+    if (editedShelf) {
+      setErrors(editedShelf.errors)
     }
-    const newShelf = await dispatch(bookshelfActions.editBookshelfThunk(shelfId, shelfName)).then(()=> cancelSubmit())
-    .catch(async (response) =>{
-      const data = await response.json();
-      if (data && data.errors) {
-        setErrors((prevState) => {
-          return {...prevState, newError: data.errors}});
-        // This console log is to make react happy - do not delete
-        console.log("Errors "+errors)
-      }
-
-    if (newShelf.ok) {
-      window.reload()
-      window.scrollTo(0,0)
+    else {
+      await dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
+      cancelSubmit()
     }
-  })
 }
+
+
+let ErrorHandler = [];
+if (errors) {
+  // console.log(errors)
+  for (let error in errors) {
+    // console.log(error)
+    // console.log(errors[error])
+      ErrorHandler.push((
+    <>
+      <span>
+        <h2>{error}:{errors[error]}</h2>
+      </span>
+    </>
+    ))}
+}
+
 
   return(
     <div >
       {showEditShelfForm === false && (
         <>
           <div id="edit_bookshelf_new_button" onClick={()=> setShowEditShelfForm(true)}>
-            <span><i class="fa-solid fa-pen-to-square"></i></span>
+            <span><i className="fa-solid fa-pen-to-square"></i></span>
           </div>
         </>
       )}
@@ -72,7 +83,7 @@ const EditBookshelf = ({shelfId, shelfname}) => {
         <>
           <form className="edit_bookshelf_form" onSubmit={onSubmit}>
             <div>
-              {/* Error div */}
+              {ErrorHandler}
               </div>
           <div className="edit_bookshelf_form_input_box">
             <label>Bookshelf Name:
@@ -91,7 +102,7 @@ const EditBookshelf = ({shelfId, shelfname}) => {
           </div>
           <div className='edit_bookshelf_form_footer'>
             <button className='edit_bookshelf_cancel_button' onClick={cancelSubmit}>cancel</button>
-            <button className='edit_bookshelf_submit_button' type="submit" disabled={disableSubmit}>add</button>
+            <button className='edit_bookshelf_submit_button' type="submit" disabled={disableSubmit}>edit</button>
           </div>
           </form>
         </>

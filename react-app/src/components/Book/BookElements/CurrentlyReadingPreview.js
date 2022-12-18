@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Redirect, useHistory, NavLink } from "react-router-dom";
+import React, { useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
 import * as bookActions from '../../../store/book'
 import * as bookshelfActions from '../../../store/bookshelf'
-import * as creatorActions from '../../../store/creator'
+// import * as creatorActions from '../../../store/creator'
 import './CurrentlyReadingPreview.css'
 
 
@@ -12,9 +12,9 @@ const CurrentlyReadingPreview = ({book}) => {
   // what we need - creator.
   const dispatch = useDispatch();
   const bookobj = useSelector(state => state.books);
-  const history = useHistory();
-  const [creatorList, setCreatorList] = useState([])
-  const [errors, setErrors] = useState([]);
+  // const history = useHistory();
+  // const [creatorList, setCreatorList] = useState([])
+  // const [errors, setErrors] = useState([]);
 
   useEffect(()=> {
     dispatch(bookActions.getAllBooksThunk())

@@ -107,8 +107,8 @@ def edit_bookshelf(shelfId):
             return {'message': "Read, Want to read, Currently Reading shelves can not be edited!"}, 403
     else:
         if shelf_form.validate_on_submit():
-            if shelf_form.data['bookshelf_name'] and current_shelf.bookshelf_name != shelf_form.data['bookshelf_name']:
-                current_shelf.bookshelf_name = shelf_form.data['bookshelf_name']
+            if shelf_form.data['bookshelfName'] and current_shelf.bookshelf_name != shelf_form.data['bookshelfName']:
+                current_shelf.bookshelf_name = shelf_form.data['bookshelfName']
                 db.session.commit()
             else:
                 return {'message': "Nothing Changed!"}, 300

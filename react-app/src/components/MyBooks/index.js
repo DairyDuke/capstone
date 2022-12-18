@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
 import * as bookActions from '../../store/book'
 import * as bookshelfActions from '../../store/bookshelf'
@@ -15,13 +15,13 @@ import DeleteBookshelfModal from '../Bookshelf/DeleteBookshelf/DeleteBookshelfMo
 const Home = ()=>{
   const dispatch = useDispatch();
   const bookobj = useSelector(state => state.books) || [];
-  const bookshelvobj = useSelector(state => state.bookshelves) || [];
+  // const bookshelvobj = useSelector(state => state.bookshelves) || [];
   const userBookshelvobj = useSelector(state => state.bookshelves.currentUser) || [];
-  const books = Object.values(bookobj) || [];
-  const history = useHistory();
+  // const books = Object.values(bookobj) || [];
+  // const history = useHistory();
   const [showShelfDeleteModal, setShowShelfDeleteModal] = useState(false)
-  const [showShelfEditModal, setShowShelfEditModal] = useState([])
-  const [errors, setErrors] = useState([]);
+  // const [showShelfEditModal, setShowShelfEditModal] = useState([])
+  // const [errors, setErrors] = useState([]);
   const defaulImg = "https://i.imgur.com/iL99VfD.jpg"
   // const tx = document.getElementsByClassName("growing_paragraph");
   // for (let i = 1; i < tx.length; i++) {
@@ -53,7 +53,7 @@ const Home = ()=>{
     await dispatch(creatorActions.getAllCreatorsThunk())}
     grabData()
   },[dispatch])
-let myspan;
+// let myspan;
   // useEffect(() => {
   //   if (showShelfEditModal[1]) {
   //     myspan = document.getElementByTagName('span').getElementById(showShelfEditModal[0])
@@ -105,14 +105,17 @@ let myspan;
           </span>
         </div>
     ))}
+
+    // onClick={document.getElementById(`bookshelf${shelf[1]}`).style.display = "none"}
+    // onClick={()=> setShowShelfEditModal([`bookshelf${shelf[1]}`, true])}
   if (UserShelfList && UserShelfList.length >= 1) {
   ShowShelfList = UserShelfList.map((shelf)=> (
       <div key={shelf[0]} className="mybooks_custom_shelves">
-        <span id={`bookshelf${shelf[1]}`} onClick={()=> setShowShelfEditModal([`bookshelf${shelf[1]}`, true])} >{shelf[2]}    {shelf[0]}
+        <span id={`bookshelf${shelf[1]}`} >{shelf[2]}    {shelf[0]}
         </span>
           <EditBookshelf shelfId={shelf[1]} shelfname={shelf[0]} />
           <button className='mybooks_delete_bookshelf_button'  onClick={() => setShowShelfDeleteModal(true)}>
-            <i class="fa-sharp fa-solid fa-x"></i>
+            <i className="fa-sharp fa-solid fa-x"></i>
           </button>
           <DeleteBookshelfModal showDeleteModal={showShelfDeleteModal} setShowDeleteModal={setShowShelfDeleteModal} bookshelfid={shelf[1]} />
       </div>

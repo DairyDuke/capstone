@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useHistory, NavLink } from "react-router-dom";
+import React, { useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
 import * as bookActions from '../../store/book'
 import * as bookshelfActions from '../../store/bookshelf'
@@ -12,12 +12,12 @@ import CurrentlyReadingPreview from '../Book/BookElements/CurrentlyReadingPrevie
 const Home = ()=>{
   const dispatch = useDispatch();
   const bookobj = useSelector(state => state.books);
-  const bookshelvobj = useSelector(state => state.bookshelves);
+  // const bookshelvobj = useSelector(state => state.bookshelves);
   const userBookshelvobj = useSelector(state => state.bookshelves.currentUser);
-  const books = Object.values(bookobj);
-  const history = useHistory();
-  const [errors, setErrors] = useState([]);
-  const defaulImg = "https://i.imgur.com/iL99VfD.jpg"
+  // const books = Object.values(bookobj);
+  // const history = useHistory();
+  // const [errors, setErrors] = useState([]);
+  // const defaulImg = "https://i.imgur.com/iL99VfD.jpg"
   // const tx = document.getElementsByClassName("growing_paragraph");
   // for (let i = 1; i < tx.length; i++) {
   //   tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px");
@@ -101,7 +101,7 @@ const Home = ()=>{
   // console.log('1 ', UserShelfList)
   if (UserShelfList && UserShelfList.length >= 1) {
   ShowShelfList = UserShelfList.map((shelf)=> (
-      <div key={shelf[0]}>
+      <div key={shelf[0]+shelf[1]}>
         <span>{shelf[1]}    {shelf[0]}</span>
       </div>
   ))}

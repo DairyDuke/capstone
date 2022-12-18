@@ -38,12 +38,11 @@ const SignUpForm = ({showModal, setShowModal}) => {
   const onSignUp = async (e) => {
     e.preventDefault();
     if (password === repeatPassword) {
-      console.log("Pro", profileUrl)
       let profileImageUrl = defaultProfilePictureImage
-      if (profileUrl) {
-        return profileImageUrl = profileUrl
-      }
+      if (profileUrl) profileImageUrl = profileUrl;
+
       const data = await dispatch(signUp({username, email, profileImageUrl, password}));
+
       if (data) {
         setErrors(data.errors)
       }

@@ -48,14 +48,15 @@ const CreateEditBookShelf = () => {
     if (errors) {
 
     }
+    // NTW - rewrite this to be more like the others.
     const newShelf = await dispatch(bookshelfActions.createBookshelfThunk(shelfName))
     .then(()=>{
       cancelSubmit()
       history.push('/mybooks')
       window.location.reload();
     })
-    .catch(async (response) =>{
-      const data = await response.json();
+    .catch(async (newShelf) =>{
+      const data = await newShelf.json();
       if (data && data.errors) {
         setErrors(Object.values(data.errors));
         // This console log is to make react happy - do not delete
