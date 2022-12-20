@@ -129,7 +129,7 @@ const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
     let id = bookObj.id
     const newBook = await dispatch(bookActions.editBookThunk(bookDataObject, id))
     if (newBook) {
-      console.log("Test")
+
       setErrors(newBook.errors)
     } else {
      await dispatch(bookActions.getSingleBookThunk(bookDataObject.id))

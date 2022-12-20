@@ -25,6 +25,7 @@ const EditBookshelf = ({shelfId, shelfname}) => {
     setShelfName(shelfname)
     setErrors([])
     setShelfNameCharCount(0)
+    window.location.reload()
   }
 
   useEffect(() => {
@@ -47,6 +48,7 @@ const EditBookshelf = ({shelfId, shelfname}) => {
       setErrors(editedShelf.errors)
     }
     else {
+      await dispatch(bookshelfActions.getAllBookshelvesThunk())
       await dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
       cancelSubmit()
     }

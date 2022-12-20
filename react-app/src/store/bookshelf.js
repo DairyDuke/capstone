@@ -104,19 +104,19 @@ export const removeSingleBookshelfThunk = () => async (dispatch) => {
   return
 }
 
-export const createBookshelfThunk = (shelfData) => async (dispatch) => {
+export const createBookshelfThunk = (shelfName) => async (dispatch) => {
   const response = await fetch(`/api/bookshelves`, {
     method: 'POST',
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      "bookshelf_name": shelfData,
+      "bookshelfName": shelfName,
     })
   });
 
   if (response.ok){
     const newShelf = await response.json()
     dispatch(createBookshelf(newShelf))
-    return newShelf
+    return null
   } else {
     const errors = await response.json()
     return errors

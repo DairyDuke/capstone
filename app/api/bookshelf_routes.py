@@ -60,28 +60,22 @@ def bookshelf_details(shelfId):
 @login_required
 def create_bookshelf():
     # pass
+    data = request.get_json()
     shelf_form = BookshelfForm()
     shelf_form['csrf_token'].data = request.cookies['csrf_token']
-
-    try:
-        new_shelf = Bookshelf.query.filter_by(bookshelf_name=shelf_form.data['bookshelf_name'], user_id=current_user.get_id()).all()
-        if not new_shelf:
-            raise Exception()
-    except:
-        if shelf_form.validate_on_submit():
-            new_shelf_create= Bookshelf(
-                user_id= current_user.get_id(),
-                bookshelf_name= shelf_form.data['bookshelf_name']
-            )
-            db.session.add(new_shelf_create)
-            db.session.commit()
-            shelf_dict = new_shelf_create.to_dict()
-            return shelf_dict
-        return {'errors': validation_errors_to_error_messages(shelf_form.errors)}, 401
-    else:
-        return {'message': "Shelf already exists!"}, 300
-
-
+    if shelf_form.validate_on_submit():
+        new_shelf_check = Bookshelf.query.filter_by(bookshelf_name=data['bookshelfName'], user_id=current_user.get_id()).all()
+        if new_shelf_check:
+            return {'errors': {"bookshelf_name":"Shelf already exists!"}}, 403
+        new_shelf_create= Bookshelf(
+            user_id= current_user.get_id(),
+            bookshelf_name= shelf_form.data['bookshelfName']
+        )
+        db.session.add(new_shelf_create)
+        db.session.commit()
+        shelf_dict = new_shelf_create.to_dict()
+        return shelf_dict
+    return {'errors': validation_errors_to_error_messages(shelf_form.errors)}, 401
 
 # PUT - Update a Bookshelf name.
 @bookshelf_routes.route('/<int:shelfId>', methods=["PUT"])

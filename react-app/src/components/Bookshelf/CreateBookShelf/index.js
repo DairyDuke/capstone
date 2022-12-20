@@ -17,7 +17,7 @@ const CreateEditBookShelf = () => {
   // Actual form data:
   const [shelfName, setShelfName] = useState("");
   // Error Handling
-  const [errors, setErrors] = useState("");
+  const [errors, setErrors] = useState([]);
   // Character Counter
   const [shelfNameCharCount, setShelfNameCharCount] = useState(0);
 
@@ -27,7 +27,7 @@ const CreateEditBookShelf = () => {
     setShowNewShelfForm(false)
     setShowEditShelfForm(false)
     setShelfName("")
-    setErrors("")
+    setErrors([])
     setShelfNameCharCount(0)
   }
 
@@ -45,26 +45,32 @@ const CreateEditBookShelf = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     setErrors([]);
-    if (errors) {
 
-    }
     // NTW - rewrite this to be more like the others.
     const newShelf = await dispatch(bookshelfActions.createBookshelfThunk(shelfName))
-    .then(()=>{
+    if (newShelf) {
+      setErrors(newShelf.errors)
+    } else {
+      await dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
       cancelSubmit()
-      history.push('/mybooks')
-      window.location.reload();
-    })
-    .catch(async (newShelf) =>{
-      const data = await newShelf.json();
-      if (data && data.errors) {
-        setErrors(Object.values(data.errors));
-        // This console log is to make react happy - do not delete
-        console.log("Errors "+errors)
-      }
-  })
+      window.location.reload()
+    }
 }
 
+let ErrorHandler = [];
+if (errors) {
+  // console.log(errors)
+  for (let error in errors) {
+    // console.log(error)
+    // console.log(errors[error])
+      ErrorHandler.push((
+    <>
+      <span>
+        <h2>{error}:{errors[error]}</h2>
+      </span>
+    </>
+    ))}
+}
   return(
     <div id="create_bookshelf_main_container">
       {showNewShelfForm === false && (
@@ -78,6 +84,8 @@ const CreateEditBookShelf = () => {
       {showNewShelfForm === true && showEditShelfForm === false && (
         <>
           <form className="create_bookshelf_form" onSubmit={onSubmit}>
+               {ErrorHandler}
+
           <div className="create_bookshelf_form_input_box">
             <label>Bookshelf Name:
             <input
@@ -92,12 +100,7 @@ const CreateEditBookShelf = () => {
               />
               </label>
               <div className="create_bookshelf_form_input_count">{shelfNameCharCount}/35</div>
-              <div>
-                {!!errors && (
-                  <>
-                  {errors}
-                  </>)}
-              </div>
+
           </div>
           <div className='create_bookshelf_form_footer'>
             <button className='create_bookshelf_cancel_button' onClick={cancelSubmit}>cancel</button>

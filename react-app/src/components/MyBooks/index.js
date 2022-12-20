@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
 import * as bookActions from '../../store/book'
@@ -8,18 +8,15 @@ import * as creatorActions from '../../store/creator'
 import './MyBooks.css'
 import CurrentlyReadingPreview from '../Book/BookElements/CurrentlyReadingPreview.js'
 import CreateEditBookShelf from '../Bookshelf/CreateBookShelf'
-import EditBookshelf from '../Bookshelf/EditBookshelf'
-import DeleteBookshelfModal from '../Bookshelf/DeleteBookshelf/DeleteBookshelfModal.js'
-
+import CustomBookShelfShow from '../Bookshelf/BookshelfElements/CustomBookShelfShow.js'
 
 const Home = ()=>{
   const dispatch = useDispatch();
-  const bookobj = useSelector(state => state.books) || [];
+  const bookobj = useSelector(state => state.books);
   // const bookshelvobj = useSelector(state => state.bookshelves) || [];
   const userBookshelvobj = useSelector(state => state.bookshelves.currentUser) || [];
   // const books = Object.values(bookobj) || [];
   // const history = useHistory();
-  const [showShelfDeleteModal, setShowShelfDeleteModal] = useState(false)
   // const [showShelfEditModal, setShowShelfEditModal] = useState([])
   // const [errors, setErrors] = useState([]);
   const defaulImg = "https://i.imgur.com/iL99VfD.jpg"
@@ -87,7 +84,9 @@ const Home = ()=>{
     if (userBookshelvobj[shelf].protected === true) {
       ProtectedShelf.push([[userBookshelvobj[shelf].bookshelfName], userBookshelvobj[shelf].id, userBookshelvobj[shelf].Stacks.length])
     } else {
-    UserShelfList.push([[userBookshelvobj[shelf].bookshelfName], userBookshelvobj[shelf].id, userBookshelvobj[shelf].Stacks.length])}
+    UserShelfList.push(
+      {"name": userBookshelvobj[shelf].bookshelfName, "id": userBookshelvobj[shelf].id, "number": userBookshelvobj[shelf].Stacks.length}
+      )}
     if (userBookshelvobj[shelf].bookshelfName === "want to read") {
       if (userBookshelvobj[shelf].Stacks.length > 0) {
         userBookshelvobj[shelf].Stacks.map((stack)=>
@@ -106,20 +105,9 @@ const Home = ()=>{
         </div>
     ))}
 
-    // onClick={document.getElementById(`bookshelf${shelf[1]}`).style.display = "none"}
-    // onClick={()=> setShowShelfEditModal([`bookshelf${shelf[1]}`, true])}
-  if (UserShelfList && UserShelfList.length >= 1) {
-  ShowShelfList = UserShelfList.map((shelf)=> (
-      <div key={shelf[0]} className="mybooks_custom_shelves">
-        <span id={`bookshelf${shelf[1]}`} >{shelf[2]}    {shelf[0]}
-        </span>
-          <EditBookshelf shelfId={shelf[1]} shelfname={shelf[0]} />
-          <button className='mybooks_delete_bookshelf_button'  onClick={() => setShowShelfDeleteModal(true)}>
-            <i className="fa-sharp fa-solid fa-x"></i>
-          </button>
-          <DeleteBookshelfModal showDeleteModal={showShelfDeleteModal} setShowDeleteModal={setShowShelfDeleteModal} bookshelfid={shelf[1]} />
-      </div>
-  ))}
+    if (UserShelfList && UserShelfList.length >= 1) {
+      ShowShelfList = UserShelfList.map((shelf)=> <CustomBookShelfShow shelf={shelf} />)
+    }
 
   if (UserWantRead && UserWantRead.length >= 1) {
   ShowWantRead = UserWantRead.map((book)=> (
