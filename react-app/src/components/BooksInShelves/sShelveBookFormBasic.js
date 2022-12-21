@@ -1,11 +1,9 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { Modal } from '../../context/Modal';
-import CreatePostForm from './CreatePostForm'
-import './CreatePostModal.css'
-import './CreatePostBar.css'
+import './BooksInShelves.css'
 
-export default function BooksInShelvesModal() {
+export default function SShelveBookFormBasic() {
     const [showModal, setShowModal] = useState(false);
     const [postType, setPostType] = useState(false);
 
@@ -56,7 +54,7 @@ export default function BooksInShelvesModal() {
             </div>
             {showModal && (
                 <Modal id='create-post-modal' onClose={() => setShowModal(false)} >
-                    <CreatePostForm setShowModal={setShowModal} typeSelection={postType} />
+                    {/* <CreatePostForm setShowModal={setShowModal} typeSelection={postType} /> */}
                 </Modal>
             )}
         </>

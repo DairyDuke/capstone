@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { createPost, addMediaByPostId } from '../../store/post';
-import './CreatePostModal.css'
-import './CreatePostForm.css'
-// import UploadPicture from '../UploadImage';
+import './BooksInShelves.css'
 
-const ShelveBookForm = ({ setShowModal, showModal, typeSelection = false }) => {
+const ShelveBookFormBasic = ({ setShowModal, showModal, typeSelection = false }) => {
     const author = useSelector(state => state.session.user)
     const history = useHistory()
     const [errors, setErrors] = useState([]);
@@ -56,36 +53,36 @@ const ShelveBookForm = ({ setShowModal, showModal, typeSelection = false }) => {
             text
         }
 
-        const post = await dispatch(createPost(postData))
-            .catch(async (response) => {
-                const data = await response.json();
-                if (data && data.errors) {
-                    setErrors(Object.values(data.errors));
-                    // This console log is to make react happy - do not delete
-                    console.log("Errors "+errors)
-                }
-            });
-        if (post && !mediaUrl) {
-            setShowModal(false)
-            history.push('/feed')
-            window.scrollTo(0,0)
-        }
-        if (post && mediaUrl) {
-            const postMedia = await dispatch(addMediaByPostId(post.id, mediaUrl))
-                .catch(async (response) => {
-                    const data = await response.json();
-                    if (data && data.errors) {
-                        setErrors(Object.values(data.errors));
-                        // This console log is to make react happy - do not delete
-                        console.log("Errors "+errors)
-                    }
-                });
-            if (postMedia) {
-                setShowModal(false)
-                history.push('/feed')
-                window.scrollTo(0,0)
-            }
-        }
+    //     const post = await dispatch(createPost(postData))
+    //         .catch(async (response) => {
+    //             const data = await response.json();
+    //             if (data && data.errors) {
+    //                 setErrors(Object.values(data.errors));
+    //                 // This console log is to make react happy - do not delete
+    //                 console.log("Errors "+errors)
+    //             }
+    //         });
+    //     if (post && !mediaUrl) {
+    //         setShowModal(false)
+    //         history.push('/feed')
+    //         window.scrollTo(0,0)
+    //     }
+    //     if (post && mediaUrl) {
+    //         const postMedia = await dispatch(addMediaByPostId(post.id, mediaUrl))
+    //             .catch(async (response) => {
+    //                 const data = await response.json();
+    //                 if (data && data.errors) {
+    //                     setErrors(Object.values(data.errors));
+    //                     // This console log is to make react happy - do not delete
+    //                     console.log("Errors "+errors)
+    //                 }
+    //             });
+    //         if (postMedia) {
+    //             setShowModal(false)
+    //             history.push('/feed')
+    //             window.scrollTo(0,0)
+    //         }
+    //     }
     };
     return (
         <div>
@@ -311,4 +308,4 @@ const ShelveBookForm = ({ setShowModal, showModal, typeSelection = false }) => {
     );
 };
 
-export default ShelveBookForm;
+export default ShelveBookFormBasic;
