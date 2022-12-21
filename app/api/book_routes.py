@@ -133,10 +133,11 @@ def book_details(bookId):
       response['Creators'] = [creator.to_dict() for creator in single_book.creators]
       response['Reviewed'] = [review.to_dict() for review in single_book.reviewed]
       shelves = [shelf.to_dict() for shelf in single_book.shelved]
-      if current_user.get_id():
-          shelf_location = [shelf["userId"] == current_user.get_id() for shelf in shelves]
-      else:
-          shelf_location = "unread"
+    #   if current_user.get_id():
+    #       print("--------------------------------")
+    #       shelf_location = [shelf["userId"] == current_user.get_id() for shelf in shelves]
+    #   else:
+      shelf_location = shelves
 
       response['Shelved'] = shelf_location
       # single_book.reviewed.to_dict()

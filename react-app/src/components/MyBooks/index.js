@@ -108,12 +108,17 @@ const Home = ()=>{
     if (UserShelfList && UserShelfList.length >= 1) {
       ShowShelfList = UserShelfList.map((shelf)=> <CustomBookShelfShow shelf={shelf} />)
     }
-
+    const checkImg = (book) => {
+      if (bookobj && bookobj[book.id]) {
+       return bookobj[book.id].Cover
+      } else {
+         return defaulImg }
+    }
   if (UserWantRead && UserWantRead.length >= 1) {
   ShowWantRead = UserWantRead.map((book)=> (
     <NavLink to={`/books/${book.id}`} key={book.id}>
       <div>
-        <img src={bookobj[book.id].Cover || defaulImg} alt={book.title}/>
+        <img src={checkImg(book)} alt={book.title}/>
       </div>
     </NavLink>
   ))}

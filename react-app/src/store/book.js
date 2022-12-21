@@ -81,7 +81,6 @@ export const getSingleBookThunk = (bookId) => async (dispatch) => {
   const response = await fetch(`/api/books/${bookId}`)
 
   if (response.ok){
-    console.log("Response,", response.ok)
     const singleBook = await response.json()
     dispatch(getSingleBook(singleBook))
     return singleBook
