@@ -344,7 +344,7 @@ def remove_book_from_shelf(bookId):
 # Route - Get all reviews of a post:
 @book_routes.route('/<int:id>/reviews', methods=['GET'])
 def get_all_reviews(id):
-    pass
+    reviews = Review.query.order_by(Review.created_at.desc()).options(joinedload(Review.author)).filter_by(book_id=id).all()
 
 
 # Route - Add a review to a book:
