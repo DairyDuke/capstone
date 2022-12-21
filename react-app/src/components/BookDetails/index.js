@@ -16,25 +16,25 @@ const BookDetails = () => {
   const [showEditModal, setShowEditModal] = useState(false)
   const sessionUser = useSelector(state => state.session.user)
   const bookobj = useSelector(state => state.books.singleBook) || [];
-  const userBookshelvobj = useSelector(state => state.bookshelves.currentUser) || [];
+  // const userBookshelvobj = useSelector(state => state.bookshelves.currentUser) || [];
 
   const history = useHistory();
   // const [errors, setErrors] = useState([]);
   const bookId = useParams()
   useEffect(()=> {
     if (bookobj && bookobj.Shelved){
-      const bookShelfCurrent = bookobj.Shelved.find((shelf) => shelf.userId == sessionUser.id && shelf.protected == true)
+      const bookShelfCurrent = bookobj.Shelved.find((shelf) => shelf.userId === sessionUser.id && shelf.protected === true)
       if (bookShelfCurrent) {
-        setCurrentShelf(bookShelfCurrent.bookshelfName)
+        setCurrentShelf(bookShelfCurrent)
       }
     }
-  }, [bookobj])
+  }, [bookobj, sessionUser])
 
-  console.log(currentShelf)
+  // console.log(currentShelf)
 
   useEffect(()=> {
     async function checkBookData(bookId) {
-      await dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
+      // await dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
       await dispatch(bookActions.getSingleBookThunk(bookId))
       // .then((response)=> console.log('there'))
       .catch(async (response) => {
@@ -63,7 +63,7 @@ const BookDetails = () => {
 
 
   let creators;
-  if (bookobj["Creators"] && bookobj["Creators"].length > 0) {
+  if (bookobj && bookobj["Creators"] && bookobj["Creators"].length > 0) {
     creators = bookobj["Creators"].map((creator) =>(
     <div key={creator.id}>
       <div id="bookdetails_right_column_creator_role">
