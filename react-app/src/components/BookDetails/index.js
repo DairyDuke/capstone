@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Redirect, useHistory, NavLink, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
 import './BookDetails.css'
 import * as bookActions from '../../store/book'
@@ -9,20 +9,32 @@ import DeleteBookModal from '../Book/DeleteBook/DeleteBookModal.js'
 const BookDetails = () => {
   const dispatch = useDispatch();
   const [showDeleteModal, setShowDeleteModal] = useState(false)
-  const [showOnShelf, setShowOnShelf] = useState(false)
+  // const [showOnShelf, setShowOnShelf] = useState(false)
   const [showEditModal, setShowEditModal] = useState(false)
   const sessionUser = useSelector(state => state.session.user)
   const bookobj = useSelector(state => state.books.singleBook) || [];
   const history = useHistory();
-  const [errors, setErrors] = useState([]);
+  // const [errors, setErrors] = useState([]);
   const bookId = useParams()
 
-  // id, title, genre, Cover, Shelved, Creators - [{}], Reviewed [{}] cAt,uAt
 
   useEffect(()=> {
-    if (bookId) dispatch(bookActions.getSingleBookThunk(bookId.bookId))
+    async function checkBookData(bookId) {
+      await dispatch(bookActions.getSingleBookThunk(bookId))
+      // .then((response)=> console.log('there'))
+      .catch(async (response) => {
+        await dispatch(bookActions.removeSingleBookThunk(bookId)).then(async ()=> await dispatch(bookActions.getAllBooksThunk())).then(()=>
+        history.push('/')
+        )
+      })
+    }
+    checkBookData(bookId.bookId)
+    // if (bookId) {
+    //   console.log("Book, ", bookId)
+    // }
+    // else {history.push('/')}
 
-  },[dispatch])
+  },[dispatch, bookId, history])
 
   const addBookToShelf = async (bookId, bookobj) => {
     await dispatch(bookActions.addBookToShelfThunk(bookobj, bookId.bookId))
@@ -32,6 +44,7 @@ const BookDetails = () => {
   }
     )
   }
+
 
 
   let creators;
@@ -90,7 +103,7 @@ const BookDetails = () => {
             <div id="bookdetails_right_column_book_creator_list">
             </div>
             <div id="bookdetails_right_column_book_review_rating">
-              <h2></h2>
+              <h2>Review Rating</h2>
             </div>
             <div id="bookdetails_right_column_book_summary">
               <p>{bookobj.summary}</p>

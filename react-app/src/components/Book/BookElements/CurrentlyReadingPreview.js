@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Redirect, useHistory, NavLink } from "react-router-dom";
+import React, { useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
 import * as bookActions from '../../../store/book'
 import * as bookshelfActions from '../../../store/bookshelf'
-import * as creatorActions from '../../../store/creator'
+// import * as creatorActions from '../../../store/creator'
 import './CurrentlyReadingPreview.css'
 
 
@@ -12,9 +12,9 @@ const CurrentlyReadingPreview = ({book}) => {
   // what we need - creator.
   const dispatch = useDispatch();
   const bookobj = useSelector(state => state.books);
-  const history = useHistory();
-  const [creatorList, setCreatorList] = useState([])
-  const [errors, setErrors] = useState([]);
+  // const history = useHistory();
+  // const [creatorList, setCreatorList] = useState([])
+  // const [errors, setErrors] = useState([]);
 
   useEffect(()=> {
     dispatch(bookActions.getAllBooksThunk())
@@ -24,7 +24,9 @@ const CurrentlyReadingPreview = ({book}) => {
     // dispatch(creatorActions.getAllCreatorsThunk())
   },[dispatch])
 
-
+  // console.log("This is currently reading, ", book)
+  // console.log("This is currently reading 2, ", bookobj)
+  // console.log("This is currently reading 3, ", bookobj[book.id])
   // console.log(bookobj[book.id].Creators)
   // need to pull books, then pull author/creator
   // title, summary, id, genre, createdAt, updatedAt
@@ -74,6 +76,12 @@ const CurrentlyReadingPreview = ({book}) => {
   //     </>
   //   )
   // } else {
+  if (!book || !bookobj[book.id]) {
+    return (
+      <>
+      </>
+    )
+  } else {
   return   (
     <div className="currently_reading_preview_container">
       <NavLink to={`/books/${book.id}`} key={book.id}>
@@ -94,6 +102,6 @@ const CurrentlyReadingPreview = ({book}) => {
         </div>
       </div>
     </div>
-  )
+  )}
 }
 export default CurrentlyReadingPreview

@@ -9,5 +9,5 @@ class BookForm(FlaskForm):
         max=100), DataRequired()])
     summary = TextAreaField("Summary", validators=[Length(
         max=1500), Optional()])
-    cover_image_url = StringField(
+    coverImageURL = StringField(
         "Cover Image URL", validators=[URL(), Optional()])

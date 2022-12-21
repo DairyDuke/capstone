@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { signUp } from '../../../store/session';
 
 const SignUpForm = ({showModal, setShowModal}) => {
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState([]);
   const [username, setUsername] = useState('');
   const [usernameCharCount, setUsernameCharCount] = useState(0);
   const [email, setEmail] = useState('');
@@ -38,18 +38,16 @@ const SignUpForm = ({showModal, setShowModal}) => {
   const onSignUp = async (e) => {
     e.preventDefault();
     if (password === repeatPassword) {
-      console.log("Pro", profileUrl)
       let profileImageUrl = defaultProfilePictureImage
-      if (profileUrl) {
-        return profileImageUrl = profileUrl
-      }
+      if (profileUrl) profileImageUrl = profileUrl;
+
       const data = await dispatch(signUp({username, email, profileImageUrl, password}));
+
       if (data) {
-        setErrors(data)
-        console.log("Errors ", errors)
+        setErrors(data.errors)
       }
     } else {
-      setErrors([{'repeat_password':'Password and confirm password must match'}])
+      setErrors({'repeat_password':'Password and confirm password must match'})
     }
   };
 
@@ -78,11 +76,17 @@ const SignUpForm = ({showModal, setShowModal}) => {
     setRepeatPasswordCharCount(e.target.value.length);
   };
 
-  const ErrorHandler = (errors) => {
+  let ErrorHandler = [];
+  if (errors) {
     for (let error in errors) {
-      return (<>{error}</>)
-      }
-    }
+        ErrorHandler.push((
+      <>
+        <span>
+          <h2>{errors[error]}</h2>
+        </span>
+      </>
+      ))}
+  }
 
   if (user) {
     return <Redirect to='/' />;
@@ -90,13 +94,12 @@ const SignUpForm = ({showModal, setShowModal}) => {
 
   return (
     <form id="signup_form" onSubmit={onSignUp}>
-      <div>
-        {/* {console.log(errors)}
-        {errors && <ErrorHandler />} */}
-      </div>
       <div id="signin_declaration">
         <h1>my reader's journey</h1>
         <h3> Creant Your Account </h3>
+      </div>
+      <div id="login_errors">
+        {ErrorHandler}
       </div>
       <div className="signup_input_container">
         <label>Your Name</label>

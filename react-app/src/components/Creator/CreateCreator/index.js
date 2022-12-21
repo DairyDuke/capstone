@@ -63,6 +63,10 @@ const CreateCreator = () => {
     if (errors) {
 
     }
+    // let currentImg = defaultImg
+    // if (bookCoverImageUrl) {
+    //   currentImg = bookCoverImageUrl
+    // }
     const creatorDataObject = {
       "role_type_list": creatorRole,
       "name": creatorName,

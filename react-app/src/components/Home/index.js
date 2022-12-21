@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useHistory, NavLink } from "react-router-dom";
+import React, { useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
 import * as bookActions from '../../store/book'
 import * as bookshelfActions from '../../store/bookshelf'
@@ -11,13 +11,13 @@ import CurrentlyReadingPreview from '../Book/BookElements/CurrentlyReadingPrevie
 
 const Home = ()=>{
   const dispatch = useDispatch();
-  const bookobj = useSelector(state => state.books) || [];
-  const bookshelvobj = useSelector(state => state.bookshelves) || [];
-  const userBookshelvobj = useSelector(state => state.bookshelves.currentUser) || [];
-  const books = Object.values(bookobj) || [];
-  const history = useHistory();
-  const [errors, setErrors] = useState([]);
-  const defaulImg = "https://i.imgur.com/iL99VfD.jpg"
+  const bookobj = useSelector(state => state.books);
+  // const bookshelvobj = useSelector(state => state.bookshelves);
+  const userBookshelvobj = useSelector(state => state.bookshelves.currentUser);
+  // const books = Object.values(bookobj);
+  // const history = useHistory();
+  // const [errors, setErrors] = useState([]);
+  // const defaulImg = "https://i.imgur.com/iL99VfD.jpg"
   // const tx = document.getElementsByClassName("growing_paragraph");
   // for (let i = 1; i < tx.length; i++) {
   //   tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px");
@@ -28,22 +28,28 @@ const Home = ()=>{
   //   this.style.height = (this.scrollHeight) + "px";
   // }
 
-  useEffect(async ()=> {
-    await dispatch(bookActions.getAllBooksThunk())
-    // dispatch(bookActions.getSingleBookThunk())
-    // dispatch(bookActions.removeSingleBookThunk())
-    await dispatch(bookshelfActions.getAllBookshelvesThunk())
-    await dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
-    await dispatch(creatorActions.getAllCreatorsThunk())
-  },[dispatch])
-
-
   let UserShelves=[];
   let ShowCurrent;
   let UserShelfList = [];
   let ShowShelfList;
   let UserWantRead = [];
   let ShowWantRead;
+  let UserBooks = []
+  let RenderElement
+
+  // let experiment;
+  // useEffect(()=> {
+  //   async function runTest() {
+  //     for (let shelf in userBookshelvobj){
+  //     if (userBookshelvobj[shelf].bookshelfName === "want to read") {
+  //      experiment = await dispatch(bookshelfActions.getSingleBookshelfThunk(shelf))
+  //      console.log("Experiment, ", experiment)
+  //     }
+  //   }}
+  //   runTest()
+  // }, [dispatch])
+
+  const runData = function() {
   for (let shelf in userBookshelvobj){
     if (userBookshelvobj[shelf].bookshelfName === "currently reading") {
       if (userBookshelvobj[shelf].Stacks.length > 0) {
@@ -61,42 +67,72 @@ const Home = ()=>{
       }
     }
   }
-
-  if (UserShelfList && UserShelfList.length >= 1) {
-  ShowShelfList = UserShelfList.map((shelf)=> (
-      <div key={shelf[0]}>
-        <span>{shelf[1]}    {shelf[0]}</span>
-      </div>
-  ))}
-
-  if (UserWantRead && UserWantRead.length >= 1) {
-  ShowWantRead = UserWantRead.map((book)=> (
-    <NavLink to={`/books/${book.id}`} key={book.id}>
-      <div>
-        <img src={bookobj[book.id].Cover || defaulImg} alt={book.title}/>
-      </div>
-    </NavLink>
-  ))}
-
-  if (UserShelves && UserShelves.length >= 1) {
-  ShowCurrent = UserShelves.map((stack)=> (
-    <CurrentlyReadingPreview key={stack.id} book={stack}/>
-  ))}
-
-  let UserBooks = []
-  let RenderElement
-
   for (let book in bookobj) {
     if (book !== "singleBook") {
       UserBooks.push(bookobj[book])
     }
   }
+}
+
+  useEffect(()=> {
+    async function grabData() {
+    await dispatch(bookActions.getAllBooksThunk())
+    // dispatch(bookActions.getSingleBookThunk())
+    // dispatch(bookActions.removeSingleBookThunk())
+    await dispatch(bookshelfActions.getAllBookshelvesThunk())
+    await dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
+    await dispatch(creatorActions.getAllCreatorsThunk())}
+    grabData()
+  },[dispatch])
+// console.log("This")
+  runData()
+
+  // useEffect (() => {
+  //   runData()
+  //   console.log("First UF")
+  //   },
+  // )
+  // useEffect (() => {
+  //   runData()
+  //   console.log("Second UF")
+  //   }, [history]
+  // )
+  // console.log("Book obj ", bookobj)
+  // console.log('1 ', UserShelfList)
+  if (UserShelfList && UserShelfList.length >= 1) {
+  ShowShelfList = UserShelfList.map((shelf)=> (
+      <div key={shelf[0]+shelf[1]}>
+        <span>{shelf[1]}    {shelf[0]}</span>
+      </div>
+  ))}
+
+  // console.log('2 ', UserWantRead)
+  if (UserWantRead && UserWantRead.length > 0) {
+  ShowWantRead = UserWantRead.map((book)=> {
+    if (bookobj[book.id]) {
+      return (
+    <NavLink to={`/books/${book.id}`} key={book.id}>
+      <div>
+        <img src={bookobj[book.id]["Cover"]} alt={book.title}/>
+      </div>
+    </NavLink>
+  )}}
+  )}
+
+  // console.log('3 ', UserShelves)
+  if (UserShelves && UserShelves.length >= 1) {
+  ShowCurrent = UserShelves.map((stack)=> (
+    <CurrentlyReadingPreview key={stack.id} book={stack}/>
+  ))}
+
+
   if (UserBooks && UserBooks.length > 1) {
-      RenderElement = UserBooks.map((book)=>
-    (
+      RenderElement = UserBooks.map((book)=> {
+        if (bookobj[book.id]) {
+          return (
       <NavLink to={`/books/${book.id}`} key={book.id}>
           <div className="home_center__books">
-            <img src={book.Cover} alt={book.title} />
+            <img src={book["Cover"]} alt={book.title} />
             <div className="home_center__details">
               <div className="home_center__title">
                 <h2>{book.title}</h2>
@@ -105,7 +141,7 @@ const Home = ()=>{
                 <h3>{book.AverageRating}</h3>
               </div>
               <div className="home_center__averagerating">
-                <h3>{book.Creators.map((creator)=> (
+                <h3>{book.Creators && book.Creators.map((creator)=> (
                   <span className="splash_creator_list">
                   {creator.role}: {creator.name}
                   </span>
@@ -117,7 +153,7 @@ const Home = ()=>{
             </div>
           </div>
       </NavLink>
-        )
+        )}}
   )}
 
 

@@ -51,7 +51,7 @@
 }
 
 .mybooks_currently_reading_container {
-  margin-top: 20px;
+  margin-top: 5px;
 }
 
 .mybooks_currently_reading_container h3{
@@ -85,19 +85,29 @@
 .mybooks_want_to_read_container a {
   width: fit-content;
 }
-
-.mybooks_create_bookshelf {
+.mybooks_spacer_line {
+  margin: 10px 0px;
   border-top: 1px solid black;
-  margin-top: 10px;
-  cursor: pointer;
+}
+.mybooks_create_bookshelf {
+  display: flex;
+  flex-direction: column;
+  /* margin-top: 10px; */
+  /* cursor: pointer; */
 }
 
-.mybooks_create_bookshelf:hover {
+.mybooks_custom_shelves {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+}
+
+.create_bookshelf_new_button:hover {
   cursor: pointer;
   text-decoration: underline;
 }
 
-.mybooks_create_bookshelf:active {
+.create_bookshelf_new_button:active {
   cursor: pointer;
   text-decoration: unset;
 }

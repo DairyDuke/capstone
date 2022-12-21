@@ -49,10 +49,10 @@ export const login = (email, password) => async (dispatch) => {
   } else if (response.status < 500) {
     const data = await response.json();
     if (data.errors) {
-      return data.errors;
+      return data;
     }
   } else {
-    return ['An error occurred. Please try again.']
+    return {'errors': {'fetcherror':'An error occurred. Please try again.'}}
   }
 
 }
@@ -90,8 +90,9 @@ export const signUp = ({username, email, profileImageUrl, password}) => async (d
     return null;
   } else if (response.status < 500) {
     const data = await response.json();
-    if (data.errors) {
-      return data.errors;
+    if (data) {
+      // data.errors
+      return data;
     }
   } else {
     return [{'fetch':'An error occurred. Please try again.'}]

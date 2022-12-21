@@ -1,6 +1,12 @@
-#create_bookshelf_main_container{}
+#create_bookshelf_main_container{
+  margin-top: 15px;
+}
 #create_bookshelf_new_button{
+  border: 1px solid #D6D0C4;
+  background-color: #F4F1EA;
   cursor: pointer;
+  padding: 3px 12px;
+  border-radius: 4px;
 }
 .create_bookshelf_form{}
 .create_bookshelf_form_input_box {

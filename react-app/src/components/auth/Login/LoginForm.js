@@ -28,8 +28,7 @@ const LoginForm = ({showModal, setShowModal}) => {
     e.preventDefault();
     const data = await dispatch(login(email, password));
     if (data) {
-      console.log(data)
-      setErrors(data);
+      setErrors(data.errors);
     }
   };
 
@@ -42,11 +41,18 @@ const LoginForm = ({showModal, setShowModal}) => {
     setPassword(e.target.value);
     setPasswordCharCount(e.target.value.length);
   };
-  const errorHandler = (errors) => {
+
+  let ErrorHandler = [];
+  if (errors) {
     for (let error in errors) {
-      return (<div>{error}</div>)
-      }
-    }
+        ErrorHandler.push((
+      <>
+        <span key={error}>
+          <h2>{errors[error]}</h2>
+        </span>
+      </>
+      ))}
+  }
 
   if (user) {
     return <Redirect to='/' />;
@@ -54,19 +60,19 @@ const LoginForm = ({showModal, setShowModal}) => {
 
   return (
     <form id="login_form" onSubmit={onLogin}>
-      {/* <div id="login_errors">
-        {errors && {errorHandler}}
-      </div> */}
       <div id="signin_declaration">
         <h1>my reader's journey</h1>
         <h3> Sign In </h3>
+      </div>
+      <div id="login_errors">
+        {ErrorHandler}
       </div>
       <div id="alignment_buttons">
       <div className="login_input_container">
         <label htmlFor='email'>Email</label>
         <input
           name='email'
-          type='text'
+          type='email'
           placeholder='Email'
           value={email}
           onChange={updateEmail}

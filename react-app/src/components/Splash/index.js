@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Redirect, useHistory, NavLink } from "react-router-dom";
+import React, { useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
 import './Splash.css'
 import * as bookActions from '../../store/book'
@@ -9,10 +9,10 @@ import * as creatorActions from '../../store/creator'
 const Splash = ()=>{
   const dispatch = useDispatch();
   const bookobj = useSelector(state => state.books);
-  const bookshelvobj = useSelector(state => state.bookshelves);
-  const books = Object.values(bookobj) || [];
-  const history = useHistory();
-  const [errors, setErrors] = useState([]);
+  // const bookshelvobj = useSelector(state => state.bookshelves);
+  // const books = Object.values(bookobj) || [];
+  // const history = useHistory();
+  // const [errors, setErrors] = useState([]);
 
   // const tx = document.getElementsByClassName("growing_paragraph");
   // for (let i = 1; i < tx.length; i++) {

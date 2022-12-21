@@ -104,38 +104,41 @@ export const removeSingleBookshelfThunk = () => async (dispatch) => {
   return
 }
 
-export const createBookshelfThunk = (shelfData) => async (dispatch) => {
+export const createBookshelfThunk = (shelfName) => async (dispatch) => {
   const response = await fetch(`/api/bookshelves`, {
     method: 'POST',
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      "bookshelf_name": shelfData,
+      "bookshelfName": shelfName,
     })
   });
 
   if (response.ok){
     const newShelf = await response.json()
     dispatch(createBookshelf(newShelf))
-    return newShelf
+    return null
   } else {
-    return ['Unable to fetch.']
+    const errors = await response.json()
+    return errors
   }
 }
 
-export const editBookshelfThunk  = (shelfId, shelfData) => async (dispatch) => {
+export const editBookshelfThunk  = (shelfId, shelfName) => async (dispatch) => {
   const response = await fetch(`/api/bookshelves/${shelfId}`,{
     method: 'PUT',
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      "bookshelf_name": shelfData,
+      "bookshelfName": shelfName,
     })
   });
 
   if (response.ok){
     const editedShelf = await response.json()
     dispatch(editBookshelf(editedShelf))
-    return editedShelf
+    return null
   } else {
-    return ['Unable to fetch.']
+    const errors = await response.json()
+    return errors
   }
 }
 

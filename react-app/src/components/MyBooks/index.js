@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useHistory, NavLink } from "react-router-dom";
+import React, { useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
 import * as bookActions from '../../store/book'
 import * as bookshelfActions from '../../store/bookshelf'
@@ -8,20 +8,17 @@ import * as creatorActions from '../../store/creator'
 import './MyBooks.css'
 import CurrentlyReadingPreview from '../Book/BookElements/CurrentlyReadingPreview.js'
 import CreateEditBookShelf from '../Bookshelf/CreateBookShelf'
-import EditBookshelf from '../Bookshelf/EditBookshelf'
-import DeleteBookshelfModal from '../Bookshelf/DeleteBookshelf/DeleteBookshelfModal.js'
-
+import CustomBookShelfShow from '../Bookshelf/BookshelfElements/CustomBookShelfShow.js'
 
 const Home = ()=>{
   const dispatch = useDispatch();
-  const bookobj = useSelector(state => state.books) || [];
-  const bookshelvobj = useSelector(state => state.bookshelves) || [];
+  const bookobj = useSelector(state => state.books);
+  // const bookshelvobj = useSelector(state => state.bookshelves) || [];
   const userBookshelvobj = useSelector(state => state.bookshelves.currentUser) || [];
-  const books = Object.values(bookobj) || [];
-  const history = useHistory();
-  const [showShelfDeleteModal, setShowShelfDeleteModal] = useState(false)
-  const [showShelfEditModal, setShowShelfEditModal] = useState([])
-  const [errors, setErrors] = useState([]);
+  // const books = Object.values(bookobj) || [];
+  // const history = useHistory();
+  // const [showShelfEditModal, setShowShelfEditModal] = useState([])
+  // const [errors, setErrors] = useState([]);
   const defaulImg = "https://i.imgur.com/iL99VfD.jpg"
   // const tx = document.getElementsByClassName("growing_paragraph");
   // for (let i = 1; i < tx.length; i++) {
@@ -43,15 +40,17 @@ const Home = ()=>{
     // mySpan.display = false
     // mySpan.style.display = "";
   // }
-  useEffect(async ()=> {
+  useEffect(()=> {
+    async function grabData() {
     await dispatch(bookActions.getAllBooksThunk())
     // dispatch(bookActions.getSingleBookThunk())
     // dispatch(bookActions.removeSingleBookThunk())
     await dispatch(bookshelfActions.getAllBookshelvesThunk())
     await dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
-    await dispatch(creatorActions.getAllCreatorsThunk())
+    await dispatch(creatorActions.getAllCreatorsThunk())}
+    grabData()
   },[dispatch])
-let myspan;
+// let myspan;
   // useEffect(() => {
   //   if (showShelfEditModal[1]) {
   //     myspan = document.getElementByTagName('span').getElementById(showShelfEditModal[0])
@@ -71,6 +70,8 @@ let myspan;
   let ShowWantRead;
   let ProtectedShelf =[];
   let ShowProtected;
+
+
   for (let shelf in userBookshelvobj){
     if (userBookshelvobj[shelf].bookshelfName === "currently reading") {
       if (userBookshelvobj[shelf].Stacks.length > 0) {
@@ -83,7 +84,9 @@ let myspan;
     if (userBookshelvobj[shelf].protected === true) {
       ProtectedShelf.push([[userBookshelvobj[shelf].bookshelfName], userBookshelvobj[shelf].id, userBookshelvobj[shelf].Stacks.length])
     } else {
-    UserShelfList.push([[userBookshelvobj[shelf].bookshelfName], userBookshelvobj[shelf].id, userBookshelvobj[shelf].Stacks.length])}
+    UserShelfList.push(
+      {"name": userBookshelvobj[shelf].bookshelfName, "id": userBookshelvobj[shelf].id, "number": userBookshelvobj[shelf].Stacks.length}
+      )}
     if (userBookshelvobj[shelf].bookshelfName === "want to read") {
       if (userBookshelvobj[shelf].Stacks.length > 0) {
         userBookshelvobj[shelf].Stacks.map((stack)=>
@@ -101,18 +104,10 @@ let myspan;
           </span>
         </div>
     ))}
-  if (UserShelfList && UserShelfList.length >= 1) {
-  ShowShelfList = UserShelfList.map((shelf)=> (
-      <div key={shelf[0]} >
-        <span id={`bookshelf${shelf[1]}`} onClick={()=> setShowShelfEditModal([`bookshelf${shelf[1]}`, true])} >{shelf[2]}    {shelf[0]}
-          <EditBookshelf shelfId={shelf[1]} shelfname={shelf[0]} />
-          <button className='mybooks_delete_bookshelf_button'  onClick={() => setShowShelfDeleteModal(true)}>
-            <i class="fa-sharp fa-solid fa-x"></i>
-          </button>
-        </span>
-          <DeleteBookshelfModal showDeleteModal={showShelfDeleteModal} setShowDeleteModal={setShowShelfDeleteModal} bookshelfid={shelf[1]} />
-      </div>
-  ))}
+
+    if (UserShelfList && UserShelfList.length >= 1) {
+      ShowShelfList = UserShelfList.map((shelf)=> <CustomBookShelfShow shelf={shelf} />)
+    }
 
   if (UserWantRead && UserWantRead.length >= 1) {
   ShowWantRead = UserWantRead.map((book)=> (
@@ -153,7 +148,7 @@ let myspan;
             </NavLink>
           </td>
           <td className="mybooks_right_column_creator">
-              <h3>{book.Creators.map((creator)=> (<span className="mybooks_right_column_creator_list">
+              <h3>{book.Creators && book.Creators.map((creator)=> (<span className="mybooks_right_column_creator_list">
                   {creator.role}: {creator.name}</span>))}
               </h3>
           </td>
@@ -193,15 +188,22 @@ let myspan;
         <div className="mybooks_bookshelves_list">
           <h3>BOOKSHELVES</h3>
           {ShowProtected}
-
-          {ShowShelfList}
+        </div>
+        <div className="mybooks_spacer_line">
         </div>
         <div className="mybooks_create_bookshelf">
+          {ShowShelfList}
+        </div>
           <CreateEditBookShelf />
+
+        <div className="mybooks_spacer_line">
         </div>
         <div className="mybooks_currently_reading_container">
           <h3>CURRENTLY READING</h3>
           {ShowCurrent}
+        </div>
+
+        <div className="mybooks_spacer_line">
         </div>
         <div className="mybooks_want_to_read_container">
           <h3>WANT TO READ</h3>

@@ -80,13 +80,14 @@ def create_book():
     Else, just creates an association.
     """
     # pass
+    data = request.get_json()
     book_form = BookForm()
     book_form['csrf_token'].data = request.cookies['csrf_token']
 
     new_book = Book.query.filter_by(title=book_form.data['title']).first()
     # print(new_book)
     if new_book:
-        return {'message': "Book already exists!"}, 300
+        return {'errors':{'message': "Book already exists!"}}, 300
 
     if book_form.validate_on_submit():
         new_book = Book(
@@ -96,11 +97,10 @@ def create_book():
         )
         db.session.add(new_book)
         db.session.commit()
-
-        if book_form.data['cover_image_url']:
+        if book_form.data['coverImageURL']:
             new_book_cover = BookCover(
             book_id= new_book.id,
-            cover_image_url = book_form.data['cover_image_url']
+            cover_image_url = book_form.data['coverImageURL']
             )
         else:
             new_book_cover = BookCover(
@@ -122,7 +122,7 @@ def book_details(bookId):
     try:
       single_book = Book.query.order_by(Book.created_at.desc()).options(joinedload(Book.creators), joinedload(Book.covered), joinedload(Book.shelved), joinedload(Book.reviewed)).get_or_404(bookId)
     except:
-        return {'message': "Book couldn't be found"}, 404
+        return {'errors':{'message': "Book couldn't be found"}}, 404
     else:
       single_data = single_book.to_dict()
       # single_book.creators.to_dict()
@@ -147,12 +147,14 @@ def book_details(bookId):
 @book_routes.route('/<int:bookId>', methods=["PUT"])
 def edit_book(bookId):
     # pass
+    data = request.get_json()
     book_form = BookForm()
     book_form['csrf_token'].data = request.cookies['csrf_token']
     try:
         current_book = Book.query.get_or_404(bookId)
+        current_book_Cover = BookCover.query.filter_by(book_id=bookId).first()
     except:
-        return {'message': "Book couldn't be found"}, 404
+        return {'errors':{'message': "Book couldn't be found"}}, 404
     else:
         if book_form.validate_on_submit():
             if book_form.data['title']:
@@ -162,14 +164,16 @@ def edit_book(bookId):
             if book_form.data['summary']:
                 current_book.summary = book_form.data['summary']
             current_book.updated_at = datetime.utcnow()
-            if book_form.data['cover_image_url']:
-                current_book_cover = BookCover.query.get(bookId)
-                current_book_cover = book_form.data['cover_image_url']
+            if book_form.data['coverImageURL']:
+                current_book_Cover.cover_image_url = book_form.data['coverImageURL']
 
             db.session.commit()
             response = current_book.to_dict()
-            response['cover_image_url'] = current_book_cover
+            response['cover_image_url'] = current_book_Cover.cover_image_url
             return response
+
+        errorReturn = {'errors': validation_errors_to_error_messages(book_form.errors)}, 401
+
         return {'errors': validation_errors_to_error_messages(book_form.errors)}, 401
 
 
@@ -275,6 +279,7 @@ def remove_book_from_shelf(bookId):
     elif data["custom_bookshelf_name"]:
         response = {"message": f"{book_dict_message['title']} successfully removed from {data['custom_bookshelf_name']}!"}
 
+
     for shelf in user_shelves:
         shelf_dict = shelf.to_dict()
         # Staple Bookshelf Route
@@ -289,6 +294,9 @@ def remove_book_from_shelf(bookId):
                 shelf.stacks.remove(book_to_add)
         # Custom Bookshelf Route
         if data["custom_bookshelf_name"] == shelf_dict["bookshelfName"]:
+            if book_to_add in shelf.stacks:
+                shelf.stacks.remove(book_to_add)
+        if data["bookshelf_name"] == "all":
             if book_to_add in shelf.stacks:
                 shelf.stacks.remove(book_to_add)
             # else:
@@ -315,7 +323,8 @@ def remove_book_from_shelf(bookId):
     # return "cool"
     # books = Book.query.order_by(Book.created_at.desc()).options(joinedload(Book.creators), joinedload(Book.covered), joinedload(Book.shelved), joinedload(Book.reviewed)).all()
 
-# @book_routes.route('/', defaults={'path': ''})
+
+# @book_routes.route('', defaults={'path': ''})
 # @book_routes.route('/favicon.png', method=["GET"])
 # def react_root():
 #     """
@@ -324,6 +333,22 @@ def remove_book_from_shelf(bookId):
 #     or index.html requests
 #     """
 #     print(".........................................")
-#     # if path == '/books/favicon.ico':
-#     return app.send_from_directory('public', 'favicon.png')
-#     # return app.send_static_file('index.html')
+#     if path == '/books/favicon.ico':
+#         return app.send_from_directory('public', 'favicon.png')
+#     return app.send_static_file('index.html')
+
+# ------------------------------------------------------------
+# Review Routes - (that have a prefix of /books/:bookId)
+# ------------------------------------------------------------
+
+# Route - Get all reviews of a post:
+@book_routes.route('/<int:id>/reviews', methods=['GET'])
+def get_all_reviews(id):
+    reviews = Review.query.order_by(Review.created_at.desc()).options(joinedload(Review.author)).filter_by(book_id=id).all()
+
+
+# Route - Add a review to a book:
+@book_routes.route('/<int:id>/reviews', methods=['POST'])
+@login_required
+def add_review(id):
+    pass

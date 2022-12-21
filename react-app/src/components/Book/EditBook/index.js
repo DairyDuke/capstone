@@ -8,12 +8,13 @@ const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
 
   // Actual form data:
   const [bookObj, setBookObj] = useState({...bookData})
-  const [bookTitle, setBookTitle] = useState("");
-  const [bookGenre, setBookGenre] = useState("");
-  const [bookSummary, setBookSummary] = useState("");
-  const [bookCoverImageUrl, setBookCoverImageUrl] = useState("");
+  // const [bookTitle, setBookTitle] = useState("");
+  // const [bookGenre, setBookGenre] = useState("");
+  // const [bookSummary, setBookSummary] = useState("");
+  // const [bookCoverImageUrl, setBookCoverImageUrl] = useState("");
   // Error Handling
-  const [errors, setErrors] = useState({title: "", genre: "", summary: "", url: "", form: "", newError: {} });
+  const [errors, setErrors] = useState([])
+  // ({title: "", genre: "", summary: "", url: "", form: "", newError: "" });
   // Character Counter
   const [bookTitleCharCount, setBookTitleCharCount] = useState(0);
   const [bookGenreCharCount, setBookGenreCharCount] = useState(0);
@@ -21,6 +22,7 @@ const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
   const [bookUrlCharCount, setBookUrlCharCount] = useState(0);
 
   const [disableSubmit, setDisableSubmit] = useState(true);
+  const defaultImg = "https://i.imgur.com/iL99VfD.jpg"
 
   const tx = document.getElementsByTagName("textarea");
   for (let i = 1; i < tx.length; i++) {
@@ -33,11 +35,13 @@ const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
   }
   const cancelSubmit = async () => {
     setShowEditModal(false)
-    setBookTitle("")
-    setBookCoverImageUrl("")
-    setBookSummary("")
-    setBookGenre("")
-    setErrors({title: "", genre: "", summary: "", url: "", form: "", newError: {} })
+    setBookObj({...bookData})
+    // setBookTitle("")
+    // setBookCoverImageUrl("")
+    // setBookSummary("")
+    // setBookGenre("")
+    setErrors([])
+      // {title: "", genre: "", summary: "", url: "", form: "", newError: "" })
     setBookTitleCharCount(0)
     setBookGenreCharCount(0)
     setBookSummaryCharCount(0)
@@ -52,9 +56,9 @@ const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
     }
   }, [showEditModal])
 
-  const editBook = (bookData) => {
-    dispatch(bookActions.editBookThunk(bookData))
-  }
+  // const editBook = (bookData) => {
+  //   dispatch(bookActions.editBookThunk(bookData))
+  // }
 
   useEffect(() => {
     if (bookTitleCharCount > 250) {
@@ -108,41 +112,75 @@ const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    setErrors((prevState)=>{
-      return {...prevState, newError: {}}
-    });
-    if (errors) { }
-    const bookDataObject = {
-     "title": bookTitle,
-     "genre": bookGenre,
-     "summary": bookSummary,
-     "cover_image_url": bookCoverImageUrl
+    setErrors([])
+
+    let currentImg = defaultImg
+    if (bookObj.Cover) {
+      currentImg = bookObj.Cover
     }
-    const newBook = await dispatch(bookActions.createBookThunk( ))
-    .then(() => {
+
+    const bookDataObject = {
+      "id": bookObj.id,
+     "title": bookObj.title,
+     "genre": bookObj.genre,
+     "summary": bookObj.summary,
+     "coverImageURL": currentImg
+    }
+    let id = bookObj.id
+    const newBook = await dispatch(bookActions.editBookThunk(bookDataObject, id))
+    if (newBook) {
+
+      setErrors(newBook.errors)
+    } else {
+     await dispatch(bookActions.getSingleBookThunk(bookDataObject.id))
       cancelSubmit()
-    })
-    .catch(async (newBook) => {
-      const data = await newBook.json();
-      if (data && data.errors) {
-        setErrors((prevState) => {
-          return {...prevState, newError: data.errors}});
-        // This console log is to make react happy - do not delete
-        console.log("Errors "+errors)
-      }
-    })
+    }
+
+    // .then((newBook) => {
+    //   console.log("This")
+    //   console.log(newBook)
+    //   if (newBook.errors) {
+    //     setErrors(newBook.errors)
+    //     // setErrors((prevState) => {
+    //     //   return {...prevState, newBook.errors}});
+    //     // This console log is to make react happy - do not delete
+    //     console.log("Errors "+errors)
+    //   }
+    //   // console.log("HETY", bookDataObject)
+    //   // cancelSubmit()
+    // }).catch(async (newBook) => {
+    //   // console.log("That", newBook)
+    //   // const data = await newBook.json();
+    // })
+    // console.log(newBook)
   };
+
+  let ErrorHandler = [];
+  if (errors) {
+    // console.log(errors)
+    for (let error in errors) {
+      // console.log(error)
+      // console.log(errors[error])
+        ErrorHandler.push((
+      <>
+        <span>
+          <h2>{error}:{errors[error]}</h2>
+        </span>
+      </>
+      ))}
+  }
 
   return (
 
 
     <div id="edit_book_form_container">
       <div id="edit_book_text">
-        <h2>Librarian, are you really sure you want to delete this book?</h2>
+        <h2>Librarian, are you really sure you want to Edit this book?</h2>
       </div>
       <div>
           <form className="edit_book_form" onSubmit={onSubmit}>
             <div>
+            {ErrorHandler}
             </div>
           <div className="edit_book_form_input_box">
             <label>Book's Title:
@@ -155,7 +193,7 @@ const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
               onChange={(e)=> {
                 const val = e.target.value;
                 setBookObj((prevState) => {
-                  return {...prevState, title: val}
+                  return {...prevState, "title": val}
                 })
                 // setBookTitle(e.target.value)
                 setBookTitleCharCount(e.target.value.length)}}

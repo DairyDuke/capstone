@@ -5,7 +5,6 @@ import DeleteBookshelf from '.';
 
 export default function DeleteBookshelfModal({showDeleteModal, setShowDeleteModal, bookshelfid}) {
 
-
   return (
       <>
         {showDeleteModal && (
