@@ -3,23 +3,38 @@ import { useHistory, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
 import './BookDetails.css'
 import * as bookActions from '../../store/book'
+import * as bookshelfActions from '../../store/bookshelf'
 import EditBookModal from '../Book/EditBook/EditBookModal.js'
 import DeleteBookModal from '../Book/DeleteBook/DeleteBookModal.js'
+import BookShelfStatusModal from '../BooksInShelves/BookShelfStatusModal.js'
 
 const BookDetails = () => {
   const dispatch = useDispatch();
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   // const [showOnShelf, setShowOnShelf] = useState(false)
+  const [currentShelf, setCurrentShelf] = useState("")
   const [showEditModal, setShowEditModal] = useState(false)
   const sessionUser = useSelector(state => state.session.user)
   const bookobj = useSelector(state => state.books.singleBook) || [];
+  const userBookshelvobj = useSelector(state => state.bookshelves.currentUser) || [];
+
   const history = useHistory();
   // const [errors, setErrors] = useState([]);
   const bookId = useParams()
+  useEffect(()=> {
+    if (bookobj && bookobj.Shelved){
+      const bookShelfCurrent = bookobj.Shelved.find((shelf) => shelf.userId == sessionUser.id && shelf.protected == true)
+      if (bookShelfCurrent) {
+        setCurrentShelf(bookShelfCurrent.bookshelfName)
+      }
+    }
+  }, [bookobj])
 
+  console.log(currentShelf)
 
   useEffect(()=> {
     async function checkBookData(bookId) {
+      await dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
       await dispatch(bookActions.getSingleBookThunk(bookId))
       // .then((response)=> console.log('there'))
       .catch(async (response) => {
@@ -36,14 +51,14 @@ const BookDetails = () => {
 
   },[dispatch, bookId, history])
 
-  const addBookToShelf = async (bookId, bookobj) => {
-    await dispatch(bookActions.addBookToShelfThunk(bookobj, bookId.bookId))
-    .then(()=> {
-    // setShowDeleteModal(false)
-    window.location.reload()
-  }
-    )
-  }
+  // const addBookToShelf = async (bookId, bookobj) => {
+  //   await dispatch(bookActions.addBookToShelfThunk(bookobj, bookId.bookId))
+  //   .then(()=> {
+  //   // setShowDeleteModal(false)
+  //   window.location.reload()
+  // }
+  //   )
+  // }
 
 
 
@@ -75,9 +90,6 @@ const BookDetails = () => {
           <div id="bookdetails_left_column_book_cover">
             <img src={bookobj.Cover} alt={bookobj.title} />
           </div>
-          <div id="bookdetails_left_column_book_status" onClick={()=> addBookToShelf()}>
-            {/* <h3>Shelf: {showOnShelf ? showOnShelf : "Unread"}</h3> */}
-          </div>
           <div id="quick_box">
          {sessionUser && (<div className='bookdetails_edit_button' onClick={() => setShowEditModal(true)}>
             <button id="edit-reply-button" className='edit-post-button edit-delete-post interface-text'>
@@ -91,6 +103,9 @@ const BookDetails = () => {
           </div>)}
           <DeleteBookModal showDeleteModal={showDeleteModal} setShowDeleteModal={setShowDeleteModal} bookid={bookId.bookId} />
           <EditBookModal showEditModal={showEditModal} setShowEditModal={setShowEditModal} bookData={bookobj} />
+          </div>
+          <div className="bookdetails_left_column_book_status" id="quick_box">
+            {currentShelf && (<BookShelfStatusModal bookId={bookId} currentShelf={currentShelf} />)}
           </div>
         </div>
       </div>

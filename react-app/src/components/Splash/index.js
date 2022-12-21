@@ -92,7 +92,7 @@ const Splash = ()=>{
               <div id="splash_description_box_right">
                 <h2>What are your friends reading?</h2>
 
-                <p>Chances are your friends are discussing their favorite (and least favorite) books on Goodreads.</p>
+                <p>Chances are your friends are discussing their favorite (and least favorite) books on their own Reader's Journey!</p>
               </div>
             </div>
             <div id="splash_discover_reccomendations">
