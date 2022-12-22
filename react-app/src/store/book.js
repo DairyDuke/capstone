@@ -148,35 +148,39 @@ export const deleteBookThunk = (bookId) => async (dispatch) => {
 
 //-- BOOKSHELF FUNCTIONALITY --\\
 
-export const addBookToShelfThunk = (bookshelfData, bookId) => async (dispatch) => {
-  const response = await fetch('/api/books',{
+export const addBookToShelfThunk = (bookId, shelfId) => async (dispatch) => {
+  const response = await fetch(`/api/books/${bookId}/bookshelf`, {
     method: 'POST',
-    body: JSON.stringify({
-    })
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({'shelfId':shelfId})
   });
+
+
   if (response.ok){
     const addedShelf = await response.json()
+    dispatch(getSingleBookThunk(bookId))
     dispatch(addBookToShelf(addedShelf, bookId))
-    return addedShelf
+    return null
   } else {
-    throw 404
+    const errors = await response.json()
+    return errors
   }
 }
 
-export const removeBookFromShelfThunk = (bookshelfData, bookId) => async (dispatch) => {
-  const response = await fetch(`/api/books/${bookId}/bookshelf`,{
+export const removeBookFromShelfThunk = (bookId, shelfId) => async (dispatch) => {
+  const response = await fetch(`/api/books/${bookId}/bookshelf`, {
     method: 'DELETE',
-    body: JSON.stringify({
-      "bookshelf_name": bookshelfData.bookshelf_name,
-      "custome_bookshelf_name": bookshelfData.custom_bookshelf_name
-    })
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({'shelfId':shelfId})
   });
+
   if (response.ok){
     const removedShelf = await response.json()
     dispatch(removeBookFromShelf(removedShelf, bookId))
-    return removedShelf
+    return null
   } else {
-    return ['Unable to fetch.']
+    const errors = await response.json()
+    return errors
   }
 }
 

@@ -3,6 +3,8 @@ import { useHistory, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import * as bookActions from '../../store/book'
 import * as bookshelfActions from '../../store/bookshelf'
+import CustomBookShelfForms from './CustomBookShelfForms.js'
+import ProtectedBookShelfForms from './ProtectedBookShelfForms.js'
 import './BooksInShelves.css'
 
 const ShelveBookFormBasic = ({ setShowModal, showModal, currentShelf, bookId }) => {
@@ -14,7 +16,6 @@ const ShelveBookFormBasic = ({ setShowModal, showModal, currentShelf, bookId }) 
     const dispatch = useDispatch();
     const userBookshelvobj = useSelector(state => state.bookshelves.currentUser) || [];
 
-
     useEffect(() => {
         if (showModal) {
             document.body.style.overflow = 'hidden';
@@ -24,25 +25,23 @@ const ShelveBookFormBasic = ({ setShowModal, showModal, currentShelf, bookId }) 
         }
     }, [showModal])
 
-    // useEffect(()=> {
-    //     async function checkBookData(bookId) {
-    //       await dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
-    //       await dispatch(bookActions.getSingleBookThunk(bookId))
-    //       // .then((response)=> console.log('there'))
-    //       .catch(async (response) => {
-    //         await dispatch(bookActions.removeSingleBookThunk(bookId)).then(async ()=> await dispatch(bookActions.getAllBooksThunk())).then(()=>
-    //         history.push('/')
-    //         )
-    //       })
-    //     }
-    //     checkBookData(bookId)
-    //     // if (bookId) {
-    //     //   console.log("Book, ", bookId)
-    //     // }
-    //     // else {history.push('/')}
+    useEffect(()=> {
+        async function checkBookData(bookId) {
+          await dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
+        }
+        checkBookData(bookId)
+      },[dispatch])
+      let protectedShelves = []
+      let otherShelves = [];
 
-    //   },[dispatch, history])
-
+      if (userBookshelvobj) {
+        for (let shelf in userBookshelvobj){
+            if (userBookshelvobj[shelf].protected === false){
+                otherShelves.push(<CustomBookShelfForms bookshelf={userBookshelvobj[shelf]} bookId={bookId} />)}
+            else {
+                protectedShelves.push(<ProtectedBookShelfForms bookshelf={userBookshelvobj[shelf]} bookId={bookId} />)}
+        }
+      }
     // const onSubmit = async (e) => {
     //     e.preventDefault();
     //     setErrors([]);
@@ -86,22 +85,27 @@ const ShelveBookFormBasic = ({ setShowModal, showModal, currentShelf, bookId }) 
         e.preventDefault()
         setCurrentSelection(shelf)
     }
+                // <div className='selector-wrapper' onClick={(e)=> clickItem(e, "read")} >
+                //     <div id='text-label'>read</div>
+                // </div>
+                // <div className='selector-wrapper' onClick={(e)=> clickItem(e, "want to read")}  >
+
+                //     <div id='image-label'>want to read</div>
+                // </div>
+                // <div className='selector-wrapper' onClick={(e)=> clickItem(e, "currently reading")} >
+                //     <div id='quote-label'>currently reading</div>
+                // </div>
     return (
-        <>
+        <div>
             <div id='post-type-selector'>
-                <div className='selector-wrapper' onClick={(e)=> clickItem(e, "read")} >
-                    <div id='text-label'>read</div>
+                <div>
+                    {protectedShelves}
                 </div>
-                <div className='selector-wrapper' onClick={(e)=> clickItem(e, "want to read")}  >
-
-                    <div id='image-label'>want to read</div>
-                </div>
-                <div className='selector-wrapper' onClick={(e)=> clickItem(e, "currently reading")} >
-
-                    <div id='quote-label'>currently reading</div>
+                <div>
+                    {otherShelves}
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 
