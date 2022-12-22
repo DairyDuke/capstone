@@ -78,7 +78,7 @@ const Home = ()=>{
     async function grabData() {
     await dispatch(bookActions.getAllBooksThunk())
     // dispatch(bookActions.getSingleBookThunk())
-    // dispatch(bookActions.removeSingleBookThunk())
+    dispatch(bookActions.removeSingleBookThunk())
     await dispatch(bookshelfActions.getAllBookshelvesThunk())
     await dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
     await dispatch(creatorActions.getAllCreatorsThunk())}
