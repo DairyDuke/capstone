@@ -6,7 +6,7 @@ import * as bookshelfActions from '../../store/bookshelf'
 
 import './BooksInShelves.css'
 
-export default function CustomBookShelfForms({bookshelf, bookId}) {
+export default function CustomBookShelfForms({setShowModal, showModal, bookshelf, bookId}) {
     const dispatch = useDispatch()
     const [shelved, setShelved] = useState(false)
     // bookshelfName, id, protected
@@ -25,10 +25,12 @@ export default function CustomBookShelfForms({bookshelf, bookId}) {
     const addBookToShelf = async () => {
         await dispatch(bookActions.addBookToShelfThunk(bookId, shelfid))
         await dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
+        setShowModal(false)
     }
     const removeBookToShelf = async () => {
         await dispatch(bookActions.removeBookFromShelfThunk(bookId, shelfid))
         await dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
+        setShowModal(false)
     }
     return (
         <div id="confirm_delete_form" key={shelfid}>

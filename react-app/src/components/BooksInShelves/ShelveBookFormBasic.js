@@ -37,9 +37,9 @@ const ShelveBookFormBasic = ({ setShowModal, showModal, currentShelf, bookId }) 
       if (userBookshelvobj) {
         for (let shelf in userBookshelvobj){
             if (userBookshelvobj[shelf].protected === false){
-                otherShelves.push(<CustomBookShelfForms bookshelf={userBookshelvobj[shelf]} bookId={bookId} />)}
+                otherShelves.push(<CustomBookShelfForms setShowModal={setShowModal} showModal={showModal} bookshelf={userBookshelvobj[shelf]} bookId={bookId} />)}
             else {
-                protectedShelves.push(<ProtectedBookShelfForms bookshelf={userBookshelvobj[shelf]} bookId={bookId} />)}
+                protectedShelves.push(<ProtectedBookShelfForms setShowModal={setShowModal} showModal={showModal} bookshelf={userBookshelvobj[shelf]} bookId={bookId} />)}
         }
       }
     // const onSubmit = async (e) => {
