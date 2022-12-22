@@ -227,11 +227,12 @@ def add_book_to_shelf(bookId):
     else:
         user_shelf.stacks.append(book_to_add)
 
-    for shelf in user_shelves:
-        shelfDict = shelf.to_dict()
-        if book_to_add in shelf.stacks:
-            if shelfDict['id'] != shelfId:
-                shelf.stacks.remove(book_to_add)
+    if bookshelf['protected'] == True:
+        for shelf in user_shelves:
+            shelfDict = shelf.to_dict()
+            if book_to_add in shelf.stacks:
+                if shelfDict['id'] != shelfId:
+                    shelf.stacks.remove(book_to_add)
 
     db.session.commit()
     return response
