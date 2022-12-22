@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Modal } from '../../context/Modal';
 import './BooksInShelves.css'
 
-export default function SShelveBookFormBasic() {
+export default function CustomBookShelfForms({bookshelf}) {
     const [showModal, setShowModal] = useState(false);
     const [postType, setPostType] = useState(false);
 

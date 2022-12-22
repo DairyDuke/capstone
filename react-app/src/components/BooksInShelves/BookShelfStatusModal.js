@@ -5,8 +5,7 @@ import ShelveBookFormBasic from './ShelveBookFormBasic.js'
 import './BooksInShelves.css'
 
 export default function BookShelfStatusModal({bookId, currentShelf}) {
-    const [showModal, setShowModal] = useState(false);
-    console.log("Name,", currentShelf)
+    const [showModal, setShowModal] = useState(false)
     return (
         <>
             <div id='booksinshelves_add_button' onClick={() => setShowModal(true)}>
@@ -18,8 +17,8 @@ export default function BookShelfStatusModal({bookId, currentShelf}) {
             </div>
             {showModal && (
                 <Modal id='booksinshelves_choice_modal' onClose={() => setShowModal(false)} >
-                    {/* <ShelveBookFormBasic setShowModal={setShowModal} showModal={showModal} currentShelf={currentShelf} bookId={bookId} /> */}
-                    {window.alert("This feature still in progress")}
+                    <ShelveBookFormBasic setShowModal={setShowModal} showModal={showModal} currentShelf={currentShelf} bookId={bookId["bookId"]} />
+                    {/* {window.alert("This feature still in progress")} */}
                 </Modal>
             )}
         </>

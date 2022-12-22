@@ -6,11 +6,13 @@ import * as bookActions from '../../store/book'
 import * as bookshelfActions from '../../store/bookshelf'
 import EditBookModal from '../Book/EditBook/EditBookModal.js'
 import DeleteBookModal from '../Book/DeleteBook/DeleteBookModal.js'
+import CreateBookModal from '../Book/CreateBook/CreateBookModal.js'
 import BookShelfStatusModal from '../BooksInShelves/BookShelfStatusModal.js'
 
 const BookDetails = () => {
   const dispatch = useDispatch();
   const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [showModal, setShowModal] = useState(false)
   // const [showOnShelf, setShowOnShelf] = useState(false)
   const [currentShelf, setCurrentShelf] = useState("")
   const [showEditModal, setShowEditModal] = useState(false)
@@ -28,7 +30,7 @@ const BookDetails = () => {
         setCurrentShelf(bookShelfCurrent)
       }
     }
-  }, [bookobj, sessionUser])
+  }, [sessionUser])
 
   // console.log(currentShelf)
 
@@ -105,6 +107,7 @@ const BookDetails = () => {
           <EditBookModal showEditModal={showEditModal} setShowEditModal={setShowEditModal} bookData={bookobj} />
           </div>
           <div className="bookdetails_left_column_book_status" id="quick_box">
+            <CreateBookModal showModal={showModal} setShowModal={setShowModal}/>
             {currentShelf && (<BookShelfStatusModal bookId={bookId} currentShelf={currentShelf} />)}
           </div>
         </div>
