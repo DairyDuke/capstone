@@ -87,6 +87,10 @@ const Home = ()=>{
 // console.log("This")
   runData()
 
+  const dispatchSingle = (bookId) => {
+    dispatch(bookActions.getSingleBookThunk(bookId))
+  }
+  // onClick={()=> dispatchSingle(book.id)}
   // useEffect (() => {
   //   runData()
   //   console.log("First UF")
@@ -111,7 +115,7 @@ const Home = ()=>{
   ShowWantRead = UserWantRead.map((book)=> {
     if (bookobj[book.id]) {
       return (
-    <NavLink to={`/books/${book.id}`} key={book.id}>
+    <NavLink to={`/books/${book.id}`} key={book.id} onClick={()=> dispatchSingle(book.id)}>
       <div>
         <img src={bookobj[book.id]["Cover"]} alt={book.title}/>
       </div>
@@ -130,7 +134,7 @@ const Home = ()=>{
       RenderElement = UserBooks.map((book)=> {
         if (bookobj[book.id]) {
           return (
-      <NavLink to={`/books/${book.id}`} key={book.id}>
+      <NavLink to={`/books/${book.id}`} key={book.id} onClick={()=> dispatchSingle(book.id)}>
           <div className="home_center__books">
             <img src={book["Cover"]} alt={book.title} />
             <div className="home_center__details">

@@ -33,6 +33,10 @@ const Splash = ()=>{
     dispatch(creatorActions.getAllCreatorsThunk())
   },[dispatch])
 
+  const dispatchSingle = (bookId) => {
+    dispatch(bookActions.getSingleBookThunk(bookId))
+  }
+
   let UserBooks = []
   let RenderElement
 
@@ -44,7 +48,7 @@ const Splash = ()=>{
   if (UserBooks && UserBooks.length > 1) {
       RenderElement = UserBooks.map((book)=>
     (
-      <NavLink to={`/books/${book.id}`} key={book.id}>
+      <NavLink to={`/books/${book.id}`} key={book.id} onClick={()=> dispatchSingle(book.id)}>
           <div className="splash_discover_reccomendations_books">
             <img src={book.Cover} alt={book.title} />
             <div className="splash_discover_reccomendations_details">

@@ -44,7 +44,7 @@ const Home = ()=>{
     async function grabData() {
     await dispatch(bookActions.getAllBooksThunk())
     // dispatch(bookActions.getSingleBookThunk())
-    // dispatch(bookActions.removeSingleBookThunk())
+    await dispatch(bookActions.removeSingleBookThunk())
     await dispatch(bookshelfActions.getAllBookshelvesThunk())
     await dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
     await dispatch(creatorActions.getAllCreatorsThunk())}
@@ -61,6 +61,10 @@ const Home = ()=>{
   //     if (myspan) myspan.style.display = ""
   //   }
   // }, [showShelfEditModal])
+
+  const dispatchSingle = (bookId) => {
+    dispatch(bookActions.getSingleBookThunk(bookId))
+  }
 
   let UserShelves=[];
   let ShowCurrent;
@@ -116,7 +120,7 @@ const Home = ()=>{
     }
   if (UserWantRead && UserWantRead.length >= 1) {
   ShowWantRead = UserWantRead.map((book)=> (
-    <NavLink to={`/books/${book.id}`} key={book.id}>
+    <NavLink to={`/books/${book.id}`} key={book.id} onClick={()=> dispatchSingle(book.id)}>
       <div>
         <img src={checkImg(book)} alt={book.title}/>
       </div>

@@ -6,7 +6,10 @@ import './DemoUserButton.css';
 const DemoUserButton = () => {
     const dispatch = useDispatch()
 
-    const demoLogin = () => dispatch(login('demo@aa.io', 'password'))
+    const demoLogin = async () => {
+        await dispatch(login('demo@aa.io', 'password'))
+        window.location.reload()
+    }
 
     return (
         <div id="login_modal_button" className='signup-login-button' onClick={demoLogin}>

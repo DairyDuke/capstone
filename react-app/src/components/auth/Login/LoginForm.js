@@ -29,7 +29,7 @@ const LoginForm = ({showModal, setShowModal}) => {
     const data = await dispatch(login(email, password));
     if (data) {
       setErrors(data.errors);
-    }
+    } else {window.location.reload()}
   };
 
   const updateEmail = (e) => {
