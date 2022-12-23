@@ -23,6 +23,9 @@ const CurrentlyReadingPreview = ({book}) => {
     dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
     // dispatch(creatorActions.getAllCreatorsThunk())
   },[dispatch])
+  const dispatchSingle = (bookId) => {
+    dispatch(bookActions.getSingleBookThunk(bookId))
+  }
 
   // console.log("This is currently reading, ", book)
   // console.log("This is currently reading 2, ", bookobj)
@@ -84,7 +87,7 @@ const CurrentlyReadingPreview = ({book}) => {
   } else {
   return   (
     <div className="currently_reading_preview_container">
-      <NavLink to={`/books/${book.id}`} key={book.id}>
+      <NavLink to={`/books/${book.id}`} key={book.id} onClick={()=> dispatchSingle(book.id)}>
         <img src={bookobj[book.id].Cover} alt={book.title} />
       </NavLink>
       <div className="currently_reading_preview_info_box">

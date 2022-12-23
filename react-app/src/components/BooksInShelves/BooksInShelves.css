@@ -1,1 +1,68 @@
-#booksinshelves_add_button {}
+#bis_add_button {}
+#bis_shelve_box{
+
+}
+#bis_shelve_box > span{}
+#bis_choice_modal{}
+
+#modal-content{
+  background: transparent;
+  /* height: auto; */
+  /* width: auto; */
+  width: fit-content;
+}
+/* Actual Form container  */
+.bis_shelf_container{
+  min-width: 300px;
+  min-height: 300px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px black dotted;
+  border-radius: 34%;
+
+  background-color: gray;
+}
+.bis_shelf_box{
+  text-transform: capitalize;
+  width: 100%;
+}
+.bis_protected_box{
+  margin: 25px;
+  }
+#bis_protected_container{
+  width: 100%;
+}
+#bis_protected_name_box{
+  width: 100%;
+  height: auto;
+  border: 2px red solid;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+#bis_protected_name_box > span{
+
+}
+
+.bis_custom_box{
+  margin: 25px;}
+#bis_custom_container{
+  width: 100%;}
+#bis_custom_name_box{
+  width: 100%;
+  height: auto;
+  border: 2px red solid;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;}
+
+
+
+.bis_remove_button{
+  cursor: pointer;
+}
+.bis_add_button{
+  cursor: pointer;}

@@ -17,19 +17,19 @@ export default function BookShelfStatusModal({bookId, currentShelf}) {
         checkBookData(bookId)
       },[dispatch])
 
+
     return (
         <>
-            <div id='booksinshelves_add_button' onClick={() => setShowModal(true)}>
-                <div id='booksinshelves_status_box'>
+            <div id='bis_add_button' onClick={() => setShowModal(true)}>
+                <div id='bis_shelve_box'>
                     <span>
                         {currentShelf}
                     </span>
                 </div>
             </div>
             {showModal && (
-                <Modal id='booksinshelves_choice_modal' onClose={() => setShowModal(false)} >
+                <Modal id='bis_choice_modal' onClose={() => setShowModal(false)} >
                     <ShelveBookFormBasic setShowModal={setShowModal} showModal={showModal} currentShelf={currentShelf} bookId={bookId["bookId"]} />
-                    {/* {window.alert("This feature still in progress")} */}
                 </Modal>
             )}
         </>

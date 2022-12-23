@@ -1,27 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
 import './BookDetails.css'
 import * as bookActions from '../../store/book'
-import * as bookshelfActions from '../../store/bookshelf'
+// import * as bookshelfActions from '../../store/bookshelf'
 import EditBookModal from '../Book/EditBook/EditBookModal.js'
 import DeleteBookModal from '../Book/DeleteBook/DeleteBookModal.js'
-import CreateBookModal from '../Book/CreateBook/CreateBookModal.js'
+// import CreateBookModal from '../Book/CreateBook/CreateBookModal.js'
 import BookShelfStatusModal from '../BooksInShelves/BookShelfStatusModal.js'
+import LoginFormModalButton from '../auth/Login/LoginFormModalButton';
 
 
 const BookDetails = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  // const history = useHistory();
   const bookId = useParams()
 
   // Variables for the Edit, Delete, and Shelf Modals
   const [showEditModal, setShowEditModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
-  const [showModal, setShowModal] = useState(false)
+  // const [showModal, setShowModal] = useState(false)
 
   // Store Data
-  const user = useSelector(state => state.session.user) || []
+  const user = useSelector(state => state.session.user) || null
   const [sessionUser, setSessionUser] = useState(user)
   const book = useSelector(state => state.books.singleBook) || []
   const [bookobj, setBookobj] = useState(book)
@@ -37,7 +38,6 @@ const BookDetails = () => {
     setBookobj(book)
     setCurrentShelf(bookobj['CurrentShelved'])
   }, [book, bookobj])
-
   // const addBookToShelf = async (bookId, bookobj) => {
   //   await dispatch(bookActions.addBookToShelfThunk(bookobj, bookId.bookId))
   //   .then(()=> {
@@ -55,8 +55,6 @@ const BookDetails = () => {
   //     // }
   //   }
   // }, [sessionUser, currentShelf])
-
-
   let creators;
   if (bookobj && bookobj["Creators"] && bookobj["Creators"].length > 0) {
     creators = bookobj["Creators"].map((creator) =>(
@@ -101,7 +99,7 @@ const BookDetails = () => {
           </div>
           <div className="bookdetails_left_column_book_status" id="quick_box">
             {/* <CreateBookModal showModal={showModal} setShowModal={setShowModal}/> */}
-            <BookShelfStatusModal bookId={bookId} currentShelf={currentShelf} />
+            {sessionUser ? (<BookShelfStatusModal bookId={bookId} currentShelf={currentShelf} />) : (<LoginFormModalButton linkText={"add to shelf"} />)}
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 // , useSelector
 import './EditBookShelf.css'
@@ -7,7 +7,7 @@ import * as bookshelfActions from '../../../store/bookshelf'
 
 const CreateEditBookShelf = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  // const history = useHistory();
   // const bookshelves = useSelector(state => state.bookshelves.currentUser)
   // Determines if the new comment button exists or not.
   const [showNewShelfForm, setShowNewShelfForm] = useState(false);
