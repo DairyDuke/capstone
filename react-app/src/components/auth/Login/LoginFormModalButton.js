@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { Modal } from '../../../context/Modal';
 import LoginForm from './LoginForm';
-import "./LoginModal.css";
+import './LoginForm.css'
 
 export default function LoginFormModalButton({linkText}) {
     const [showModal, setShowModal] = useState(false);

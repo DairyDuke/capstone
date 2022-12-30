@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom';
 import { signUp } from '../../../store/session';
+import "./SignUpForm.css";
 
 const SignUpForm = ({showModal, setShowModal}) => {
   const [errors, setErrors] = useState([]);
@@ -94,78 +95,92 @@ const SignUpForm = ({showModal, setShowModal}) => {
 
   return (
     <form id="signup_form" onSubmit={onSignUp}>
-      <div id="signin_declaration">
-        <h1>my reader's journey</h1>
-        <h3> Creant Your Account </h3>
-      </div>
-      <div id="login_errors">
+    <div id="signup_declaration">
+      <h1>
+        <img src="https://i.imgur.com/WwOdFuk.png" alt="My Reader's Journey logo."/>
+        <br />
+         My Reader's Journey</h1>
+      <h2> Create Account </h2>
+    </div>
+      <div id="signup_errors">
         {ErrorHandler}
       </div>
-      <div className="signup_input_container">
-        <label>Your Name</label>
-        <input
-          type='text'
-          name='username'
-          onChange={updateUsername}
-          value={username}
-          required
-          maxLength={40}
-        ></input>
-        {usernameCharCount > 0 && (<div className='char-count'>{usernameCharCount}/40</div>)}
+      <div className="signup_input_section">
+        <div className="signup_input_container">
+          <label>Your Name</label>
+          <div>
+            <input
+              type='text'
+              name='username'
+              onChange={updateUsername}
+              value={username}
+              required
+              maxLength={40}
+            ></input>
+            {usernameCharCount > 0 && (<span className='signup_character_count'>Remaining Characters: {usernameCharCount}/40</span>)}
+          </div>
+        </div>
+        <div className="signup_input_container">
+          <label>Email</label>
+          <div>
+          <input
+            type='email'
+            name='email'
+            onChange={updateEmail}
+            value={email}
+            required
+            minLength={6}
+            maxLength={255}
+          ></input>
+          {emailCharCount > 0 && (<span className='signup_character_count'>Remaining Characters: {emailCharCount}/255</span>)}
+          </div>
+        </div>
+        <div className="signup_input_container">
+          <label>Profile Picture</label>
+          <div>
+          <input
+            type='url'
+            name='profile picture'
+            onChange={updateProfilePic}
+            value={profileUrl}
+            maxLength={255}
+          ></input>
+          {profileUrlCharCount > 0 && (<span className='signup_character_count'>Remaining Characters: {profileUrlCharCount}/255</span>)}
+          </div>
+        </div>
+        <div className="signup_input_container">
+          <label>Password</label>
+          <div>
+          <input
+            type='password'
+            name='password'
+            onChange={updatePassword}
+            value={password}
+            required
+            minLength={6}
+            maxLength={40}
+          ></input>
+          {passwordCharCount > 0 && (<span className='signup_character_count'>Remaining Characters: {passwordCharCount}/40</span>)}
+          </div>
+        </div>
+        <div className="signup_input_container">
+          <label>Re-enter Password</label>
+          <div>
+          <input
+            type='password'
+            name='repeat_password'
+            onChange={updateRepeatPassword}
+            value={repeatPassword}
+            required={true}
+            minLength={6}
+            maxLength={40}
+          ></input>
+          {repeatPasswordCharCount > 0 && (<span className='signup_character_count'>Remaining Characters: {repeatPasswordCharCount}/40</span>)}
+          </div>
+        </div>
       </div>
-      <div className="signup_input_container">
-        <label>Email</label>
-        <input
-          type='email'
-          name='email'
-          onChange={updateEmail}
-          value={email}
-          required
-          minLength={6}
-          maxLength={255}
-        ></input>
-        {emailCharCount > 0 && (<div className='char-count'>{emailCharCount}/255</div>)}
-      </div>
-      <div className="signup_input_container">
-        <label>Profile Picture</label>
-        <input
-          type='url'
-          name='profile picture'
-          onChange={updateProfilePic}
-          value={profileUrl}
-          maxLength={255}
-        ></input>
-        {profileUrlCharCount > 0 && (<div className='char-count'>{profileUrlCharCount}/255</div>)}
-      </div>
-      <div className="signup_input_container">
-        <label>Password</label>
-        <input
-          type='password'
-          name='password'
-          onChange={updatePassword}
-          value={password}
-          required
-          minLength={6}
-          maxLength={40}
-        ></input>
-        {passwordCharCount > 0 && (<div className='char-count'>{passwordCharCount}/40</div>)}
-      </div>
-      <div className="signup_input_container">
-        <label>Re-enter Password</label>
-        <input
-          type='password'
-          name='repeat_password'
-          onChange={updateRepeatPassword}
-          value={repeatPassword}
-          required={true}
-          minLength={6}
-          maxLength={40}
-        ></input>
-        {repeatPasswordCharCount > 0 && (<div className='char-count'>{repeatPasswordCharCount}/40</div>)}
-      </div>
-      <div className="signup_buttons">
-        <button id="cancel_button" type='button' onClick={() => setShowModal(false)}>Close</button>
-        <button id="signup_button" type='submit'>Sign Up</button>
+      <div className="signup_form_button">
+        <button id="signup_form_submit" type='submit'>Sign Up</button>
       </div>
     </form>
   );
