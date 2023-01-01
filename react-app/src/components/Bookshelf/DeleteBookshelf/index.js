@@ -28,11 +28,16 @@ const DeleteBookshelf = ({ bookshelfid, setShowDeleteModal, showDeleteModal }) =
   return (
     <div id="confirm_delete_bookshelf_form">
       <div id="confirm_delete_bookshelf_text">
+        <h1>
+          <img src="https://i.imgur.com/WwOdFuk.png" alt="My Reader's Journey logo."/>
+          <br />
+          My Reader's Journey</h1>
         <h2>Librarian, are you really sure you want to delete this bookshelf?</h2>
+        <h3></h3>
       </div>
       <div className="confirm_delete_footer">
-        <button onClick={() => setShowDeleteModal(false)} className='cancel-button'>Cancel</button>
-        <button onClick={() => deleteBookshelf(bookshelfid)} className="save-edit-button">YES</button>
+        <button onClick={() => setShowDeleteModal(false)} className='confirm_delete_cancel'>Cancel</button>
+        <button onClick={() => deleteBookshelf(bookshelfid)} className="confirm_delete_submit">DELETE</button>
       </div>
     </div>
   )

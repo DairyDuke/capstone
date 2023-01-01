@@ -12,7 +12,7 @@ const DemoUserButton = () => {
     }
 
     return (
-        <div id="login_modal_button" className='signup-login-button' onClick={demoLogin}>
+        <div id="demo-user-button" className='signup-login-button' onClick={demoLogin}>
             <p>
              Demo User
             </p>

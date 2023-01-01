@@ -57,47 +57,54 @@ const LoginForm = ({showModal, setShowModal}) => {
   if (user) {
     return <Redirect to='/' />;
   }
-
+// Passwords must be at least 6 characters.
   return (
     <form id="login_form" onSubmit={onLogin}>
       <div id="signin_declaration">
-        <h1>my reader's journey</h1>
-        <h3> Sign In </h3>
+        <h1>
+          <img src="https://i.imgur.com/WwOdFuk.png" alt="My Reader's Journey logo."/>
+          <br />
+           My Reader's Journey</h1>
+        <h2> Sign in </h2>
       </div>
       <div id="login_errors">
         {ErrorHandler}
       </div>
-      <div id="alignment_buttons">
-      <div className="login_input_container">
-        <label htmlFor='email'>Email</label>
-        <input
-          name='email'
-          type='email'
-          placeholder='Email'
-          value={email}
-          onChange={updateEmail}
-          required
-          maxLength={255}
-        />
-       {emailCharCount > 0 && (<div className='char-count'>{emailCharCount}/255</div>)}
+      <div className="login_input_section">
+        <div className="login_input_container">
+          <label htmlFor='email'>Email</label>
+            <div className="login_input_bar_count">
+            <input
+              name='email'
+              type='email'
+
+              value={email}
+              onChange={updateEmail}
+              required
+              maxLength={255}
+              />
+              {emailCharCount > 0 ? (<span className='login_character_count'>Remaining Characters: {emailCharCount}/255</span>) : (<span id="nothing_render"></span>)}
+            </div>
+        </div>
+        <div className="login_input_container">
+          <label htmlFor='password'>Password</label>
+            <div className="login_input_bar_count">
+            <input
+              name='password'
+              type='password'
+
+              value={password}
+              onChange={updatePassword}
+              required
+              maxLength={40}
+              minLength={6}
+            />
+            {passwordCharCount > 0 && (<div className='login_character_count'>Remaining Characters: {passwordCharCount}/40</div>)}
+          </div>
+        </div>
       </div>
-      <div className="login_input_container">
-        <label htmlFor='password'>Password</label>
-        <input
-          name='password'
-          type='password'
-          placeholder='Password'
-          value={password}
-          onChange={updatePassword}
-          required
-          maxLength={40}
-        />
-        {passwordCharCount > 0 && (<div className='char-count'>{passwordCharCount}/40</div>)}
-      </div>
-    </div>
       <div id="login_form_buttons">
-        <button id="login_form_cancel" type='button' onClick={()=> setShowModal(false)}>Close</button>
-        <button id="login_form_submit" type='submit'>Login</button>
+        <button id="login_form_submit" type='submit'>Sign in</button>
       </div>
     </form>
   );

@@ -171,19 +171,21 @@ const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
   }
 
   return (
-
-
-    <div id="edit_book_form_container">
+    <form id="edit_book_form" onSubmit={onSubmit}>
       <div id="edit_book_text">
-        <h2>Librarian, are you really sure you want to Edit this book?</h2>
+        <h1>
+          <img src="https://i.imgur.com/WwOdFuk.png" alt="My Reader's Journey logo."/>
+          <br />
+          My Reader's Journey</h1>
+        <h2> Edit Book </h2>
       </div>
-      <div>
-          <form className="edit_book_form" onSubmit={onSubmit}>
-            <div>
-            {ErrorHandler}
-            </div>
-          <div className="edit_book_form_input_box">
-            <label>Book's Title:
+      <div id="edit_book_errors">
+        {ErrorHandler}
+      </div>
+      <div className="edit_book_input_containers">
+        <div className="edit_book_form_input_box">
+          <label>Book's Title:</label>
+          <div className="edit_book_form_input_count">
             <input
               name='Book Title'
               type='text'
@@ -198,11 +200,12 @@ const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
                 // setBookTitle(e.target.value)
                 setBookTitleCharCount(e.target.value.length)}}
               />
-              </label>
-              {bookTitleCharCount > 0 && (<div className="edit_book_form_input_count">{bookTitleCharCount}/250</div>)}
+              {bookTitleCharCount > 0 && (<div className="edit_book_character_count">Remaining Characters: {bookTitleCharCount}/250</div>)}
           </div>
-          <div className="edit_book_form_input_box">
-            <label>Book's Genre:
+        </div>
+        <div className="edit_book_form_input_box">
+          <label>Book's Genre: </label>
+          <div className="edit_book_form_input_count">
             <input
               name='Book Genre'
               type='text'
@@ -217,11 +220,13 @@ const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
                 // setBookGenre(e.target.value)
                 setBookGenreCharCount(e.target.value.length)}}
               />
-              </label>
-              {bookGenreCharCount > 0 && (<div className="edit_book_form_input_count">{bookGenreCharCount}/100</div>)}
+
+              {bookGenreCharCount > 0 && (<div className="edit_book_character_count">Remaining Characters: {bookGenreCharCount}/100</div>)}
           </div>
-          <div className="edit_book_form_input_box">
-            <label>Book's Cover Image (URL):
+        </div>
+        <div className="edit_book_form_input_box">
+          <label>Book's Cover Image (URL):</label>
+          <div className="edit_book_form_input_count">
             <input
               name='Book Cover Image URL'
               type='url'
@@ -238,11 +243,12 @@ const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
                 //  setBookCoverImageUrl(e.target.value)}
                 }}
               />
-              </label>
-              {bookUrlCharCount > 0 && (<div className="edit_book_form_input_count">{bookUrlCharCount}/250</div>)}
+              {bookUrlCharCount > 0 && (<div className="edit_book_character_count">Remaining Characters: {bookUrlCharCount}/250</div>)}
           </div>
-          <div className="edit_book_form_input_box">
-            <label>Book's Summary:
+        </div>
+        <div className="edit_book_form_input_box">
+          <label>Book's Summary:</label>
+          <div className="edit_book_form_input_count">
             <textarea
               name='Book Summary'
               type='text'
@@ -257,16 +263,16 @@ const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
                 // setBookSummary(e.target.value)
                 setBookSummaryCharCount(e.target.value.length)}}
               />
-              </label>
-              {bookSummaryCharCount >0 && (<div className="edit_book_form_input_count">{bookSummaryCharCount}/1500</div>)}
+
+              {bookSummaryCharCount >0 && (<div className="edit_book_character_count">Remaining Characters: {bookSummaryCharCount}/1500</div>)}
           </div>
-          <div className='edit_book_form_footer'>
-            <button className='edit_book_cancel_button' onClick={cancelSubmit}>cancel</button>
-            <button className='edit_book_submit_button' type="submit" disabled={disableSubmit} hidden={disableSubmit}>add</button>
-          </div>
-          </form>
-    </div>
-  </div>
+        </div>
+      </div>
+      <div className='edit_book_form_footer'>
+        <button className='edit_book_cancel_button' onClick={cancelSubmit}>Cancel</button>
+        <button className='edit_book_submit_button' type="submit" disabled={disableSubmit} hidden={disableSubmit}>Confirm</button>
+      </div>
+    </form>
   )
 }
 
