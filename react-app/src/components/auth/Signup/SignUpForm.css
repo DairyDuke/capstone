@@ -1,5 +1,7 @@
 .signup_button{
   cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 #signup_form {

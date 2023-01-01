@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import './EditBookshelf.css'
 import * as bookshelfActions from '../../../store/bookshelf'
 
-const EditBookshelf = ({shelfId, shelfname}) => {
+const EditBookshelf = ({shelfNumber, shelfId, shelfname}) => {
   const dispatch = useDispatch();
   // Determines if the edit form should show.
   const [showEditShelfForm, setShowEditShelfForm] = useState(false);
@@ -25,7 +25,7 @@ const EditBookshelf = ({shelfId, shelfname}) => {
     setShelfName(shelfname)
     setErrors([])
     setShelfNameCharCount(0)
-    window.location.reload()
+    // window.location.reload()
   }
 
   useEffect(() => {
@@ -51,6 +51,7 @@ const EditBookshelf = ({shelfId, shelfname}) => {
       await dispatch(bookshelfActions.getAllBookshelvesThunk())
       await dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
       cancelSubmit()
+      window.location.reload()
     }
 }
 
@@ -75,9 +76,12 @@ if (errors) {
     <div >
       {showEditShelfForm === false && (
         <>
-          <div id="edit_bookshelf_new_button" onClick={()=> setShowEditShelfForm(true)}>
+          <span id={`bookshelf_${shelfId}`} >
+            {shelfNumber}    {shelfname}
+          </span>
+          <span id="edit_bookshelf_new_button" onClick={()=> setShowEditShelfForm(true)}>
             <span><i className="fa-solid fa-pen-to-square"></i></span>
-          </div>
+          </span>
         </>
       )}
 

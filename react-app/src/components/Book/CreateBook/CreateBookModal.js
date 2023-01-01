@@ -9,7 +9,7 @@ export default function CreateBookModal({showModal, setShowModal}) {
 
     return (
         <>
-            <div id="create_book_modal_button" onClick={() => setShowModal(true)}>
+            <div id="create_book_modal" onClick={() => setShowModal(true)}>
                 <p>Create Book</p>
             </div>
             {showModal && (

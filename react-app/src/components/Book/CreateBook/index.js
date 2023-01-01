@@ -147,24 +147,20 @@ const CreateBook = ({showModal, setShowModal, status}) => {
     // }
 
   return(
-    <div>
-      {/* {showNewBookForm === false && (
-        <>
-          <div id="create_book_new_button" onClick={()=> setShowNewBookForm(true)}>
-            <span>Create Book</span>
-          </div>
-        </>
-      )} */}
+      <form id="create_book_form" onSubmit={onSubmit}>
+        <div id="create_book_text">
+          <h1>
+            <img src="https://i.imgur.com/WwOdFuk.png" alt="My Reader's Journey logo."/>
+            <br />
+            My Reader's Journey</h1>
+            <h2> Create Book </h2>
+        </div>
+        <div id="create_book_errors">
+        </div>
 
-      {showNewBookForm && (
-        <>
-          <form className="create_book_form" onSubmit={onSubmit}>
-          <div id="signin_declaration">
-        <h1>my reader's journey</h1>
-        <h3> Create Book </h3>
-      </div>
-          <div className="create_book_form_input_box">
-            <label>Book's Title:
+        <div className="create_book_form_input_box">
+          <label>Book's Title:</label>
+          <div className="create_book_form_input_count">
             <input
               name='Book Title'
               type='text'
@@ -176,17 +172,12 @@ const CreateBook = ({showModal, setShowModal, status}) => {
                 setBookTitle(e.target.value)
                 setBookTitleCharCount(e.target.value.length)}}
               />
-              </label>
-              {bookTitleCharCount > 0 && (<div className="create_book_form_input_count">{bookTitleCharCount}/250</div>)}
-              {/* <div>
-                {!!errors && (
-                  <>
-                  {errors}
-                  </>)}
-              </div> */}
+              {bookTitleCharCount > 0 && (<div className="create_book_character_count">Remaining Characters: {bookTitleCharCount}/250</div>)}
           </div>
-          <div className="create_book_form_input_box">
-            <label>Book's Genre:
+        </div>
+        <div className="create_book_form_input_box">
+          <label>Book's Genre:</label>
+          <div className="create_book_form_input_count">
             <input
               name='Book Genre'
               type='text'
@@ -198,17 +189,12 @@ const CreateBook = ({showModal, setShowModal, status}) => {
                 setBookGenre(e.target.value)
                 setBookGenreCharCount(e.target.value.length)}}
               />
-              </label>
-              {bookGenreCharCount > 0 && (<div className="create_book_form_input_count">{bookGenreCharCount}/100</div>)}
-              {/* <div>
-                {!!errors && (
-                  <>
-                  {errors}
-                  </>)}
-              </div> */}
+              {bookGenreCharCount > 0 && (<div className="create_book_character_count">Remaining Characters: {bookGenreCharCount}/100</div>)}
           </div>
-          <div className="create_book_form_input_box">
-            <label>Book's Cover Image (URL):
+        </div>
+        <div className="create_book_form_input_box">
+          <label>Book's Cover Image (URL):</label>
+          <div className="create_book_form_input_count">
             <input
               name='Book Cover Image URL'
               type='text'
@@ -217,18 +203,12 @@ const CreateBook = ({showModal, setShowModal, status}) => {
               maxLength={100}
               onChange={(e)=> setBookCoverImageUrl(e.target.value)}
               />
-              </label>
-              {bookUrlCharCount > 0 && (<div className="create_book_form_input_count">{bookUrlCharCount}/100</div>)}
-
-              {/* <div>
-                {!!errors && (
-                  <>
-                  {errors}
-                  </>)}
-              </div> */}
+              {bookUrlCharCount > 0 && (<div className="create_book_character_count">{bookUrlCharCount}/100</div>)}
           </div>
-          <div className="create_book_form_input_box">
-            <label>Book's Summary:
+        </div>
+        <div className="create_book_form_input_box">
+          <label>Book's Summary:</label>
+          <div className="create_book_form_input_count">
             <textarea
               name='Book Summary'
               type='text'
@@ -239,23 +219,14 @@ const CreateBook = ({showModal, setShowModal, status}) => {
                 setBookSummary(e.target.value)
                 setBookSummaryCharCount(e.target.value.length)}}
               />
-              </label>
-              {bookSummaryCharCount > 0 && (<div className="create_book_form_input_count">{bookSummaryCharCount}/1500</div>)}
-              {/* <div>
-                {!!errors && (
-                  <>
-                  {errors}
-                  </>)}
-              </div> */}
+              {bookSummaryCharCount > 0 && (<div className="create_book_character_count">{bookSummaryCharCount}/1500</div>)}
           </div>
-          <div className='create_book_form_footer'>
-            <button className='create_book_cancel_button' onClick={cancelSubmit}>cancel</button>
-            <button className='create_book_submit_button' type="submit" disabled={disableSubmit}>add</button>
-          </div>
-          </form>
-        </>
-      )}
-    </div>
+        </div>
+      <div className='create_book_form_footer'>
+        <button className='create_book_cancel_button' onClick={cancelSubmit}>Cancel</button>
+        <button className='create_book_submit_button' type="submit" disabled={disableSubmit}>CREATE</button>
+      </div>
+    </form>
   )
 }
 

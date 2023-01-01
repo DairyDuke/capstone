@@ -1,6 +1,8 @@
 #login_modal_button {
   cursor: pointer;
   margin-right: 10px;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 #login_form {
@@ -33,6 +35,12 @@
   position: relative;
 }
 
+.login_input_bar_count{
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
 .login_character_count{
  min-width: none;
  position: absolute;
@@ -45,11 +53,6 @@
   display: none;
 }
 
-.login_input_bar_count{
-  width: 100%;
-  flex-direction: row;
-  flex-wrap: nowrap;
-}
 
 .login_input_container input {
   height: 35px;
