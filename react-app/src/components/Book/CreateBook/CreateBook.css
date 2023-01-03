@@ -28,6 +28,7 @@
 
 #create_book_errors{
   color: red;
+  text-transform: uppercase;
 }
 
 .create_book_input_containers{

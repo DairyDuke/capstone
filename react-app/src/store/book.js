@@ -73,7 +73,8 @@ export const getAllBooksThunk = () => async (dispatch) => {
     dispatch(getAllBooks(allBooks))
     return allBooks
   } else {
-    throw 404
+    const errors = await response.json()
+    return errors
   }
 }
 
@@ -85,7 +86,8 @@ export const getSingleBookThunk = (bookId) => async (dispatch) => {
     dispatch(getSingleBook(singleBook))
     return singleBook
   } else {
-    throw 404
+    const errors = await response.json()
+    return errors
   }
 }
 
@@ -111,7 +113,8 @@ export const createBookThunk = ({title, genre, summary, cover_image_url}) => asy
     dispatch(createBook(createdBook))
     return createdBook
   } else {
-    throw 404
+    const errors = await response.json()
+    return errors
   }
 }
 
@@ -142,7 +145,8 @@ export const deleteBookThunk = (bookId) => async (dispatch) => {
     dispatch(deleteBook(bookId))
     return deletedBook
   } else {
-    throw 404
+    const errors = await response.json()
+    return errors
   }
 }
 
