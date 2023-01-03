@@ -29,10 +29,13 @@ const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
     tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px");
     tx[i].addEventListener("input", OnInput, false);
   }
+
   function OnInput() {
     this.style.height = 0;
     this.style.height = (this.scrollHeight) + "px";
   }
+
+
   const cancelSubmit = async () => {
     setShowEditModal(false)
     setBookObj({...bookData})

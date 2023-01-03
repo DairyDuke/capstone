@@ -50,6 +50,16 @@ const CreateBook = ({showModal, setShowModal, status}) => {
     setBookUrlCharCount(0)
   }
 
+  useEffect(() => {
+    if (showNewBookForm) {
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+      setShowNewBookForm(false)
+    }
+  }, [showNewBookForm, setShowNewBookForm])
+
   const handleHidden = () => {
   //   let element = document.getElementsByClassName("create_book_submit_button");
   //   if (element && element.hidden) {
@@ -111,7 +121,6 @@ const CreateBook = ({showModal, setShowModal, status}) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     setErrors([]);
-    if (errors) { }
 
     let currentImg = defaultImg
     if (bookCoverImageUrl) {
@@ -135,7 +144,9 @@ const CreateBook = ({showModal, setShowModal, status}) => {
         console.log("Errors "+errors)
       }
     })
-    if (newBook){
+    if (newBook && newBook.errors) {
+      setErrors(newBook.errors)
+    } else {
     await dispatch(bookActions.getSingleBookThunk(newBook.id))
     cancelSubmit()
       history.push(`/books/${newBook.id}`)
@@ -145,6 +156,21 @@ const CreateBook = ({showModal, setShowModal, status}) => {
     //   window.reload()
     //   window.scrollTo(0,0)
     // }
+
+    let ErrorHandler = [];
+    if (errors) {
+      // console.log(errors)
+      for (let error in errors) {
+        // console.log(error)
+        // console.log(errors[error])
+          ErrorHandler.push((
+        <>
+          <span>
+            <h2>{error}:{errors[error]}</h2>
+          </span>
+        </>
+        ))}
+    }
 
   return(
       <form id="create_book_form" onSubmit={onSubmit}>
@@ -156,6 +182,7 @@ const CreateBook = ({showModal, setShowModal, status}) => {
             <h2> Create Book </h2>
         </div>
         <div id="create_book_errors">
+          {ErrorHandler}
         </div>
 
         <div className="create_book_form_input_box">
@@ -167,6 +194,7 @@ const CreateBook = ({showModal, setShowModal, status}) => {
               placeholder='Full Title Here'
               value={bookTitle}
               required
+              minLength={3}
               maxLength={250}
               onChange={(e)=> {
                 setBookTitle(e.target.value)
@@ -184,6 +212,7 @@ const CreateBook = ({showModal, setShowModal, status}) => {
               placeholder='Pick the most relevant!'
               value={bookGenre}
               required
+              minLength={6}
               maxLength={100}
               onChange={(e)=> {
                 setBookGenre(e.target.value)
@@ -197,9 +226,10 @@ const CreateBook = ({showModal, setShowModal, status}) => {
           <div className="create_book_form_input_count">
             <input
               name='Book Cover Image URL'
-              type='text'
+              type='url'
               placeholder='Full HTTPS or leave blank.'
               value={bookCoverImageUrl}
+
               maxLength={100}
               onChange={(e)=> setBookCoverImageUrl(e.target.value)}
               />
