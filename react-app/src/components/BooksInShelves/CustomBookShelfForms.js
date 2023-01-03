@@ -33,13 +33,11 @@ export default function CustomBookShelfForms({setShowModal, showModal, bookshelf
     return (
         <div id="bis_custom_container" key={shelfid}>
             <div id="bis_custom_name_box">
-                <span>
-                    {customeBookShelfName}
-                </span>
                 {shelved ?
-                (<button onClick={() => removeBookToShelf()} className="bis_remove_button">REMOVE</button>)
+                (<button onClick={() => removeBookToShelf()} className="bis_remove_button">
+                    <i className="fa-solid fa-check"></i> {customeBookShelfName}</button>)
                 :
-                (<button onClick={() => addBookToShelf()} className='bis_add_button'>ADD</button>)
+                (<button onClick={() => addBookToShelf()} className='bis_add_button'>{customeBookShelfName}</button>)
                 }
             </div>
       </div>

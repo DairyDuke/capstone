@@ -48,11 +48,22 @@ const ShelveBookFormBasic = ({ setShowModal, showModal, currentShelf, bookId }) 
 
     return (
         <div className="bis_shelf_container">
+            <div id="bis_shelf_text">
+                <h2>Choose a shelf for this book:</h2>
+            </div>
             <div className="bis_shelf_box">
                 <div className="bis_protected_box">
+                <h4>
+                    Your Main Shelves:
+                </h4>
+                    <span>Only one shelf!</span>
                     {protectedShelves}
                 </div>
                 <div className="bis_custom_box">
+                <h4>
+                    Your Custom Shelves:
+                </h4>
+                <span>Put this on as many shelves as you'd like!</span>
                     {otherShelves}
                 </div>
             </div>

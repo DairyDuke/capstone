@@ -34,13 +34,11 @@ export default function ProtectedBookShelfForms({setShowModal, showModal, booksh
     return (
         <div id="bis_protected_container" key={shelfid}>
             <div id="bis_protected_name_box">
-                <span>
-                    {customeBookShelfName}
-                </span>
                 {shelved ?
-                (<button onClick={() => removeBookToShelf()} className="bis_remove_button">REMOVE</button>)
+                (<button onClick={() => removeBookToShelf()} className="bis_remove_button">
+                <i className="fa-solid fa-check"></i> {customeBookShelfName}</button>)
                 :
-                (<button onClick={() => addBookToShelf()} className='bis_add_button'>ADD</button>)
+                (<button onClick={() => addBookToShelf()} className='bis_add_button'>{customeBookShelfName}</button>)
                 }
             </div>
       </div>
