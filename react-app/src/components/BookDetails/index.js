@@ -111,7 +111,7 @@ if (bookobj.Reviewed && bookobj.Reviewed.length > 0 ) {
           </div>
           <div className="bookdetails_left_column_book_status" id="quick_box">
             {/* <CreateBookModal showModal={showModal} setShowModal={setShowModal}/> */}
-            {sessionUser ? (<BookShelfStatusModal bookId={bookId} currentShelf={currentShelf} />) : (<LoginFormModalButton linkText={"add to shelf"} />)}
+            {sessionUser ? (<BookShelfStatusModal bookId={bookId} currentShelf={currentShelf} />) : (<LoginFormModalButton linkText={"Add To Shelf"} />)}
           </div>
         </div>
       </div>
