@@ -5,12 +5,22 @@
 }
 .edit_bookshelf_form{
   box-sizing: border-box;
-  border: 1px solid black;
+  /* width: fit-content; */
   position: relative;
 }
 .edit_bookshelf_form_input_box{
+  position: relative;
+  /* width: fit-content; */
 }
-.edit_bookshelf_form_input_count{}
+
+.edit_bookshelf_form_input_box input{
+  border: 1px solid black;
+}
+.edit_bookshelf_form_input_count{
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
 .edit_bookshelf_form_footer{}
 .edit_bookshelf_cancel_button{
   cursor: pointer;

@@ -45,7 +45,8 @@ color: black;
 
 }
 .splash_creator_list{
-  padding: 5px;
+  margin: 0;
+  /* padding: 5px; */
 }
 
 .splash_content_container {

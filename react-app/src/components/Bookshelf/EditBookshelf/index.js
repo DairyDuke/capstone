@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import DeleteBookshelfModal from '../DeleteBookshelf/DeleteBookshelfModal.js'
 import './EditBookshelf.css'
 import * as bookshelfActions from '../../../store/bookshelf'
 
 const EditBookshelf = ({shelfNumber, shelfId, shelfname}) => {
+  const [showShelfDeleteModal, setShowShelfDeleteModal] = useState(false)
+
+
   const dispatch = useDispatch();
   // Determines if the edit form should show.
   const [showEditShelfForm, setShowEditShelfForm] = useState(false);
@@ -82,6 +86,10 @@ if (errors) {
           <span id="edit_bookshelf_new_button" onClick={()=> setShowEditShelfForm(true)}>
             <span><i className="fa-solid fa-pen-to-square"></i></span>
           </span>
+          <button className='mybooks_delete_bookshelf_button'  onClick={()=> setShowShelfDeleteModal(true)}>
+            <i className="fa-sharp fa-solid fa-x"></i>
+          </button>
+          <DeleteBookshelfModal showDeleteModal={showShelfDeleteModal} setShowDeleteModal={setShowShelfDeleteModal} bookshelfid={shelfId} />
         </>
       )}
 
@@ -107,8 +115,8 @@ if (errors) {
               {shelfNameCharCount > 0 && (<div className="edit_bookshelf_form_input_count">{shelfNameCharCount}/35</div>)}
           </div>
           <div className='edit_bookshelf_form_footer'>
-            <button className='edit_bookshelf_cancel_button' onClick={cancelSubmit}>cancel</button>
-            <button className='edit_bookshelf_submit_button' type="submit" disabled={disableSubmit}>edit</button>
+            <button className='edit_bookshelf_cancel_button' onClick={cancelSubmit}>Cancel</button>
+            <button className='edit_bookshelf_submit_button' type="submit" disabled={disableSubmit}>CONFIRM</button>
           </div>
           </form>
         </>

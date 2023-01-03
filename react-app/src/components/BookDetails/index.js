@@ -46,7 +46,17 @@ const BookDetails = () => {
   // }
   //   )
   // }
+let AverageRating = 0;
+let MathRating = "Not Rated!";
+if (bookobj.Reviewed && bookobj.Reviewed.length > 0 ) {
 
+  for (let review in bookobj.Reviewed){
+    AverageRating = AverageRating + bookobj.Reviewed[review].rating
+  }
+  MathRating = AverageRating / bookobj.Reviewed.length
+
+}
+// {bookobj.Reviewed.length > 0 : }
   // useEffect(()=> {
   //   if (bookobj) {
   //     // const bookShelfCurrent = bookobj.Shelved.find((shelf) => shelf.userId === sessionUser.id && shelf.protected === true)
@@ -59,19 +69,21 @@ const BookDetails = () => {
   if (bookobj && bookobj["Creators"] && bookobj["Creators"].length > 0) {
     creators = bookobj["Creators"].map((creator) =>(
     <div key={creator.id}>
-      <div id="bookdetails_right_column_creator_role">
-        {creator.role}
-      </div>
-      <div id="bookdetails_right_column_creator_details">
+      <div>
+        <div id="bookdetails_right_column_creator_role">
+          <h3>{creator.role}</h3>
+        </div>
         <div id="bookdetails_right_column_creator_picture">
           <img src={creator.creatorImageUrl} alt={creator.name} />
         </div>
+      </div>
+      <div id="bookdetails_right_column_creator_details">
         <div id="bookdetails_right_column_creator_name">
             <h3>{creator.name}</h3>
         </div>
-      </div>
       <div id="bookdetails_right_column_creator_summary">
         <p>{creator.summary}</p>
+      </div>
       </div>
     </div>
     ))
@@ -112,13 +124,13 @@ const BookDetails = () => {
             <div id="bookdetails_right_column_book_creator_list">
             </div>
             <div id="bookdetails_right_column_book_review_rating">
-              <h2>Review Rating</h2>
+              <h2>Average Rating: {MathRating}</h2>
             </div>
             <div id="bookdetails_right_column_book_summary">
               <p>{bookobj.summary}</p>
             </div>
             <div id="bookdetails_right_column_book_genre">
-              <h3>{bookobj.genre}</h3>
+              <h3>Genre: {bookobj.genre}</h3>
             </div>
           </div>
           <div id="bookdetails_right_column_creator_section">

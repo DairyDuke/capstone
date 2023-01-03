@@ -98,7 +98,7 @@ const CurrentlyReadingPreview = ({book}) => {
           by {bookobj[book.id]["Creators"].find((creator)=> creator['role'] === "author")['name']}
         </div>
         <div>
-        {bookobj[book.id]['AverageRating']}
+        AVG. Rating: {bookobj[book.id]['AverageRating']}
         </div>
         <div className="currently_reading_preview_summary">
           {/* {book.summary} */}
