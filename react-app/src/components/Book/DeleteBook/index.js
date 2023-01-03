@@ -21,7 +21,7 @@ const DeleteBook = ({ bookid, setShowDeleteModal, showDeleteModal }) => {
     // await dispatch(bookActions.deleteBookThunk(bookid)).then(async ()=> await dispatch(bookActions.removeSingleBookThunk(bookid))).then(async ()=> await dispatch(bookActions.getAllBooksThunk())).then(()=> history.push('/'))
     await dispatch(bookActions.deleteBookThunk(bookid))
     await dispatch(bookActions.removeSingleBookThunk(bookid))
-    await dispatch(bookActions.removeBookFromShelfThunk({"bookshelf_name":"all", "custom_bookshelf_name":null}, bookid))
+    // await dispatch(bookActions.removeBookFromShelfThunk(bookid))
     await dispatch(bookActions.getAllBooksThunk())
     history.push('/')
   }
