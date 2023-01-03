@@ -87,7 +87,12 @@ if (bookobj.Reviewed && bookobj.Reviewed.length > 0 ) {
       </div>
     </div>
     ))
-  }
+  } else { creators = (
+  <>
+    <h2>No Creators linked to this book as of yet!</h2>
+      <h3> Do you know who created this book? Contact your Librarian today!</h3>
+  </>
+  )}
   return (
     <div className="bookdetails_main_container">
       <div className="bookdetails_left_column_sticky_container">

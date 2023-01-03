@@ -137,7 +137,12 @@ color: black;
   width: 700px;
   height: 100%;
 }
-.splash_discover_reccomendations_summary p {
+.splash_discover_reccomendations_summary p{
+}
+
+#splash_discover_reccomendations_summary_growing_paragraph {
+
+  position: relative;
   white-space: wrap;
   word-break: break-word;
   width: 100%;
@@ -145,6 +150,21 @@ color: black;
   /* max-height: 120px; */
   text-overflow: ellipsis;
   overflow-x: hidden;
-  overflow-y:auto;
+  overflow-y: hidden;
   scrollbar-width: none;
+  z-index: 0;
+}
+
+#splash_discover_reccomendations_summary_growing_paragraph:after {
+  content  : "";
+  position : absolute;
+  z-index  : 0;
+  bottom   : 0;
+  left     : 0;
+  pointer-events   : none;
+  background-image : linear-gradient(to bottom,
+                    rgba(255,255,255, 0),
+                    rgba(255,255,255, 1) 90%);
+  width    : 100%;
+  height   : 4em;
 }
