@@ -130,7 +130,7 @@ const Home = ()=>{
   if (UserShelves && UserShelves.length >= 1) {
   ShowCurrent = UserShelves.map((stack)=> (
     <CurrentlyReadingPreview key={stack.id} book={stack}/>
-  ))}
+  ))} else { ShowCurrent = (<h4>Not Currently Reading anything!</h4>)}
 
   let UserBooks = []
   let RenderElement
@@ -216,7 +216,11 @@ const Home = ()=>{
         </div>
         <div className="mybooks_want_to_read_container">
           <h3>WANT TO READ</h3>
+          <div>
           {ShowWantRead}
+          </div>
+        </div>
+        <div className="mybooks_spacer_line">
         </div>
       </div>
       <div className="mybooks_right_container">
@@ -224,13 +228,13 @@ const Home = ()=>{
           <table className="mybooks_table">
             <thread>
               <tr>
-                <th id="column1">cover</th>
-                <th id="column2">title</th>
-                <th id="column3">author</th>
-                <th id="column4">avg rating</th>
-                <th id="column5">rating</th>
+                <th id="column1">Cover</th>
+                <th id="column2">Title</th>
+                <th id="column3">Creators</th>
+                <th id="column4">AVG. Rating</th>
+                <th id="column5">You Rating</th>
                 {/* <th id="column6">shelves</th> */}
-                <th id="column7">review</th>
+                <th id="column7">Your Review</th>
                 {/* <th id="column8">date read</th>
                 <th id="column9">date added</th> */}
               </tr>

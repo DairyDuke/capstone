@@ -47,7 +47,7 @@
 }
 
 .mybooks_left_container {
-  width: 260px;
+  width: 35%;
 }
 
 .mybooks_currently_reading_container {
@@ -61,7 +61,16 @@
 .mybooks_want_to_read_container {
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   margin-bottom: 20px;
+  max-height: 450px;
+}
+
+.mybooks_want_to_read_container div {
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+/* margin-bottom: 20px; */
 }
 
 .mybooks_want_to_read_container img{
@@ -76,14 +85,11 @@
 
 }
 
-.mybooks_want_to_read_container div {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: fit-content;
+.mybooks_want_to_read_container a {
+  width: min-content;
 }
 .mybooks_want_to_read_container a {
-  width: fit-content;
+  /* width: fit-content; */
 }
 .mybooks_spacer_line {
   margin: 10px 0px;
@@ -102,6 +108,15 @@
   flex-direction: row;
 }
 
+.mybooks_custom_shelves div {
+  width: fit-content;
+  /* white-space: pre-wrap; */
+  overflow-x: hidden;
+  word-break: break-all;
+  text-overflow: ellipsis;
+
+}
+
 .create_bookshelf_new_button:hover {
   cursor: pointer;
   text-decoration: underline;
@@ -118,6 +133,7 @@
 }
 
 .mybooks_bookshelves_list {
+  min-width: max-content;
   text-transform: capitalize;
   word-break: break-all;
   text-overflow: ellipsis;
@@ -139,12 +155,17 @@
 .mybooks_right_container {
   margin-left: 20px;
   /* width: 400px; */
-  width: 100%;
+  width: 60%;
   /* max-width: 100%; */
 }
 .mybooks_table {
   /* border: 1px solid black; */
-  width: 100%;
+  text-transform: capitalize;
+  width: fit-content;
+}
+
+.mybooks_table td{
+  text-align: center;
 }
 
 .mybooks_main_reccomendation_list {
@@ -173,18 +194,21 @@ flex-direction: column;
 .mybooks_right_column_title a{
   text-decoration: none;
   color: black;
-  font-size: 12px;
+  font-size: small;
 }
 .mybooks_right_column_creator {
   text-transform: capitalize;
+  font-size: medium;
   width: 80px;
 }
 .mybooks_right_column_creator_list {
+  font-size: medium;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
 }
 .mybooks_right_column_averagerating{
+  text-align: center;
   width: 80px;
 }
 .mybooks_right_column_shelves{
@@ -204,32 +228,42 @@ flex-direction: column;
 .mybooks_table th{
   text-align: left;
   word-break: nowrap;
+  width: fit-content;
 }
 
 #column1 {
+  text-align: center;
   width: 50px;
 }
 #column2 {
+  text-align: center;
   width: 117px;
 }
 #column3 {
+  text-align: center;
   width: 80px;
 }
 #column4 {
-  width: 80px;
+  text-align: center;
+  width: 100px;
 }
 #column5 {
+  text-align: center;
   width: 111px;
 }
 #column6 {
+  text-align: center;
   width: 65px;
 }
 #column7 {
+  text-align: center;
   width: 190px;
 }
 #column8 {
+  text-align: center;
   width: 35px;
 }
 #column9 {
+  text-align: center;
   width: 35px;
 }

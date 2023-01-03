@@ -121,13 +121,15 @@ const Home = ()=>{
       </div>
     </NavLink>
   )}}
-  )}
+  )} else {ShowWantRead = (<h2>Not currently wanting to read!</h2>)}
 
   // console.log('3 ', UserShelves)
   if (UserShelves && UserShelves.length >= 1) {
   ShowCurrent = UserShelves.map((stack)=> (
     <CurrentlyReadingPreview key={stack.id} book={stack}/>
-  ))}
+  ))} else {
+    ShowCurrent = (<h2>Not current reading anything!</h2>)
+  }
 
 
   if (UserBooks && UserBooks.length > 1) {
@@ -177,13 +179,21 @@ const Home = ()=>{
           <h3>CURRENTLY READING</h3>
           {ShowCurrent}
         </div>
+        <div className="mybooks_spacer_line">
+        </div>
         <div className="home_want_to_read_container">
           <h3>WANT TO READ</h3>
+          <div>
           {ShowWantRead}
+          </div>
+        </div>
+        <div className="mybooks_spacer_line">
         </div>
         <div className="home_bookshelves_list">
           <h3>BOOKSHELVES</h3>
           {ShowShelfList}
+        </div>
+        <div className="mybooks_spacer_line">
         </div>
       </div>
       <div className="home_right_container">

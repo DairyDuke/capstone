@@ -41,7 +41,6 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: fit-content;
 }
 .home_want_to_read_container a {
   width: fit-content;

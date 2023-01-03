@@ -56,7 +56,7 @@ const Splash = ()=>{
                 <h2>{book.title}</h2>
               </div>
               <div className="splash_discover_reccomendations_averagerating">
-                <h3>{book.AverageRating}</h3>
+                <h3>AVG. Rating: {book.AverageRating}</h3>
               </div>
               <div className="splash_discover_reccomendations_averagerating">
                 <h3>{book.Creators.map((creator)=> (
@@ -101,7 +101,7 @@ const Splash = ()=>{
             </div>
             <div id="splash_discover_reccomendations">
                 <span id="splash_what_discover_box">
-                  What will you discover?
+                 <h2>What will you discover?</h2>
                 </span>
                 {RenderElement}
 
