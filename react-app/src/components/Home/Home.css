@@ -58,7 +58,7 @@
 /* RIGHT SIDE */
 .home_right_container {
   margin-left: 20px;
-  width: 400px;
+  width: 450px;
 }
 
 .home_main_reccomendation_list {
@@ -109,8 +109,12 @@
 #splash_login_module>div {
 
 }
-.splash_creator_list{
+.home_center_creator_list{
   padding: 5px;
+  display: flex;
+  flex-direction: column;
+  padding: 0px;
+  text-transform: capitalize;
 }
 
 .splash_content_container {

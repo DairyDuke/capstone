@@ -142,11 +142,11 @@ const Home = ()=>{
                 <h2>{book.title}</h2>
               </div>
               <div className="home_center__averagerating">
-                <h3>{book.AverageRating}</h3>
+                <h3>AVG. Rating: {book.AverageRating}</h3>
               </div>
               <div className="home_center__averagerating">
                 <h3>{book.Creators && book.Creators.map((creator)=> (
-                  <span className="splash_creator_list">
+                  <span className="home_center_creator_list">
                   {creator.role}: {creator.name}
                   </span>
                 ))}</h3>
