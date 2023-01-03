@@ -9,7 +9,7 @@ export default function LoginFormModalButton({linkText}) {
 
     return (
         <>
-            <div id="login_modal_button" onClick={() => setShowModal(true)}>
+            <div id="login_form_modal_button" onClick={() => setShowModal(true)}>
                 <span>{linkText}</span>
             </div>
             {showModal && (
