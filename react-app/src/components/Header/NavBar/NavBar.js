@@ -70,7 +70,10 @@ const NavBar = () => {
             </div>
             <div id="test">
               <div onClick={toggleMenu} id='navbar_profile_button'>
-                <img src="https://i.imgur.com/pZlkRiA.png" alt="User Menu" />
+                <span>
+                <img  id='navbar-profile-img-button' className='profile-img' alt='profile' src={sessionUser.profileImageUrl} />
+                </span>
+                {/* <img src="https://i.imgur.com/pZlkRiA.png" alt="User Menu" /> */}
               </div>
 
             {showMenu && (
@@ -79,7 +82,7 @@ const NavBar = () => {
                   <div id="dropdown-header">
                     {/* <NavLink to={`/users/${sessionUser.id}`} exact={true} className='dropdown-option image-option'> */}
                     <div className='dropdown-option image-option'>
-                      <img id='navbar-profile-img' className='profile-img' alt='profile' src={sessionUser.profileImageUrl} />
+                      <img  id='navbar-profile-img' className='profile-img' alt='profile' src={sessionUser.profileImageUrl} />
                           <p>{sessionUser.username}</p>
                     </div>
                     {/* </NavLink> */}

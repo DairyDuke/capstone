@@ -29,7 +29,7 @@ export default function BookShelfStatusModal({bookId, currentShelf}) {
             </div>
             {showModal && (
                 <Modal id='bis_choice_modal' onClose={() => setShowModal(false)} >
-                    <ShelveBookFormBasic setShowModal={setShowModal} showModal={showModal} currentShelf={currentShelf} bookId={bookId["bookId"]} />
+                    <ShelveBookFormBasic setShowModal={setShowModal} showModal={showModal} currentShelf={currentShelf} bookId={bookId} />
                 </Modal>
             )}
         </>

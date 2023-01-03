@@ -14,7 +14,8 @@ import LoginFormModalButton from '../auth/Login/LoginFormModalButton';
 const BookDetails = () => {
   const dispatch = useDispatch();
   // const history = useHistory();
-  const bookId = useParams()
+  const params = useParams()
+  const bookId = params["bookId"]
 
   // Variables for the Edit, Delete, and Shelf Modals
   const [showEditModal, setShowEditModal] = useState(false)
@@ -30,7 +31,7 @@ const BookDetails = () => {
   const [currentShelf, setCurrentShelf] = useState("")
   // UseEfect to Load data
   useEffect(()=> {
-    dispatch(bookActions.getSingleBookThunk(bookId.bookId))
+    dispatch(bookActions.getSingleBookThunk(bookId))
   },[dispatch, bookId])
 
   // UseEffect to Update State Values
@@ -111,7 +112,7 @@ if (bookobj.Reviewed && bookobj.Reviewed.length > 0 ) {
               Delete Book
             </button>
           </div>)}
-          <DeleteBookModal showDeleteModal={showDeleteModal} setShowDeleteModal={setShowDeleteModal} bookid={bookId.bookId} />
+          <DeleteBookModal showDeleteModal={showDeleteModal} setShowDeleteModal={setShowDeleteModal} bookid={bookId} />
           <EditBookModal showEditModal={showEditModal} setShowEditModal={setShowEditModal} bookData={bookobj} />
           </div>
           <div className="bookdetails_left_column_book_status" id="quick_box">

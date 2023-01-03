@@ -102,11 +102,13 @@
 }
 
 /* ---------- BOOK CONTENT  --------- */
-#bookdetails_right_column_book_title {}
+#bookdetails_right_column_book_title {
+  text-transform: capitalize;
+}
 
 #bookdetails_right_column_book_details {
 
-  /* text-transform: capitalize; */
+  text-transform: capitalize;
 
 }
 
