@@ -188,6 +188,23 @@ export const removeBookFromShelfThunk = (bookId, shelfId) => async (dispatch) =>
   }
 }
 
+export const uploadImageThunk = (formData) => async () => {
+  const response = await fetch('/api/images', {
+    method: "POST",
+    body: formData,
+  });
+
+  if (response.ok) {
+    const imageUrl = await response.json();
+    return imageUrl;
+  }
+  else {
+    const imageUrl = await response.json();
+    console.log("Errors", imageUrl);
+  }
+
+}
+
 // --- REDUCER STUFF --- \\
 
 // --- NORMALIZE DATA SPACE --- \\

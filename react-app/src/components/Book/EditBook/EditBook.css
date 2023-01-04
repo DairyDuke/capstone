@@ -71,7 +71,37 @@
   background-color: #fafafa;
 }
 
+#edit_book_cover_preview{
+  /* cursor: pointer;
+  color: black; */
 
+  width: 80%;
+  line-height: 30px;
+  font-size: larger;
+  cursor: pointer;
+  margin: auto;
+  border: 1px solid black;
+  background-color: black;
+  color: white;
+  /* border-radius: 10px; */
+  margin: 2px;
+
+  /* display: flex;
+  flex-direction: row; */
+  /* justify-content: start; */
+  /* margin-bottom: 15px; */
+}
+
+#edit_book_cover_preview:hover {
+  color: gray;
+  background-color: rgba(0, 0, 0, 0.798);
+
+}
+
+#edit_book_cover_preview img{
+  max-height: 75px;
+
+}
 .edit_book_form_input_box textarea {
   height: auto;
   /* max-height: 150px; */

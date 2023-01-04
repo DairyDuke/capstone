@@ -8,6 +8,9 @@ import * as bookActions from '../../../store/book'
 const CreateBook = ({showModal, setShowModal, status}) => {
   const dispatch = useDispatch();
   const history = useHistory();
+  // These variable are for AWS Picture Saving
+  const [image, setImage] = useState(null);
+  const [imageLoading, setImageLoading] = useState(false);
   // const creators = useSelector(state => state.creators)
   // Determines if the new comment button exists or not.
   const [showNewBookForm, setShowNewBookForm] = useState(showModal || false);
@@ -97,16 +100,16 @@ const CreateBook = ({showModal, setShowModal, status}) => {
     } else {
       setDisableSubmit(true)
     }
-    if (bookUrlCharCount > 100) {
-      setDisableSubmit(true)
-      setErrors("Book Cover must be between 0 and 100 characters.")
-    } else if (bookUrlCharCount >= 0) {
-      setDisableSubmit(false)
-      handleHidden()
-    } else {
-      setDisableSubmit(true)
-    }
-  }, [bookTitleCharCount, bookGenreCharCount, bookSummaryCharCount, bookUrlCharCount])
+    // if (bookUrlCharCount > 100) {
+    //   setDisableSubmit(true)
+    //   setErrors("Book Cover must be between 0 and 100 characters.")
+    // } else if (bookUrlCharCount >= 0) {
+    //   setDisableSubmit(false)
+    //   handleHidden()
+    // } else {
+    //   setDisableSubmit(true)
+    // }
+  }, [bookTitleCharCount, bookGenreCharCount, bookSummaryCharCount])
 
   // useEffect(() => {
   //   if (showModal) {
@@ -123,10 +126,24 @@ const CreateBook = ({showModal, setShowModal, status}) => {
     setErrors([]);
 
     let currentImg = defaultImg
-    if (bookCoverImageUrl) {
-      console.log("this is why, ", bookCoverImageUrl)
-      currentImg = bookCoverImageUrl
-    }
+    const formData = new FormData();
+      formData.append("image", image);
+
+      // aws uploads can be a bit slow—displaying
+      // some sort of loading message is a good idea
+      setImageLoading(true);
+
+      const bookCoverUpload = await dispatch(bookActions.uploadImageThunk(formData))
+
+      if (bookCoverUpload) {
+        setImageLoading(false);
+        currentImg = bookCoverUpload.url;
+      }
+      else {
+          setImageLoading(false);
+      }
+
+
 
     const bookDataObject = {
      "title": bookTitle,
@@ -156,6 +173,11 @@ const CreateBook = ({showModal, setShowModal, status}) => {
     //   window.reload()
     //   window.scrollTo(0,0)
     // }
+
+    const updateImage = (e) => {
+      const file = e.target.files[0];
+      setImage(file);
+    };
 
     let ErrorHandler = [];
     if (errors) {
@@ -224,7 +246,12 @@ const CreateBook = ({showModal, setShowModal, status}) => {
         <div className="create_book_form_input_box">
           <label>Book's Cover Image (URL):</label>
           <div className="create_book_form_input_count">
-            <input
+          <input
+              type="file"
+              accept="image/*"
+              onChange={updateImage}
+            />
+            {/* <input
               name='Book Cover Image URL'
               type='url'
               placeholder='Full HTTPS or leave blank.'
@@ -233,7 +260,7 @@ const CreateBook = ({showModal, setShowModal, status}) => {
               maxLength={100}
               onChange={(e)=> setBookCoverImageUrl(e.target.value)}
               />
-              {bookUrlCharCount > 0 && (<div className="create_book_character_count">{bookUrlCharCount}/100</div>)}
+              {bookUrlCharCount > 0 && (<div className="create_book_character_count">{bookUrlCharCount}/100</div>)} */}
           </div>
         </div>
         <div className="create_book_form_input_box">
@@ -256,6 +283,7 @@ const CreateBook = ({showModal, setShowModal, status}) => {
         <button className='create_book_cancel_button' onClick={cancelSubmit}>Cancel</button>
         <button className='create_book_submit_button' type="submit" disabled={disableSubmit}>CREATE</button>
       </div>
+        {(imageLoading)&& <p>Loading...</p>}
     </form>
   )
 }

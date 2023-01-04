@@ -5,9 +5,13 @@ import './EditBook.css'
 
 const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
   const dispatch = useDispatch()
+  const [showInput, setShowInput] = useState(false)
 
   // Actual form data:
   const [bookObj, setBookObj] = useState({...bookData})
+  // These variable are for AWS Picture Saving
+  const [image, setImage] = useState(bookObj.Cover);
+  const [imageLoading, setImageLoading] = useState(false);
   // const [bookTitle, setBookTitle] = useState("");
   // const [bookGenre, setBookGenre] = useState("");
   // const [bookSummary, setBookSummary] = useState("");
@@ -34,7 +38,6 @@ const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
     this.style.height = 0;
     this.style.height = (this.scrollHeight) + "px";
   }
-
 
   const cancelSubmit = async () => {
     setShowEditModal(false)
@@ -92,15 +95,15 @@ const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
     } else {
       setDisableSubmit(true)
     }
-    if (bookUrlCharCount > 250) {
-      setDisableSubmit(true)
-      setErrors((prevState) => {
-     return {...prevState, url:"Url must be between 1 and 250 characters."}})
-    } else if (bookUrlCharCount >= 0) {
-      setDisableSubmit(false)
-    } else {
-      setDisableSubmit(true)
-    }
+    // if (bookUrlCharCount > 250) {
+    //   setDisableSubmit(true)
+    //   setErrors((prevState) => {
+    //  return {...prevState, url:"Url must be between 1 and 250 characters."}})
+    // } else if (bookUrlCharCount >= 0) {
+    //   setDisableSubmit(false)
+    // } else {
+    //   setDisableSubmit(true)
+    // }
     // if (bookTitleCharCount === 0
     //   && bookGenreCharCount === 0
     //   && bookSummaryCharCount === 0
@@ -110,7 +113,7 @@ const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
 
     // console.log(errors)
     //   }
-  }, [bookTitleCharCount, bookGenreCharCount, bookSummaryCharCount, bookUrlCharCount])
+  }, [bookTitleCharCount, bookGenreCharCount, bookSummaryCharCount])
 
 
   const onSubmit = async (e) => {
@@ -121,6 +124,24 @@ const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
     if (bookObj.Cover) {
       currentImg = bookObj.Cover
     }
+    const formData = new FormData();
+      formData.append("image", image);
+
+      // aws uploads can be a bit slow—displaying
+      // some sort of loading message is a good idea
+      setImageLoading(true);
+
+      const bookCoverUpload = await dispatch(bookActions.uploadImageThunk(formData))
+
+      if (bookCoverUpload) {
+        setImageLoading(false);
+        currentImg = bookCoverUpload.url;
+      }
+      else {
+          setImageLoading(false);
+      }
+
+
 
     const bookDataObject = {
       "id": bookObj.id,
@@ -157,6 +178,18 @@ const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
     // })
     // console.log(newBook)
   };
+
+  const updateImage = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+  };
+
+  const handleCancel = () => {
+    setShowInput(false)
+    setImage(bookObj.Cover)
+  }
+  // const coverImgChange = {showInput ? (<span onClick={()=> setShowInput(false)}> Cancel </span>) :
+  //   (<span id="edit_book_cover_preview" onClick={()=> setShowInput(true)}> UPDATE </span>)}
 
   let ErrorHandler = [];
   if (errors) {
@@ -228,9 +261,20 @@ const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
           </div>
         </div>
         <div className="edit_book_form_input_box">
-          <label>Book's Cover Image (URL):</label>
+          <label>Update Cover Image? {showInput ? (<span id="edit_book_cover_preview"  onClick={handleCancel}> Cancel </span>) :
+    (<span id="edit_book_cover_preview" onClick={()=> setShowInput(true)}> UPDATE </span>)}</label>
+
           <div className="edit_book_form_input_count">
+            {showInput ? (<>
             <input
+                type="file"
+                accept="image/*"
+                // value={bookObj.Cover}
+                placeholder={bookObj.Cover}
+                onChange={updateImage}
+              />
+              </>): (<br />)}
+            {/* <input
               name='Book Cover Image URL'
               type='url'
               placeholder='Full HTTPS or leave blank.'
@@ -246,7 +290,7 @@ const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
                 //  setBookCoverImageUrl(e.target.value)}
                 }}
               />
-              {bookUrlCharCount > 0 && (<div className="edit_book_character_count">Remaining Characters: {bookUrlCharCount}/250</div>)}
+              {bookUrlCharCount > 0 && (<div className="edit_book_character_count">Remaining Characters: {bookUrlCharCount}/250</div>)} */}
           </div>
         </div>
         <div className="edit_book_form_input_box">
@@ -275,6 +319,7 @@ const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
         <button className='edit_book_cancel_button' onClick={cancelSubmit}>Cancel</button>
         <button className='edit_book_submit_button' type="submit" disabled={disableSubmit} hidden={disableSubmit}>Confirm</button>
       </div>
+        {(imageLoading)&& <p>Loading...</p>}
     </form>
   )
 }

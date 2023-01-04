@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom';
 import { signUp } from '../../../store/session';
+import * as bookActions from '../../../store/book'
 import "./SignUpForm.css";
 
 const SignUpForm = ({showModal, setShowModal}) => {
@@ -11,6 +12,9 @@ const SignUpForm = ({showModal, setShowModal}) => {
   const [email, setEmail] = useState('');
   const [emailCharCount, setEmailCharCount] = useState(0)
 
+  // These variable are for AWS Picture Saving
+  const [image, setImage] = useState(null);
+  const [imageLoading, setImageLoading] = useState(false);
 
   const [profileUrl, setProfileUrl] = useState('');
   const [profileUrlCharCount, setProfileUrlCharCount] = useState(0)
@@ -40,7 +44,22 @@ const SignUpForm = ({showModal, setShowModal}) => {
     e.preventDefault();
     if (password === repeatPassword) {
       let profileImageUrl = defaultProfilePictureImage
-      if (profileUrl) profileImageUrl = profileUrl;
+      const formData = new FormData();
+      formData.append("image", image);
+
+      // aws uploads can be a bit slow—displaying
+      // some sort of loading message is a good idea
+      setImageLoading(true);
+
+      const profilePic = await dispatch(bookActions.uploadImageThunk(formData))
+
+      if (profilePic) {
+        setImageLoading(false);
+        profileImageUrl = profilePic.url;
+      }
+      else {
+          setImageLoading(false);
+      }
 
       const data = await dispatch(signUp({username, email, profileImageUrl, password}));
 
@@ -50,6 +69,11 @@ const SignUpForm = ({showModal, setShowModal}) => {
     } else {
       setErrors({'repeat_password':'Password and confirm password must match'})
     }
+  };
+
+  const updateImage = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
   };
 
   const updateUsername = (e) => {
@@ -139,13 +163,18 @@ const SignUpForm = ({showModal, setShowModal}) => {
           <label>Profile Picture</label>
           <div>
           <input
+              type="file"
+              accept="image/*"
+              onChange={updateImage}
+            />
+          {/* <input
             type='url'
             name='profile picture'
             onChange={updateProfilePic}
             value={profileUrl}
             maxLength={255}
           ></input>
-          {profileUrlCharCount > 0 && (<span className='signup_character_count'>Remaining Characters: {profileUrlCharCount}/255</span>)}
+          {profileUrlCharCount > 0 && (<span className='signup_character_count'>Remaining Characters: {profileUrlCharCount}/255</span>)} */}
           </div>
         </div>
         <div className="signup_input_container">
@@ -181,6 +210,7 @@ const SignUpForm = ({showModal, setShowModal}) => {
       </div>
       <div className="signup_form_button">
         <button id="signup_form_submit" type='submit'>Sign Up</button>
+        {(imageLoading)&& <p>Loading...</p>}
       </div>
     </form>
   );
