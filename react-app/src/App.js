@@ -14,6 +14,7 @@ import BookDetails from './components/BookDetails'
 // import UsersList from './components/Header/UsersList';
 // import User from './components/Header/User';
 import { authenticate } from './store/session';
+import UploadPicture from './components/AWS/UploadPicture.js'
 
 function App() {
   const sessionUser = useSelector(state => state.session.user);
@@ -63,6 +64,7 @@ function App() {
           <div id='page-not-found-container'>
             <h1>404 Page not found {':<'} Sowwyyyyy</h1>
             <h4> Thanks, Nate!</h4>
+
           </div>
         </Route>
       </Switch>

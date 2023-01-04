@@ -11,6 +11,7 @@ from .api.book_routes import book_routes
 from .api.creator_routes import creator_routes
 from .api.bookshelf_routes import bookshelf_routes
 from .api.review_routes import review_routes
+from .api.image_routes import image_routes
 from .seeds import seed_commands
 from .config import Config
 
@@ -37,6 +38,7 @@ app.register_blueprint(creator_routes, url_prefix='/api/creators')
 
 app.register_blueprint(bookshelf_routes, url_prefix='/api/bookshelves')
 app.register_blueprint(review_routes, url_prefix='/api/reviews')
+app.register_blueprint(image_routes, url_prefix='/api/images')
 db.init_app(app)
 Migrate(app, db)
 

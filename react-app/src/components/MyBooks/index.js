@@ -62,6 +62,7 @@ const Home = ()=>{
   //   }
   // }, [showShelfEditModal])
 
+  // if (!bookobj) return null
   const dispatchSingle = (bookId) => {
     dispatch(bookActions.getSingleBookThunk(bookId))
   }
@@ -74,14 +75,24 @@ const Home = ()=>{
   let ShowWantRead;
   let ProtectedShelf =[];
   let ShowProtected;
+  let UserBooks = []
+  let RenderElement
 
-
+  const runData = function() {
   for (let shelf in userBookshelvobj){
     if (userBookshelvobj[shelf].bookshelfName === "currently reading") {
       if (userBookshelvobj[shelf].Stacks.length > 0) {
-        userBookshelvobj[shelf].Stacks.map((stack)=>
+        userBookshelvobj[shelf].Stacks.map((stack)=>{
+          if (bookobj && bookobj[stack.id]) {UserBooks.push(bookobj[stack.id])}
+
           UserShelves.push(stack)
-          )
+        })
+      }
+    } else if (userBookshelvobj[shelf].bookshelfName === "read") {
+      if (userBookshelvobj[shelf].Stacks.length > 0) {
+        userBookshelvobj[shelf].Stacks.map((stack)=>{
+          if (bookobj && bookobj[stack.id]) {UserBooks.push(bookobj[stack.id])}
+        })
       }
     }
 
@@ -99,6 +110,21 @@ const Home = ()=>{
       }
     }
   }
+}
+
+useEffect(()=> {
+  // UserShelves=[];
+  // ShowCurrent;
+  // UserShelfList = [];
+  // ShowShelfList;
+  // UserWantRead = [];
+  // ShowWantRead;
+  // UserBooks = []
+  // RenderElement
+runData()
+
+}, [userBookshelvobj])
+runData()
   // `bookshelf${shelf[1]}`
   // ProtectedShelf
   if (ProtectedShelf && ProtectedShelf.length >= 1) {
@@ -118,28 +144,31 @@ const Home = ()=>{
       } else {
          return defaulImg }
     }
+
+
   if (UserWantRead && UserWantRead.length >= 1) {
-  ShowWantRead = UserWantRead.map((book)=> (
+    ShowWantRead = UserWantRead.map((book)=> {
+      if (bookobj && bookobj[book.id]) {UserBooks.push(bookobj[book.id])}
+    return (
     <NavLink to={`/books/${book.id}`} key={book.id} onClick={()=> dispatchSingle(book.id)}>
       <div>
         <img src={checkImg(book)} alt={book.title}/>
       </div>
     </NavLink>
-  ))}
+  )})}
 
   if (UserShelves && UserShelves.length >= 1) {
   ShowCurrent = UserShelves.map((stack)=> (
     <CurrentlyReadingPreview key={stack.id} book={stack}/>
   ))} else { ShowCurrent = (<h4>Not Currently Reading anything!</h4>)}
 
-  let UserBooks = []
-  let RenderElement
 
-  for (let book in bookobj) {
-    if (book !== "singleBook") {
-      UserBooks.push(bookobj[book])
-    }
-  }
+
+  // for (let book in bookobj) {
+  //   if (book !== "singleBook" && book in userBookshelvobj) {
+  //     UserBooks.push(bookobj[book])
+  //   }
+  // }
   // cover	title	author	avg rating	rating	shelves	review	date read	date added
 
   if (UserBooks && UserBooks.length > 1) {

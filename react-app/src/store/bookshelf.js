@@ -189,6 +189,7 @@ const bookshelfReducer = (state = initialState, action) => {
       return newState;
 
     case GET_ALL_CURRENT_USER_BOOKSHELVES:
+      newState['currentUser'] = {}
       action.payload.Bookshelves.forEach(
         bookshelf => {
           if (newState['currentUser']) {
