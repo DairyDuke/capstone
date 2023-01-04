@@ -85,7 +85,18 @@ const Home = ()=>{
     grabData()
   },[dispatch])
 // console.log("This")
+useEffect(()=> {
+  UserShelves=[];
+  // ShowCurrent;
+  UserShelfList = [];
+  // ShowShelfList;
+  UserWantRead = [];
+  // ShowWantRead;
+  UserBooks = []
+  // RenderElement
   runData()
+}, [userBookshelvobj])
+runData()
 
   const dispatchSingle = (bookId) => {
     dispatch(bookActions.getSingleBookThunk(bookId))

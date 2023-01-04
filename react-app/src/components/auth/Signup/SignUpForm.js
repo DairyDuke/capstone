@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom';
 import { signUp } from '../../../store/session';
 import * as bookActions from '../../../store/book'
+import * as bookshelfActions from '../../../store/bookshelf'
 import "./SignUpForm.css";
 
 const SignUpForm = ({showModal, setShowModal}) => {
@@ -39,6 +40,10 @@ const SignUpForm = ({showModal, setShowModal}) => {
     }
   }, [showModal, setShowModal])
 
+  const updateStore = async () => {
+    await dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
+    await dispatch(bookshelfActions.getAllBookshelvesThunk())
+  }
 
   const onSignUp = async (e) => {
     e.preventDefault();
@@ -65,7 +70,7 @@ const SignUpForm = ({showModal, setShowModal}) => {
 
       if (data) {
         setErrors(data.errors)
-      }
+      } else updateStore()
     } else {
       setErrors({'repeat_password':'Password and confirm password must match'})
     }

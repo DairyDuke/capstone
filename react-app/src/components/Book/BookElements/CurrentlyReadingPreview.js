@@ -95,7 +95,7 @@ const CurrentlyReadingPreview = ({book}) => {
           <h2>{book.title}</h2>
         </div>
         <div className="currently_reading_preview_author_name">
-          by {bookobj[book.id]["Creators"].find((creator)=> creator['role'] === "author")['name']}
+          by {bookobj[book.id]["Creators"].length > 0 ? (bookobj[book.id]["Creators"].find((creator)=> creator['role'] === "author")['name']) : ("Unknown")}
         </div>
         <div>
         AVG. Rating: {bookobj[book.id]['AverageRating']}
