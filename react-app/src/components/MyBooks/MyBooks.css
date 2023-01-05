@@ -82,6 +82,7 @@ flex-wrap: wrap;
 }
 
 .mybooks_want_to_read_container h3 {
+  margin: unset;
 
 }
 

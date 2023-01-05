@@ -17,8 +17,8 @@ const SignUpForm = ({showModal, setShowModal}) => {
   const [image, setImage] = useState(null);
   const [imageLoading, setImageLoading] = useState(false);
 
-  const [profileUrl, setProfileUrl] = useState('');
-  const [profileUrlCharCount, setProfileUrlCharCount] = useState(0)
+  // const [profileUrl, setProfileUrl] = useState('');
+  // const [profileUrlCharCount, setProfileUrlCharCount] = useState(0)
 
   const [password, setPassword] = useState('');
   const [passwordCharCount, setPasswordCharCount] = useState(0)
@@ -91,10 +91,10 @@ const SignUpForm = ({showModal, setShowModal}) => {
     setEmailCharCount(e.target.value.length);
   };
 
-  const updateProfilePic = (e) => {
-    setProfileUrl(e.target.value);
-    setProfileUrlCharCount(e.target.value.length);
-  };
+  // const updateProfilePic = (e) => {
+  //   setProfileUrl(e.target.value);
+  //   setProfileUrlCharCount(e.target.value.length);
+  // };
 
   const updatePassword = (e) => {
     setPassword(e.target.value);

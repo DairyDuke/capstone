@@ -71,7 +71,7 @@ const NavBar = () => {
             <div id="test">
               <div onClick={toggleMenu} id='navbar_profile_button'>
                 <span>
-                <img  id='navbar-profile-img-button' className='profile-img' alt='profile' src={sessionUser.profileImageUrl} />
+                <img  id='navbar-profile-img-button' className='profile-img' alt='profile' src={sessionUser.profileImageUrl} onError={e => { e.currentTarget.src = "https://i.imgur.com/pZlkRiA.png"; }}/>
                 </span>
                 {/* <img src="https://i.imgur.com/pZlkRiA.png" alt="User Menu" /> */}
               </div>
@@ -82,7 +82,7 @@ const NavBar = () => {
                   <div id="dropdown-header">
                     {/* <NavLink to={`/users/${sessionUser.id}`} exact={true} className='dropdown-option image-option'> */}
                     <div className='dropdown-option image-option'>
-                      <img  id='navbar-profile-img' className='profile-img' alt='profile' src={sessionUser.profileImageUrl} />
+                      <img  id='navbar-profile-img' className='profile-img' alt='profile' src={sessionUser.profileImageUrl} onError={e => { e.currentTarget.src = "https://i.imgur.com/pZlkRiA.png"; }}/>
                           <p>{sessionUser.username}</p>
                     </div>
                     {/* </NavLink> */}

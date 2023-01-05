@@ -15,7 +15,6 @@ import ErrorPage from './components/ErrorPage'
 // import UsersList from './components/Header/UsersList';
 // import User from './components/Header/User';
 import { authenticate } from './store/session';
-import UploadPicture from './components/AWS/UploadPicture.js'
 
 function App() {
   const sessionUser = useSelector(state => state.session.user);

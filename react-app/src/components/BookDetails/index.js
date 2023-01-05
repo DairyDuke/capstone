@@ -75,7 +75,7 @@ if (bookobj.Reviewed && bookobj.Reviewed.length > 0 ) {
           <h3>{creator.role}</h3>
         </div>
         <div id="bookdetails_right_column_creator_picture">
-          <img src={creator.creatorImageUrl} alt={creator.name} />
+          <img src={creator.creatorImageUrl} alt={creator.name} onError={e => { e.currentTarget.src = "https://i.imgur.com/XlI0gZD.png"; }} />
         </div>
       </div>
       <div id="bookdetails_right_column_creator_details">
@@ -99,7 +99,7 @@ if (bookobj.Reviewed && bookobj.Reviewed.length > 0 ) {
       <div className="bookdetails_left_column_sticky_container">
         <div className="bookdetails_left_column_box">
           <div id="bookdetails_left_column_book_cover">
-            <img src={bookobj.Cover} alt={bookobj.title} />
+            <img src={bookobj.Cover} alt={bookobj.title} onError={e => { e.currentTarget.src = "https://i.imgur.com/iL99VfD.jpg"; }}/>
           </div>
           <div id="quick_box">
          {sessionUser && (<div className='bookdetails_edit_button' onClick={() => setShowEditModal(true)}>

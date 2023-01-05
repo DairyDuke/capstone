@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
 import './Splash.css'
 import * as bookActions from '../../store/book'
@@ -34,9 +34,9 @@ const Splash = ()=>{
     dispatch(creatorActions.getAllCreatorsThunk())
   },[dispatch])
 
-  const dispatchSingle = (bookId) => {
-    dispatch(bookActions.getSingleBookThunk(bookId))
-  }
+  // const dispatchSingle = (bookId) => {
+  //   dispatch(bookActions.getSingleBookThunk(bookId))
+  // }
 
   let UserBooks = []
   let RenderElement
