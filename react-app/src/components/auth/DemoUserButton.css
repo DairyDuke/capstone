@@ -4,13 +4,19 @@
   margin-right: 10px;
   font-size: 18px;
   font-weight: 600;
+  padding: 5px;
 }
 
 #demo-user-button p {
-  padding-right: 2px;
-  padding-left: 2px;
+  padding: 5px;
 }
 
-#demo-user-button:hover {
-  cursor: pointer;
+#demo-user-button p:hover {
+    text-decoration: unset;
+    height: fit-content;
+    border: 1px solid white;
+    /* padding: 5px; */
+    border-radius: 10px;
+    color: firebrick;
+    background-color: rgba(0, 0, 0, 0.798);
 }

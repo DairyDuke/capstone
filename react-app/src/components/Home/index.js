@@ -132,14 +132,14 @@ runData()
       </div>
     </NavLink>
   )}}
-  )} else {ShowWantRead = (<h2>Not currently wanting to read!</h2>)}
+  )} else {ShowWantRead = (<h3>Nothing here yet! Add more!!</h3>)}
 
   // console.log('3 ', UserShelves)
   if (UserShelves && UserShelves.length >= 1) {
   ShowCurrent = UserShelves.map((stack)=> (
     <CurrentlyReadingPreview key={stack.id} book={stack}/>
   ))} else {
-    ShowCurrent = (<h2>Not current reading anything!</h2>)
+    ShowCurrent = (<p><h3>Not current reading anything!</h3></p>)
   }
 
 

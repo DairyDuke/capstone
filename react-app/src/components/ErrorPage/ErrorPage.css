@@ -1,0 +1,16 @@
+
+    #page-not-found-container{
+      width: 600px;
+      margin: auto;
+    }
+
+    #page-not-found-container h1{
+
+    }
+
+    #page-not-found-container p{
+
+    }
+    #page-not-found-container a{
+      cursor: pointer;
+    }

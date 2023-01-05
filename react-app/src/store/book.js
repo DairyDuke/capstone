@@ -200,7 +200,7 @@ export const uploadImageThunk = (formData) => async () => {
   }
   else {
     const imageUrl = await response.json();
-    console.log("Errors", imageUrl);
+    console.log("Image Error", imageUrl);
   }
 
 }

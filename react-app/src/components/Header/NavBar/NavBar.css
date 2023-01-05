@@ -10,8 +10,11 @@
 }
 .navbar_menu_text:hover {
   text-decoration: unset;
-  margin: 5px;
-  text-decoration: underline;
+  border: 1px solid white;
+  padding: 5px;
+  border-radius: 10px;
+  color: lightblue;
+  background-color: rgba(0, 0, 0, 0.798);
 }
 .navbar_container>nav {
   display: flex;

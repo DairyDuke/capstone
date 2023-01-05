@@ -136,6 +136,26 @@ const SignUpForm = ({showModal, setShowModal}) => {
       </div>
       <div className="signup_input_section">
         <div className="signup_input_container">
+          {/* <label>Your Role</label> */}
+          <div>
+            <fieldset id="role_selection">
+              <legend>Select a your intended role:</legend>
+              <div>
+                <label for="librarian">Librarian</label>
+                <input type="radio" id="librarian" name="user_role" value="Librarian" checked />
+                <span id="role_spacer">Space</span>
+              </div>
+
+              <div>
+                <label for="user">User</label>
+                <input type="radio" id="user" name="user_role" value="user" disabled="true" />
+              <span>User role currently unavailable!</span>
+              </div>
+
+            </fieldset>
+          </div>
+        </div>
+        <div className="signup_input_container">
           <label>Your Name</label>
           <div>
             <input

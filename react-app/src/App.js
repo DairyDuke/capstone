@@ -9,6 +9,7 @@ import Footer from './components/Footer'
 import Splash from './components/Splash'
 import MyBooks from './components/MyBooks'
 import BookDetails from './components/BookDetails'
+import ErrorPage from './components/ErrorPage'
 // import CreateBook from './components/Book/CreateBook'
 // import ProtectedRoute from './components/auth/ProtectedRoute';
 // import UsersList from './components/Header/UsersList';
@@ -61,11 +62,7 @@ function App() {
           <BookDetails />
         </Route>
         <Route>
-          <div id='page-not-found-container'>
-            <h1>404 Page not found {':<'} Sowwyyyyy</h1>
-            <h4> Thanks, Nate!</h4>
-
-          </div>
+          <ErrorPage />
         </Route>
       </Switch>
       <Footer />
