@@ -139,17 +139,17 @@ const SignUpForm = ({showModal, setShowModal}) => {
           {/* <label>Your Role</label> */}
           <div>
             <fieldset id="role_selection">
-              <legend>Select a your intended role:</legend>
-              <div>
+              <legend>Select your intended role:</legend>
+              <div id="role_selection_divs">
                 <label for="librarian">Librarian</label>
                 <input type="radio" id="librarian" name="user_role" value="Librarian" checked />
-                <span id="role_spacer">Space</span>
+                <span id="role_spacer">Librarian role currently unavailable!</span>
               </div>
 
               <div>
                 <label for="user">User</label>
                 <input type="radio" id="user" name="user_role" value="user" disabled="true" />
-              <span>User role currently unavailable!</span>
+                <span>User role currently unavailable!</span>
               </div>
 
             </fieldset>
