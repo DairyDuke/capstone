@@ -155,12 +155,12 @@ runData()
         <img src={checkImg(book)} alt={book.title}/>
       </div>
     </NavLink>
-  )})}
+  )})} else {ShowWantRead = (<h3>Nothing here yet! Add more!!</h3>)}
 
   if (UserShelves && UserShelves.length >= 1) {
   ShowCurrent = UserShelves.map((stack)=> (
     <CurrentlyReadingPreview key={stack.id} book={stack}/>
-  ))} else { ShowCurrent = (<h4>Not Currently Reading anything!</h4>)}
+  ))} else { ShowCurrent = (<p><h3>Not current reading anything!</h3></p>)}
 
 
 

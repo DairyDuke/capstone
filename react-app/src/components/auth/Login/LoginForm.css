@@ -3,7 +3,23 @@
   margin-right: 10px;
   font-size: 18px;
   font-weight: 600;
+  padding: 5px;
 }
+
+#login_modal_button p {
+  padding: 5px;
+}
+
+#login_modal_button p:hover {
+    text-decoration: unset;
+    height: fit-content;
+    border: 1px solid white;
+    /* padding: 5px; */
+    border-radius: 10px;
+    color: lightblue;
+    background-color: rgba(0, 0, 0, 0.798);
+}
+
 #login_form_modal_button{
   border: 1px solid gray;
   border-radius: 15%;

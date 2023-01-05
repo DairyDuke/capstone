@@ -2,6 +2,21 @@
   cursor: pointer;
   font-size: 18px;
   font-weight: 600;
+  padding: 5px;
+}
+
+.signup_button p {
+  padding: 5px;
+}
+
+.signup_button p:hover {
+    text-decoration: unset;
+    height: fit-content;
+    border: 1px solid white;
+    /* padding: 5px; */
+    border-radius: 10px;
+    color: lightblue;
+    background-color: rgba(0, 0, 0, 0.798);
 }
 
 #signup_form {
@@ -51,6 +66,45 @@
   padding-right: 12px;
   box-sizing: border-box;
   margin: 15px;
+}
+#role_selection {
+  padding: unset;
+  margin: unset;
+  height: min-content;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#role_selection span{
+  flex-direction: column !important;
+}
+#role_selection div{
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  height: min-content;
+}
+#librarian {
+  width: fit-content !important;
+  /* margin: unset; */
+}
+#role_spacer{
+  visibility: hidden;
+
+}
+#role_selection input{
+  /* width: fit-content !important; */
+  margin: auto !important;
+  justify-self: center;
+}
+#user {
+  width: fit-content !important;
 }
 
 .signup_input_container input:focus {

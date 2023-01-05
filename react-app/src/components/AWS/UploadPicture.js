@@ -25,14 +25,14 @@ const UploadPicture = () => {
             const imageUrl = await response.json();
             setImageLoading(false);
             // history.push("/images");
-            console.log("Image", imageUrl);
+            // console.log("Image", imageUrl);
         }
         else {
             setImageLoading(false);
             // a real app would probably use more advanced
             // error handling
             const imageUrl = await response.json();
-            console.log("Image", imageUrl);
+            // console.log("Image", imageUrl);
         }
     }
 
