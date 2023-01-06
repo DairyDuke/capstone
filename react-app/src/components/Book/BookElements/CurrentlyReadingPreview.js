@@ -88,7 +88,7 @@ const CurrentlyReadingPreview = ({book}) => {
   return   (
     <div className="currently_reading_preview_container">
       <NavLink to={`/books/${book.id}`} key={book.id} onClick={()=> dispatchSingle(book.id)}>
-        <img src={bookobj[book.id].Cover} alt={book.title} />
+        <img src={bookobj[book.id].Cover} alt={book.title}  onError={e => { e.currentTarget.src = "https://i.imgur.com/iL99VfD.jpg"; }}/>
       </NavLink>
       <div className="currently_reading_preview_info_box">
         <div className="currently_reading_preview_book_title">

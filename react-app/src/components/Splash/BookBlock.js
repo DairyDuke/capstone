@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux"
+import { useDispatch } from "react-redux"
 import './Splash.css'
 import * as bookActions from '../../store/book'
-import * as bookshelfActions from '../../store/bookshelf'
-import * as creatorActions from '../../store/creator'
+// import * as bookshelfActions from '../../store/bookshelf'
+// import * as creatorActions from '../../store/creator'
 
 const BookBlock = ({book}) => {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ const BookBlock = ({book}) => {
     <>
     <NavLink to={`/books/${book.id}`} key={book.id} onClick={()=> dispatchSingle(book.id)}>
         <div className="splash_discover_reccomendations_books">
-          <img src={book.Cover} alt={book.title} />
+          <img src={book.Cover} alt={book.title} onError={e => { e.currentTarget.src = "https://i.imgur.com/iL99VfD.jpg"; }}/>
           <div className="splash_discover_reccomendations_details">
             <div className="splash_discover_reccomendations_title">
               <h2>{book.title}</h2>

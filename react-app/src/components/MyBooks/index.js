@@ -84,14 +84,15 @@ const Home = ()=>{
       if (userBookshelvobj[shelf].Stacks.length > 0) {
         userBookshelvobj[shelf].Stacks.map((stack)=>{
           if (bookobj && bookobj[stack.id]) {UserBooks.push(bookobj[stack.id])}
-
           UserShelves.push(stack)
+          return null
         })
       }
     } else if (userBookshelvobj[shelf].bookshelfName === "read") {
       if (userBookshelvobj[shelf].Stacks.length > 0) {
         userBookshelvobj[shelf].Stacks.map((stack)=>{
           if (bookobj && bookobj[stack.id]) {UserBooks.push(bookobj[stack.id])}
+          return null
         })
       }
     }
@@ -112,18 +113,17 @@ const Home = ()=>{
   }
 }
 
-useEffect(()=> {
-  // UserShelves=[];
-  // ShowCurrent;
-  // UserShelfList = [];
-  // ShowShelfList;
-  // UserWantRead = [];
-  // ShowWantRead;
-  // UserBooks = []
-  // RenderElement
-runData()
-
-}, [userBookshelvobj])
+// useEffect(()=> {
+//   // UserShelves=[];
+//   // ShowCurrent;
+//   // UserShelfList = [];
+//   // ShowShelfList;
+//   // UserWantRead = [];
+//   // ShowWantRead;
+//   // UserBooks = []
+//   // RenderElement
+// runData()
+// }, [runData])
 runData()
   // `bookshelf${shelf[1]}`
   // ProtectedShelf
@@ -152,10 +152,10 @@ runData()
     return (
     <NavLink to={`/books/${book.id}`} key={book.id} onClick={()=> dispatchSingle(book.id)}>
       <div>
-        <img src={checkImg(book)} alt={book.title}/>
+        <img src={checkImg(book)} alt={book.title} onError={e => { e.currentTarget.src = "https://i.imgur.com/iL99VfD.jpg"; }}/>
       </div>
     </NavLink>
-  )})} else {ShowWantRead = (<h3>Nothing here yet! Add more!!</h3>)}
+  )})} else {ShowWantRead = (<div><p><h3>Nothing here yet! Add more!!</h3></p></div>)}
 
   if (UserShelves && UserShelves.length >= 1) {
   ShowCurrent = UserShelves.map((stack)=> (
@@ -177,7 +177,7 @@ runData()
     <tr className="mybooks_right_column_books">
           <td className="mybooks_right_column_cover">
             <NavLink to={`/books/${book.id}`} key={book.id}>
-              <img src={book.Cover} alt={book.title} />
+              <img src={book.Cover} alt={book.title} onError={e => { e.currentTarget.src = "https://i.imgur.com/iL99VfD.jpg"; }}/>
             </NavLink>
           </td>
           <td className="mybooks_right_column_title">

@@ -78,7 +78,7 @@ const Home = ()=>{
     async function grabData() {
     await dispatch(bookActions.getAllBooksThunk())
     // dispatch(bookActions.getSingleBookThunk())
-    dispatch(bookActions.removeSingleBookThunk())
+    await dispatch(bookActions.removeSingleBookThunk())
     await dispatch(bookshelfActions.getAllBookshelvesThunk())
     await dispatch(bookshelfActions.getAllCurrentUserBookshelvesThunk())
     await dispatch(creatorActions.getAllCreatorsThunk())}
@@ -128,11 +128,11 @@ runData()
       return (
     <NavLink to={`/books/${book.id}`} key={book.id} onClick={()=> dispatchSingle(book.id)}>
       <div>
-        <img src={bookobj[book.id]["Cover"]} alt={book.title}/>
+        <img src={bookobj[book.id]["Cover"]} alt={book.title} onError={e => { e.currentTarget.src = "https://i.imgur.com/iL99VfD.jpg"; }}/>
       </div>
     </NavLink>
   )}}
-  )} else {ShowWantRead = (<h3>Nothing here yet! Add more!!</h3>)}
+  )} else {ShowWantRead = (<p><h3>Nothing here yet! Add more!!</h3></p>)}
 
   // console.log('3 ', UserShelves)
   if (UserShelves && UserShelves.length >= 1) {
@@ -149,7 +149,7 @@ runData()
           return (
       <NavLink to={`/books/${book.id}`} key={book.id} onClick={()=> dispatchSingle(book.id)}>
           <div className="home_center__books">
-            <img src={book["Cover"]} alt={book.title} />
+            <img src={book["Cover"]} alt={book.title} onError={e => { e.currentTarget.src = "https://i.imgur.com/iL99VfD.jpg"; }}/>
             <div className="home_center__details">
               <div className="home_center__title">
                 <h2>{book.title}</h2>

@@ -68,6 +68,7 @@
   margin: 15px;
 }
 #role_selection {
+  width: inherit;
   padding: unset;
   margin: unset;
   height: min-content;
@@ -82,6 +83,11 @@
 #role_selection span{
   flex-direction: column !important;
 }
+
+#role_selection_divs {
+ max-width: 200px !important;
+}
+
 #role_selection div{
   display: flex;
   flex-direction: column;
