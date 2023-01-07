@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation  } from 'react-router-dom';
 import LoginFormModal from '../../auth/Login/LoginFormModal';
 import LogoutButton from '../../auth/LogoutButton';
 import SignUpFormModal from '../../auth/Signup/SignUpFormModal';
@@ -11,8 +11,8 @@ import './NavBar.css'
 // Modal Imports
 
 const NavBar = () => {
-  // const location = useLocation();
-  // console.log(location.pathname)
+  const location = useLocation();
+  console.log(location.pathname)
   const sessionUser = useSelector(state => state.session.user)
   const [status, setStatus] = useState(false);
   // const dispatch = useDispatch()
