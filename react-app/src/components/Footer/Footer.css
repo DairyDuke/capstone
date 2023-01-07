@@ -24,6 +24,7 @@
 .foot_bottom_menu {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   flex-wrap: wrap;
   box-sizing: border-box;
   font-size: 14px;
