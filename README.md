@@ -38,13 +38,17 @@ My Reader's Journey is a fullstack, stateful web-app that draws its functionalit
 ## App Screenshots
 
 ### Logged out splash page
-![image](https://user-images.githubusercontent.com/32800127/205650654-142025af-6a38-4d5a-839b-7aa452b6b66f.png)
+![image](https://user-images.githubusercontent.com/32800127/211245075-7588af94-4e16-4dc3-ab5a-553f7a00baa3.png)
 
 ### Logged in splash page
-![image](https://user-images.githubusercontent.com/32800127/205655449-5fadb582-6a77-41f9-98e5-3d8942383dc3.png)
+![image](https://user-images.githubusercontent.com/32800127/211245103-e231e4ca-42d3-4c15-a873-4d8c2ab4dc3c.png)
 
 ### My Books Page
-![image](https://user-images.githubusercontent.com/32800127/205655354-d76594fa-0dc2-44f7-bb69-29c6c376acee.png)
+![image](https://user-images.githubusercontent.com/32800127/211245127-5b0fda0a-6830-4706-84c2-eac6883111c2.png)
+
+### Book Details Page
+![image](https://user-images.githubusercontent.com/32800127/211245175-4b54987b-333c-4390-aa14-24fc7bf6940a.png)
+
 ---
 
 ## Local Run Instructions
@@ -90,4 +94,3 @@ npm start
         - Currently, all users are Librarians.
 ---
 
-## Code Highlights
