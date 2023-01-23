@@ -12,7 +12,6 @@ import './NavBar.css'
 
 const NavBar = () => {
   const location = useLocation();
-  console.log(location.pathname)
   const sessionUser = useSelector(state => state.session.user)
   const [status, setStatus] = useState(false);
   // const dispatch = useDispatch()

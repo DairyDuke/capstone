@@ -18,11 +18,40 @@ from .auth_routes import validation_errors_to_error_messages
 review_routes = Blueprint('reviews', __name__)
 
 # PUT - Edit a Review for a Book.
-@review_routes.route('/<int:bookId>', methods=["PUT"])
-def edit_review(bookId):
-    pass
+@review_routes.route('/<int:reviewId>', methods=["PUT"])
+def edit_review(reviewId):
+    # pass
+    data = request.get_json()
+    review_form = ReviewForm()
+    review_form['csrf_token'].data = request.cookies['csrf_token']
+    try:
+        current_review = Review.query.get_or_404(reviewId)
+    except:
+        return {'errors':{'message': "Book couldn't be found"}}, 404
+    else:
+        if review_form.validate_on_submit():
+            if review_form.data['review_text']:
+                current_review.title = review_form.data['review_text']
+            if review_form.data['rating']:
+                current_review.genre = review_form.data['rating']
+
+            db.session.commit()
+            response = current_review.to_dict()
+            return response
+
+        return {'errors': validation_errors_to_error_messages(review_form.errors)}, 401
+
 
 # DELETE - Delete a Review for a Book.
-@review_routes.route('/<int:bookId>', methods=["DELETE"])
-def delete_review(bookId):
-    pass
+@review_routes.route('/<int:reviewId>', methods=["DELETE"])
+def delete_review(reviewId):
+    # pass
+    try:
+        review_to_delete = Review.query.get_or_404(reviewId)
+    except:
+        return {'message': "Review couldn't be found"}, 404
+    else:
+
+        db.session.delete(review_to_delete)
+        db.session.commit()
+        return {'message': "Successfully deleted"}, 200

@@ -70,7 +70,7 @@ def create_creator():
 
         response = new_creator.to_dict()
         return response
-    print( creator_form.errors)
+    # print( creator_form.errors)
     return {'errors': validation_errors_to_error_messages(creator_form.errors)}, 401
 
 
@@ -87,21 +87,21 @@ def edit_creator(creatorId):
         edit_creator = Creator.query.get_or_404(creatorId)
     except:
         return {'message': "Creator couldn't be found"}, 404
+    else:
+        if creator_form.validate_on_submit():
+            if creator_form.data["role_type_list"]:
+                edit_creator.role = creator_form.data["role_type_list"]
+            if creator_form.data["name"]:
+                edit_creator.name = creator_form.data["name"]
+            if creator_form.data["creator_image_url"]:
+                edit_creator.creator_image_url = creator_form.data["creator_image_url"]
+            if creator_form.data["creator_summary"]:
+                edit_creator.summary = creator_form.data["creator_summary"]
 
-    if creator_form.validate_on_submit():
-        if creator_form.data["role_type_list"]:
-          edit_creator.role = creator_form.data["role_type_list"]
-        if creator_form.data["name"]:
-          edit_creator.name = creator_form.data["name"]
-        if creator_form.data["creator_image_url"]:
-          edit_creator.creator_image_url = creator_form.data["creator_image_url"]
-        if creator_form.data["creator_summary"]:
-          edit_creator.summary = creator_form.data["creator_summary"]
-        db.session.commit()
-
-        response = edit_creator.to_dict()
-        return response
-    return {'errors': validation_errors_to_error_messages(creator_form.errors)}, 401
+            db.session.commit()
+            response = edit_creator.to_dict()
+            return response
+        return {'errors': validation_errors_to_error_messages(creator_form.errors)}, 401
 
 @creator_routes.route('<int:creatorId>', methods=["DELETE"])
 def delete_creator(creatorId):

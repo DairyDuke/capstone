@@ -107,6 +107,7 @@ def create_book():
             book_id= new_book.id,
             cover_image_url = ""
             )
+            # replace cover image with filler image link
         db.session.add(new_book_cover)
         db.session.commit()
         response = new_book.to_dict()
@@ -355,9 +356,43 @@ def remove_book_from_shelf(bookId):
 def get_all_reviews(id):
     reviews = Review.query.order_by(Review.created_at.desc()).options(joinedload(Review.author)).filter_by(book_id=id).all()
 
+    response = {
+        "Reviews":[]
+    }
+    for review in reviews:
+        review_dict = review.to_dict()
+        review_dict["Reviewer"] = review.author.to_dict()
+        response["Reviews"].append(review_dict)
+
+    return response
+
 
 # Route - Add a review to a book:
-@book_routes.route('/<int:id>/reviews', methods=['POST'])
+@book_routes.route('/<int:bookId>/reviews', methods=['POST'])
 @login_required
-def add_review(id):
-    pass
+def add_review(bookId):
+    # pass
+    current_user = current_user.get_id()
+    data = request.get_json()
+    review_form = ReviewForm()
+    review_form['csrf_token'].data = request.cookies['csrf_token']
+    # try:
+    user_exists = Review.query.filter_by(user_id=current_user, book_id=bookId).first()
+    if user_exists:
+        return {'message': "User already left review!"}, 401
+    # except:
+    #     return {'message': "Book couldn't be found"}, 404
+    # else:
+    # user_id, book_id, review_text, rating
+    if review_form.validate_on_submit():
+        new_review = Review(
+            user_id = current_user,
+            book_id = bookId,
+            review_text = review_form.data["review_text"],
+            rating = review_form.data["rating"]
+        )
+        db.session.add(new_review)
+        db.session.commit()
+        response = new_review.to_dict()
+        return response
+    return {'errors': validation_errors_to_error_messages(review_form.errors)}
