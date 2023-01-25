@@ -1,0 +1,188 @@
+#create_review_modal{
+  cursor: pointer;
+  margin-right: 10px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+#create_review_form{
+  max-width: 600px;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 30px;
+}
+
+#create_review_text{
+  text-align: center;
+}
+
+#create_review_text img{
+  max-height: 55px;
+}
+
+#create_review_text h2{
+  text-align: center;
+  font-size: 38px;
+}
+
+#create_review_errors{
+  color: red;
+}
+
+.create_review_input_containers{
+  height: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.create_review_form_input_box{
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.create_review_form_input_count{
+  width: 100%;
+  height: auto;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.create_review_form_input_count input{
+  min-height: 35px;
+  height: auto;
+  line-height: 30px;
+  background-color: #EBEBEB;
+  border: 1px solid black;
+  color: black;
+  font-size: 24px;
+  width: 95%;
+  border-radius: 50px;
+  padding-left: 12px;
+  padding-right: 12px;
+  box-sizing: border-box;
+  margin: 15px;
+}
+
+.create_review_form_input_count input:focus {
+  outline: none;
+  background-color: #fafafa;
+}
+
+#create_review_cover_preview{
+  /* cursor: pointer;
+  color: black; */
+
+  width: 80%;
+  line-height: 30px;
+  font-size: larger;
+  cursor: pointer;
+  margin: auto;
+  border: 1px solid black;
+  background-color: black;
+  color: white;
+  /* border-radius: 10px; */
+  margin: 2px;
+
+  /* display: flex;
+  flex-direction: row; */
+  /* justify-content: start; */
+  /* margin-bottom: 15px; */
+}
+
+#create_review_cover_preview:hover {
+  color: gray;
+  background-color: rgba(0, 0, 0, 0.798);
+
+}
+
+#create_review_cover_preview img{
+  max-height: 75px;
+
+}
+.create_review_form_input_box textarea {
+  height: auto;
+  /* max-height: 150px; */
+  column-count: initial !important;
+  background-color: #EBEBEB;
+  border: 1px solid black;
+  border-radius: 50px;
+  color: black;
+  display: flex;
+  line-height: inherit;
+  margin: 15px;
+  outline: none;
+  padding-left: 12px;
+  padding-right: 12px;
+  white-space: pre-line;
+  width: 95%;
+  word-break: break-word;
+  text-align: left;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: auto;
+  resize: none;
+  position: sticky;
+  /* outline:1px; */
+  text-rendering: auto;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+
+}
+
+
+.create_review_form_input_count textarea:focus {
+  outline: none;
+  background-color: #fafafa;
+}
+
+.create_review_character_count{
+  min-width: none;
+  position: absolute;
+  bottom: -6%;
+  right: 1px;
+
+}
+.create_review_form_footer{
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.create_review_cancel_button{
+  width: 80%;
+  line-height: 30px;
+  font-size: larger;
+  cursor: pointer;
+  margin: auto;
+  border: 1px solid black;
+  background-color: black;
+  color: white;
+  border-radius: 10px;
+  margin: 2px;
+}
+.create_review_submit_button{
+  width: 80%;
+  line-height: 30px;
+  font-size: larger;
+  cursor: pointer;
+  margin: auto;
+  border: 1px solid black;
+  background-color: black;
+  color: white;
+  border-radius: 10px;
+}
+
+.create_review_submit_button:hover{
+  color: lightblue;
+  background-color: rgba(0, 0, 0, 0.798);
+}
+.create_review_cancel_button:hover{
+  color: red;
+  background-color: rgba(0, 0, 0, 0.798);
+}

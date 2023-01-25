@@ -81,7 +81,7 @@ const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
       setDisableSubmit(true)
       setErrors((prevState) => {
      return {...prevState, summary:"Book summary must be between 0 and 1500 characters."}})
-    } else if (bookTitleCharCount >= 0) {
+    } else if (bookSummaryCharCount >= 0) {
       setDisableSubmit(false)
     } else {
       setDisableSubmit(true)
@@ -90,7 +90,7 @@ const EditBook = ({ bookData, setShowEditModal, showEditModal }) => {
       setDisableSubmit(true)
       setErrors((prevState) => {
      return {...prevState, genre:"Genre must be between 0 and 100 characters."}})
-    } else if (bookTitleCharCount >= 0) {
+    } else if (bookGenreCharCount >= 0) {
       setDisableSubmit(false)
     } else {
       setDisableSubmit(true)
